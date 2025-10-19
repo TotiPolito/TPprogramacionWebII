@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Registro</title>
+    <link rel="stylesheet" href="/Preguntados/style/style.css">
+</head>
+
+<body>
+<h2>Registro de usuario</h2>
+
+<form action="/register" method="POST" enctype="multipart/form-data">
+
+    <label>Nombre completo:</label>
+    <input type="text" name="nombre_completo">
+
+    <label>Año de nacimiento:</label>
+    <input type="number" name="anio_nacimiento">
+
+    <label>Sexo:</label>
+    <select name="sexo">
+        <option value="Masculino">Masculino</option>
+        <option value="Femenino">Femenino</option>
+        <option value="Prefiero no cargarlo">Prefiero no cargarlo</option>
+    </select>
+
+    <label>País:</label>
+    <input type="text" name="pais">
+
+    <label>Ciudad:</label>
+    <input type="text" name="ciudad">
+
+    <label>Correo electrónico:</label>
+    <input type="email" name="mail">
+
+    <label>Nombre de usuario:</label>
+    <input type="text" name="usuario">
+
+    <label>Contraseña:</label>
+    <input type="password" name="password">
+
+    <label>Repetir contraseña:</label>
+    <input type="password" name="repassword">
+
+    <label>Foto de perfil:</label>
+    <input type="file" name="foto_perfil">
+
+    <button type="submit">Registrarme</button>
+</form>
+
+<p>¿Ya tenés cuenta? <a href="/Preguntados/Login/loginForm">Iniciá sesión</a></p>
+
+{{#error}}
+    <p class="error-message">{{error}}</p>
+{{/error}}
+
+</body>
+</html>
