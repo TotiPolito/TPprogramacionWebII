@@ -58,7 +58,7 @@ class RegisterController
         }
 
         if ($data["foto_perfil"]) {
-            $rutaDestino = "uploads/" . basename($data["foto_perfil"]);
+            $rutaDestino = "imagenes/" . basename($data["foto_perfil"]);
             move_uploaded_file($_FILES["foto_perfil"]["tmp_name"], $rutaDestino);
             $data["foto_perfil"] = $rutaDestino;
         }
