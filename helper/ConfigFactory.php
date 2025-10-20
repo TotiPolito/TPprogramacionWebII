@@ -1,6 +1,5 @@
 <?php
 include_once(__DIR__ . "/MyConexion.php");
-include_once(__DIR__ . "/IncludeFileRenderer.php");
 include_once(__DIR__ . "/NewRouter.php");
 include_once(__DIR__ . "/MustacheRenderer.php");
 
