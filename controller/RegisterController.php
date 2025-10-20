@@ -1,4 +1,5 @@
 <?php
+require_once("model/RegisterModel.php");
 
 class RegisterController
 {
@@ -36,7 +37,6 @@ class RegisterController
             "foto_perfil" => $_FILES["foto_perfil"]["name"] ?? null
         ];
 
-        // Validaciones básicas
         if (in_array("", [$data["nombre_completo"], $data["anio_nacimiento"], $data["sexo"], $data["pais"], $data["ciudad"], $data["mail"], $data["usuario"], $data["password"], $data["repassword"]])) {
             $this->renderer->render("register", ["error" => "Todos los campos son obligatorios"]);
             return;
@@ -57,17 +57,17 @@ class RegisterController
             return;
         }
 
-        // Subir foto (opcional)
         if ($data["foto_perfil"]) {
             $rutaDestino = "uploads/" . basename($data["foto_perfil"]);
             move_uploaded_file($_FILES["foto_perfil"]["tmp_name"], $rutaDestino);
             $data["foto_perfil"] = $rutaDestino;
         }
 
-        // Registrar usuario
         $this->model->crearUsuario($data);
 
-        header("Location: /loginForm");
+        header("Location: index.php?controller=Login&method=mostrarLogin");
         exit;
     }
 }
+
+?>

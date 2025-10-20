@@ -2,22 +2,28 @@
 
 class MyConexion
 {
-
+    private static $instance = null;
     private $conexion;
 
-    public function __construct($server, $user, $pass, $database)
+    private function __construct($server, $user, $pass, $database)
     {
         $this->conexion = new mysqli($server, $user, $pass, $database);
-        if ($this->conexion->error) { die("Error en la conexión: " . $this->conexion->error); }
+
+        if ($this->conexion->connect_error) {
+            die("Error en la conexión: " . $this->conexion->connect_error);
+        }
     }
 
-    public function query($sql)
+    public static function getInstance($server = "localhost", $user = "root", $pass = "", $database = "preguntados")
     {
-        $result = $this->conexion->query($sql);
-
-        if ($result->num_rows > 0) {
-            return $result->fetch_all(MYSQLI_ASSOC);
+        if (self::$instance === null) {
+            self::$instance = new MyConexion($server, $user, $pass, $database);
         }
-        return null;
+        return self::$instance;
+    }
+
+    public function getConexion()
+    {
+        return $this->conexion;
     }
 }

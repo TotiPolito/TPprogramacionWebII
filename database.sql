@@ -16,8 +16,3 @@ CREATE TABLE usuarios (
                           foto_perfil VARCHAR(255),
                           validado BOOLEAN DEFAULT FALSE
 );
-
-
-INSERT INTO usuarios (usuario, password) VALUES ('admin', 'admin'),
-                                                ('editor', 'editor'),
-                                                ('usuario', 'usuario');

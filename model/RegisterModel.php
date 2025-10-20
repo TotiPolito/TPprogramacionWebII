@@ -1,18 +1,20 @@
 <?php
+require_once("helper/MyConexion.php");
 
 class RegisterModel
 {
-    private $database;
+    private $conexion;
 
-    public function __construct($database)
+    public function __construct()
     {
-        $this->database = $database;
+        $this->conexion = MyConexion::getInstance()->getConexion();
+        $this->conexion->select_db("preguntados");
     }
 
     public function usuarioExiste($usuario)
     {
         $query = "SELECT * FROM usuarios WHERE usuario = ?";
-        $stmt = $this->database->prepare($query);
+        $stmt = $this->conexion->prepare($query);
         $stmt->bind_param("s", $usuario);
         $stmt->execute();
         return $stmt->get_result()->num_rows > 0;
@@ -21,7 +23,7 @@ class RegisterModel
     public function mailExiste($mail)
     {
         $query = "SELECT * FROM usuarios WHERE mail = ?";
-        $stmt = $this->database->prepare($query);
+        $stmt = $this->conexion->prepare($query);
         $stmt->bind_param("s", $mail);
         $stmt->execute();
         return $stmt->get_result()->num_rows > 0;
@@ -33,7 +35,10 @@ class RegisterModel
                   (nombre_completo, anio_nacimiento, sexo, pais, ciudad, mail, usuario, password, foto_perfil)
                   VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-        $stmt = $this->database->prepare($query);
+        $stmt = $this->conexion->prepare($query);
+
+        $passwordHash = password_hash($data["password"], PASSWORD_BCRYPT);
+
         $stmt->bind_param(
             "sisssssss",
             $data["nombre_completo"],
@@ -43,9 +48,10 @@ class RegisterModel
             $data["ciudad"],
             $data["mail"],
             $data["usuario"],
-            $data["password"],
+            $passwordHash,
             $data["foto_perfil"]
         );
         $stmt->execute();
     }
 }
+?>

@@ -24,7 +24,7 @@ class ConfigFactory
     {
         $this->config = parse_ini_file(__DIR__ . "/../config/config.ini");
 
-        $this->conexion = new MyConexion(
+        $this->conexion = MyConexion::getInstance(
             $this->config["server"],
             $this->config["user"],
             $this->config["pass"],
