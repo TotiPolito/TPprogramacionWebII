@@ -14,6 +14,10 @@ class MyConexion
         }
     }
 
+    public function query($sql) {
+        return $this->conexion->query($sql);
+    }
+
     public static function getInstance($server = "localhost", $user = "root", $pass = "", $database = "preguntados")
     {
         if (self::$instance === null) {

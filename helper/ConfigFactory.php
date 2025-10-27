@@ -5,11 +5,15 @@ include_once(__DIR__ . "/MustacheRenderer.php");
 
 include_once(__DIR__ . "/../controller/LoginController.php");
 include_once(__DIR__ . "/../controller/RegisterController.php");
+include_once(__DIR__ . "/../controller/IndexController.php");
+include_once(__DIR__ . "/../controller/GameController.php");
 
 include_once(__DIR__ . "/../model/LoginModel.php");
 include_once(__DIR__ . "/../model/RegisterModel.php");
+include_once(__DIR__ . "/../model/GameModel.php");
 
 include_once(__DIR__ . "/../vendor/mustache/src/Mustache/Autoloader.php");
+
 Mustache_Autoloader::register();
 
 class ConfigFactory
@@ -42,7 +46,16 @@ class ConfigFactory
             new RegisterModel($this->conexion),
             $this->renderer
         );
+
+        $this->objetos["IndexController"] = new IndexController($this->renderer);
+
+        $this->objetos["GameController"] = new GameController(
+            $this->renderer,
+            new GameModel($this->conexion)
+        );
+
     }
+
 
     public function get($objectName)
     {

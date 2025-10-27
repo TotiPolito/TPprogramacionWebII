@@ -8,7 +8,7 @@ Options -Indexes
     RewriteEngine On
     RewriteBase /Preguntados/
 
-    RewriteRule ^(imagenes)($|/) - [L,NC]
+    RewriteRule ^(public)($|/) - [L,NC]
 
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d

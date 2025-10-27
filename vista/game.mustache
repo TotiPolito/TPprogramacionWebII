@@ -1,0 +1,32 @@
+<html>
+<head>
+    <title>Game</title>
+    <link rel="stylesheet" href="/Preguntados/public/style/style.css">
+    <link rel="stylesheet" href="/Preguntados/public/style/game.css">
+</head>
+<body>
+
+<h2>Categoría: {{categoria}}</h2>
+<img src="/Preguntados/public/imagenes/{{pregunta.imagen}}" alt="imagen de la pregunta" class="pregunta_imagen">
+<p>{{pregunta.descripcion}}</p>
+
+<form id="respuestaForm" action="/Preguntados/index.php?controller=Game&method=responder" method="POST">
+    <input type="hidden" name="idPregunta" value="{{pregunta.id}}">
+    <input type="hidden" name="idRespuesta" id="idRespuesta">
+</form>
+
+<div class="respuestas">
+    {{#respuestas}}
+        <button type="button" onclick="enviarRespuesta({{id}})">{{descripcion}}</button>
+    {{/respuestas}}
+</div>
+
+<script>
+    function enviarRespuesta(idRespuesta) {
+        document.getElementById('idRespuesta').value = idRespuesta;
+        document.getElementById('respuestaForm').submit();
+    }
+</script>
+
+</body>
+</html>

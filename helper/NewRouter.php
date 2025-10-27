@@ -45,9 +45,13 @@ class NewRouter
 
     public function getControllerName($controllerName)
     {
-        return $controllerName ?
-            ucfirst($controllerName) . 'Controller' :
-            $this->defaultController;
+        if ($controllerName) {
+            // elimina extensión .php si la hay
+            $controllerName = preg_replace('/\.php$/', '', $controllerName);
+            return ucfirst($controllerName) . 'Controller';
+        } else {
+            return $this->defaultController;
+        }
     }
 
     public function getMethodName($controller, $methodName)

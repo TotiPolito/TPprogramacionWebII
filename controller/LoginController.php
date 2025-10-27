@@ -25,12 +25,17 @@ class LoginController
     {
         $resultado = $this->model->getUserWith($_POST["usuario"], $_POST["password"]);
 
-        if (sizeof($resultado) > 0) {
-            $_SESSION["usuario"] = $_POST["usuario"];
-            $this->redirectToIndex();
+        if ($resultado) {
+            $_SESSION["usuario"] = $resultado["usuario"];
+            $this->home();
         } else {
-            $this->renderer->render("login", ["error" => "Usuario o clave incorrecta"]);
+            $this->renderer->render("login", ["error" => "Usuario o contraseña incorrecta"]);
         }
+    }
+
+
+    public function home() {
+        echo $this->renderer->render("home");
     }
 
     public function logout()
@@ -46,9 +51,7 @@ class LoginController
 
     public function redirectToIndex()
     {
-        header("Location: /");
+        header("Location: /Preguntados/index.php");
         exit;
     }
-
 }
-
