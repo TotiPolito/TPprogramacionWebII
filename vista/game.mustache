@@ -1,16 +1,16 @@
 <html>
 <head>
     <title>Game</title>
-    <link rel="stylesheet" href="/Preguntados/public/style/style.css">
-    <link rel="stylesheet" href="/Preguntados/public/style/game.css">
+    <link rel="stylesheet" href="style/style.css">
 </head>
 <body>
 
 <h2>Categoría: {{categoria}}</h2>
-<img src="/Preguntados/public/imagenes/{{pregunta.imagen}}" alt="imagen de la pregunta" class="pregunta_imagen">
+<img src="/TPprogramacionWebII/{{pregunta.imagen}}" alt="imagen de la pregunta" class="pregunta_imagen">
 <p>{{pregunta.descripcion}}</p>
 
-<form id="respuestaForm" action="/Preguntados/index.php?controller=Game&method=responder" method="POST">
+<!-- Formulario que se envía al hacer click en cualquier botón -->
+<form id="respuestaForm" action="/TPprogramacionWebII/index.php?controller=Game&method=responder" method="POST">
     <input type="hidden" name="idPregunta" value="{{pregunta.id}}">
     <input type="hidden" name="idRespuesta" id="idRespuesta">
 </form>
@@ -23,10 +23,38 @@
 
 <script>
     function enviarRespuesta(idRespuesta) {
+        // Seteamos la respuesta seleccionada y enviamos el formulario
         document.getElementById('idRespuesta').value = idRespuesta;
         document.getElementById('respuestaForm').submit();
     }
 </script>
+
+<style>
+    button {
+        display: block;
+        margin: 10px 0;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        width: 20rem;
+    }
+    .respuestas {
+        max-width: 400px;
+    }
+
+    .pregunta_imagen {
+        width: 350px;        /* ancho fijo */
+        height: 350px;       /* alto fijo */
+        object-fit: cover;   /* recorta la imagen para llenar el cuadro */
+        display: block;
+        margin-bottom: 1rem;
+    }
+
+    #respuestaForm{
+        display: none;
+    }
+
+</style>
 
 </body>
 </html>

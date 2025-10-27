@@ -86,7 +86,7 @@ class GameController
         }
 
         // Si aún no completamos 10 preguntas, pasar a la siguiente
-        header("Location: /Preguntados/index.php?controller=Game&method=jugar");
+        header("Location: /TPprogramacionWebII/index.php?controller=Game&method=jugar");
         exit;
     }
 }

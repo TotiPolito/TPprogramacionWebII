@@ -38,7 +38,7 @@ class ConfigFactory
 
         $this->objetos["router"] = new NewRouter($this, "LoginController", "mostrarLogin");
         $this->objetos["LoginController"] = new LoginController(
-            new LoginModel($this->conexion),
+            new LoginModel($this->conexion->getConexion()),
             $this->renderer
         );
 

@@ -20,17 +20,17 @@ CREATE TABLE usuarios (
 DROP TABLE IF EXISTS categorias;
 
 CREATE TABLE categorias(
-                           id INT AUTO_INCREMENT PRIMARY KEY,
-                           descripcion VARCHAR(25)
+                          id INT AUTO_INCREMENT PRIMARY KEY,
+                          descripcion VARCHAR(25)
 );
 
 DROP TABLE IF EXISTS preguntas;
 
 CREATE TABLE preguntas (
-                           id tinyint AUTO_INCREMENT PRIMARY KEY,
-                           categoria int,
-                           dificultad VARCHAR(20) NOT NULL,
-                           FOREIGN KEY (categoria) REFERENCES categorias(id)
+                            id tinyint AUTO_INCREMENT PRIMARY KEY,
+                            categoria int,
+                            dificultad VARCHAR(20) NOT NULL,
+                            FOREIGN KEY (categoria) REFERENCES categorias(id)
 );
 
 ALTER TABLE preguntas
@@ -57,12 +57,12 @@ ALTER TABLE respuestas
 
 insert into categorias(descripcion)
 Values
-    ('deportes'),
-    ('historia'),
-    ('arte'),
-    ('ciencia'),
-    ('geografia'),
-    ('entretenimiento');
+('deportes'),
+('historia'),
+('arte'),
+('ciencia'),
+('geografia'),
+('entretenimiento');
 
 insert into preguntas(imagen, categoria, dificultad, descripcion)
 Values
@@ -160,3 +160,8 @@ Values
     (18, 'Edith Head', false),
     (18, 'Walt Disney', true),
     (18, 'Elizabeth Taylor', false);
+
+
+
+
+

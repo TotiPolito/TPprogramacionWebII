@@ -16,7 +16,7 @@ class IndexController
 
     public function redirectToIndex()
     {
-        header("Location: /Preguntados/index.php");
+        header("Location: /TPprogramacionWebII/index.php");
         exit;
     }
 

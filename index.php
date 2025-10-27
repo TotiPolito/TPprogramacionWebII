@@ -12,7 +12,7 @@ $configFactory = new ConfigFactory();
 
 $router = $configFactory->get("router");
 
-$controller = $_GET["controller"] ?? "login";
-$method = $_GET["method"] ?? "mostrarLogin";
+$controller = $_GET["controller"] ?? null;
+$method = $_GET["method"] ?? null;
 
 $router->executeController($controller, $method);

@@ -10,23 +10,18 @@ class LoginModel
         $this->conexion = $conexion;
     }
 
-    public function getUserWith($user, $password)
+    public function getUserWith($user)
     {
-        $stmt = $this->conexion->getConexion()->prepare("SELECT * FROM usuarios WHERE usuario = ?");
+        // Consulta segura para evitar inyección SQL
+        $sql = "SELECT * FROM usuarios WHERE usuario = ?";
+        $stmt = $this->conexion->prepare($sql);
         $stmt->bind_param("s", $user);
         $stmt->execute();
 
+        // Obtenemos el resultado
         $result = $stmt->get_result();
 
-        if ($result->num_rows > 0) {
-            $userData = $result->fetch_assoc();
-
-            if (password_verify($password, $userData['password'])) {
-                return $userData;
-            }
-        }
-
-        return null;
+        // fetch_assoc convierte el resultado en un array asociativo
+        return $result->fetch_assoc(); // Devuelve array o null si no hay usuario
     }
-
 }

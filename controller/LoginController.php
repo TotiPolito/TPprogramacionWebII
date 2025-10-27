@@ -23,16 +23,20 @@ class LoginController
 
     public function login()
     {
-        $resultado = $this->model->getUserWith($_POST["usuario"], $_POST["password"]);
+        $usuarioIngresado = $_POST["usuario"] ?? "";
+        $passwordIngresada = $_POST["password"] ?? "";
 
-        if ($resultado) {
+        $resultado = $this->model->getUserWith($usuarioIngresado);
+
+        if ($resultado && password_verify($passwordIngresada, $resultado["password"])) {
+            // Si coincide, iniciamos sesión
             $_SESSION["usuario"] = $resultado["usuario"];
             $this->home();
         } else {
-            $this->renderer->render("login", ["error" => "Usuario o contraseña incorrecta"]);
+            // Si no coincide, mostramos error
+            $this->renderer->render("login", ["error" => "Usuario o clave incorrecta"]);
         }
     }
-
 
     public function home() {
         echo $this->renderer->render("home");
@@ -51,7 +55,7 @@ class LoginController
 
     public function redirectToIndex()
     {
-        header("Location: /Preguntados/index.php");
+        header("Location: /TPprogramacionWebII/index.php");
         exit;
     }
 }
