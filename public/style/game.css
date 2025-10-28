@@ -22,6 +22,16 @@ button {
     display: none;
 }
 
+.respuestas button.correcta {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.respuestas button.incorrecta {
+    background-color: #f44336;
+    color: white;
+}
+
 .btns_fin{
     position: relative;
     top: 12rem;

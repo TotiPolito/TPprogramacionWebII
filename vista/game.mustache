@@ -17,7 +17,11 @@
 
 <div class="respuestas">
     {{#respuestas}}
-        <button type="button" onclick="enviarRespuesta({{id}})">{{descripcion}}</button>
+        <button type="button"
+                onclick="enviarRespuesta({{id}}, this)"
+                data-correcta="{{#estado}}1{{/estado}}{{^estado}}0{{/estado}}">
+            {{descripcion}}
+        </button>
     {{/respuestas}}
 </div>
 
