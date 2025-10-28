@@ -2,18 +2,21 @@
 <head>
     <title>Home</title>
     <link rel="stylesheet" href="public/style/style.css">
+    <link rel="stylesheet" href="public/style/headerFooter.css">
 </head>
 <body class="body_home">
+
+{{> header}}
 
 <main class="home_main">
     <button class="btn_primary btn_js"> Jugar </button>
     <div class="select_box box_js">
         <div class="btns">
         <button class="btn_secondary disabled" disabled>  Online </button>
-        <a href="/TPprogramacionWebII/index.php?controller=Game&method=jugar" class="btn_secondary game_link"> Offline </a>
+        <a href="/TPprogramacionWebII/index.php?controller=Game&method=jugar" class="btn_secondary btn_hover game_link"> Offline </a>
         </div>
     </div>
 </main>
-    <script src="/TPprogramacionWebII/style/dinamicStyle.js"> </script>
+    <script src="public/js/dinamicStyle.js"> </script>
 </body>
 </html>

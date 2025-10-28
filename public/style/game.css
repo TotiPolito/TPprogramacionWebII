@@ -21,3 +21,26 @@ button {
 #respuestaForm{
     display: none;
 }
+
+.btns_fin{
+    position: relative;
+    top: 12rem;
+    left: 22rem;
+    display: flex;
+    gap: 20px;
+}
+
+.contentBox{
+    height: 35rem;
+    width: 60%;
+    border: 0.5px;
+    background: rgb(255, 88, 88);
+    margin-top: 7rem;
+}
+
+.resultados{
+    position: relative;
+    top: 4rem;
+    left: 24rem;
+    font-size: 1.5rem;
+}

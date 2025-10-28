@@ -1,4 +1,4 @@
-header {
+.header {
     position: fixed;
     top: 0;
     left: 0;
@@ -8,15 +8,39 @@ header {
     color: white;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-end;
+    padding: 0 20px;
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
     z-index: 1000;
     font-family: Arial, sans-serif;
+    box-sizing: border-box;
 }
 
-header h1 {
+.header h1 {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
     margin: 0;
     font-size: 1.8em;
+}
+
+.header form {
+    margin: 0;
+}
+
+.header button {
+    background: #f2f2f2;
+    color: #8B0000;
+    border: none;
+    padding: 8px 20px;
+    font-size: 1em;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: 0.2s;
+}
+
+.header button:hover {
+    background-color: #dddddd;
 }
 
 footer {
@@ -31,10 +55,6 @@ footer {
     align-items: center;
     justify-content: center;
     box-shadow: 0 -4px 6px rgba(0,0,0,0.1);
-    font-family: Arial, sans-serif;
-}
-
-footer p {
-    margin: 0;
     font-size: 0.9em;
+    z-index: 1000;
 }

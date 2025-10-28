@@ -10,7 +10,6 @@
 <img src="/TPprogramacionWebII/{{pregunta.imagen}}" alt="imagen de la pregunta" class="pregunta_imagen">
 <p>{{pregunta.descripcion}}</p>
 
-<!-- Formulario que se envía al hacer click en cualquier botón -->
 <form id="respuestaForm" action="/TPprogramacionWebII/index.php?controller=Game&method=responder" method="POST">
     <input type="hidden" name="idPregunta" value="{{pregunta.id}}">
     <input type="hidden" name="idRespuesta" id="idRespuesta">
@@ -22,7 +21,7 @@
     {{/respuestas}}
 </div>
 
-<script src="public/style/js/dinamicStyle.js"></script>
+<script src="public/js/dinamicStyle.js"></script>
 
 </body>
 </html>

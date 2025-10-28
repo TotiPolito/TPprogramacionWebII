@@ -10,6 +10,9 @@ class HomeController
 
     public function Game()
     {
-        $this->renderer->render("home");
+        $data = [
+            "logueado" => isset($_SESSION["usuario"])
+        ];
+        $this->renderer->render("home", $data);
     }
 }
