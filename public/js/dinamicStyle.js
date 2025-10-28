@@ -5,3 +5,9 @@ boton.addEventListener('click', function() {
 
     popUp.style.display = 'flex';
 });
+
+function enviarRespuesta(idRespuesta) {
+    // Seteamos la respuesta seleccionada y enviamos el formulario
+    document.getElementById('idRespuesta').value = idRespuesta;
+    document.getElementById('respuestaForm').submit();
+}
