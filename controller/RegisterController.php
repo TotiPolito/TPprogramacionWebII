@@ -42,6 +42,11 @@ class RegisterController
             return;
         }
 
+        if (!is_numeric($data["anio_nacimiento"]) || $data["anio_nacimiento"] <= 0) {
+            $this->renderer->render("register", ["error" => "El año de nacimiento no puede ser negativo"]);
+            return;
+        }
+
         if ($data["password"] !== $data["repassword"]) {
             $this->renderer->render("register", ["error" => "Las contraseñas no coinciden"]);
             return;

@@ -35,7 +35,8 @@ class LoginController
 
 
     public function home() {
-        echo $this->renderer->render("home");
+        header("Location: /TPprogramacionWebII/index.php?controller=Home&method=Game");
+        exit;
     }
 
     public function logout()

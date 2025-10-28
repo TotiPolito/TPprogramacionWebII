@@ -10,6 +10,6 @@ class HomeController
 
     public function Game()
     {
-        $this->renderer->render("game");
+        $this->renderer->render("home");
     }
 }

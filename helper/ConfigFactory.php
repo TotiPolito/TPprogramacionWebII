@@ -6,6 +6,7 @@ include_once(__DIR__ . "/MustacheRenderer.php");
 include_once(__DIR__ . "/../controller/LoginController.php");
 include_once(__DIR__ . "/../controller/RegisterController.php");
 include_once(__DIR__ . "/../controller/IndexController.php");
+include_once(__DIR__ . "/../controller/HomeController.php");
 include_once(__DIR__ . "/../controller/GameController.php");
 
 include_once(__DIR__ . "/../model/LoginModel.php");
@@ -38,7 +39,7 @@ class ConfigFactory
 
         $this->objetos["router"] = new NewRouter($this, "LoginController", "mostrarLogin");
         $this->objetos["LoginController"] = new LoginController(
-            new LoginModel($this->conexion->getConexion()),
+            new LoginModel($this->conexion),
             $this->renderer
         );
 
@@ -48,6 +49,8 @@ class ConfigFactory
         );
 
         $this->objetos["IndexController"] = new IndexController($this->renderer);
+
+        $this->objetos["HomeController"] = new HomeController($this->renderer);
 
         $this->objetos["GameController"] = new GameController(
             $this->renderer,
