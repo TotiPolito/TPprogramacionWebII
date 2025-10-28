@@ -12,10 +12,6 @@ class GameController
 
     public function jugar()
     {
-        if (session_status() === PHP_SESSION_NONE) {
-            session_start();
-        }
-
         if (!isset($_SESSION['preguntas_vistas'])) $_SESSION['preguntas_vistas'] = [];
         if (!isset($_SESSION['aciertos'])) $_SESSION['aciertos'] = 0;
         if (!isset($_SESSION['num_preguntas'])) $_SESSION['num_preguntas'] = 0;
@@ -47,10 +43,6 @@ class GameController
 
     public function responder()
     {
-        if (session_status() === PHP_SESSION_NONE) {
-            session_start();
-        }
-
         $idRespuesta = $_POST['idRespuesta'];
 
         $resultado = $this->model->verificarRespuesta($idRespuesta);
