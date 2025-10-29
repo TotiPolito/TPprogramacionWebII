@@ -31,6 +31,17 @@
     <label>Ciudad:</label>
     <input type="text" name="ciudad">
 
+    <h3>Seleccioná tu ubicación en el mapa:</h3>
+    <div id="map" style="height: 400px; width: 100%; border-radius: 8px; margin-bottom: 10px;"></div>
+
+    <input type="hidden" name="latitud" id="latitud">
+    <input type="hidden" name="longitud" id="longitud">
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="/TPprogramacionWebII/public/js/mapa.js"></script>
+
+
     <label>Correo electrónico:</label>
     <input type="email" name="mail">
 

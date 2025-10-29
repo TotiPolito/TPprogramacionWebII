@@ -30,6 +30,8 @@ class RegisterController
             "sexo" => $_POST["sexo"] ?? "",
             "pais" => $_POST["pais"] ?? "",
             "ciudad" => $_POST["ciudad"] ?? "",
+            "latitud" => $_POST["latitud"] ?? null,
+            "longitud" => $_POST["longitud"] ?? null,
             "mail" => $_POST["mail"] ?? "",
             "usuario" => $_POST["usuario"] ?? "",
             "password" => $_POST["password"] ?? "",
@@ -37,10 +39,15 @@ class RegisterController
             "foto_perfil" => $_FILES["foto_perfil"]["name"] ?? null
         ];
 
-        if (in_array("", [$data["nombre_completo"], $data["anio_nacimiento"], $data["sexo"], $data["pais"], $data["ciudad"], $data["mail"], $data["usuario"], $data["password"], $data["repassword"]])) {
+        if (in_array("", [
+            $data["nombre_completo"], $data["anio_nacimiento"], $data["sexo"],
+            $data["pais"], $data["ciudad"], $data["mail"],
+            $data["usuario"], $data["password"], $data["repassword"]
+        ])) {
             $this->renderer->render("register", ["error" => "Todos los campos son obligatorios"]);
             return;
         }
+
 
         if (!is_numeric($data["anio_nacimiento"]) || $data["anio_nacimiento"] <= 0) {
             $this->renderer->render("register", ["error" => "El año de nacimiento no puede ser negativo"]);
@@ -63,7 +70,7 @@ class RegisterController
         }
 
         if ($data["foto_perfil"]) {
-            $rutaDestino = "imagenes/" . basename($data["foto_perfil"]);
+            $rutaDestino = "public/imagenes/" . basename($data["foto_perfil"]);
             move_uploaded_file($_FILES["foto_perfil"]["tmp_name"], $rutaDestino);
             $data["foto_perfil"] = $rutaDestino;
         }
@@ -74,5 +81,4 @@ class RegisterController
         exit;
     }
 }
-
 ?>

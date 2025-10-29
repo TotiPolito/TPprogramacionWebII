@@ -8,7 +8,6 @@ class RegisterModel
     public function __construct()
     {
         $this->conexion = MyConexion::getInstance()->getConexion();
-        $this->conexion->select_db("preguntados");
     }
 
     public function usuarioExiste($usuario)
@@ -32,25 +31,28 @@ class RegisterModel
     public function crearUsuario($data)
     {
         $query = "INSERT INTO usuarios 
-                  (nombre_completo, anio_nacimiento, sexo, pais, ciudad, mail, usuario, password, foto_perfil)
-                  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                  (nombre_completo, anio_nacimiento, sexo, pais, ciudad, latitud, longitud, mail, usuario, password, foto_perfil)
+                  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         $stmt = $this->conexion->prepare($query);
 
         $passwordHash = password_hash($data["password"], PASSWORD_BCRYPT);
 
         $stmt->bind_param(
-            "sisssssss",
+            "sisssddssss",
             $data["nombre_completo"],
             $data["anio_nacimiento"],
             $data["sexo"],
             $data["pais"],
             $data["ciudad"],
+            $data["latitud"],
+            $data["longitud"],
             $data["mail"],
             $data["usuario"],
             $passwordHash,
             $data["foto_perfil"]
         );
+
         $stmt->execute();
     }
 }

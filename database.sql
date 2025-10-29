@@ -3,6 +3,7 @@ USE preguntados;
 
 DROP TABLE IF EXISTS usuarios;
 
+
 CREATE TABLE usuarios (
                           id INT AUTO_INCREMENT PRIMARY KEY,
                           nombre_completo VARCHAR(100) NOT NULL,
@@ -161,7 +162,6 @@ Values
     (18, 'Walt Disney', true),
     (18, 'Elizabeth Taylor', false);
 
-
-
-
-
+ALTER TABLE usuarios
+    ADD COLUMN latitud DOUBLE NULL,
+ADD COLUMN longitud DOUBLE NULL;
