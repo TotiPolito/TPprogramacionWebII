@@ -7,7 +7,7 @@
 <body>
 
 <h2>Categoría: {{categoria}}</h2>
-<img src="/TPprogramacionWebII/{{pregunta.imagen}}" alt="imagen de la pregunta" class="pregunta_imagen">
+<img src="public/{{pregunta.imagen}}" alt="imagen de la pregunta" class="pregunta_imagen">
 <p>{{pregunta.descripcion}}</p>
 
 <form id="respuestaForm" action="/TPprogramacionWebII/index.php?controller=Game&method=responder" method="POST">
