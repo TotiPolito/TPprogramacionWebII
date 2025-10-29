@@ -18,6 +18,10 @@ class MyConexion
         return $this->conexion->query($sql);
     }
 
+    public function prepare($sql) {
+        return $this->conexion->prepare($sql);
+    }
+
     public static function getInstance($server = "localhost", $user = "root", $pass = "", $database = "preguntados")
     {
         if (self::$instance === null) {

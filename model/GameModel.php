@@ -37,4 +37,13 @@ class GameModel
         $sql = "SELECT estado FROM respuestas WHERE id = $idRespuesta";
         return $this->conexion->query($sql)->fetch_assoc();
     }
+
+    public function guardarPuntaje($idUsuario, $aciertos)
+    {
+        $sql = "UPDATE usuarios SET puntaje = puntaje + ? WHERE id = ?";
+        $stmt = $this->conexion->prepare($sql);
+        $stmt->bind_param("ii", $aciertos, $idUsuario);
+        $stmt->execute();
+        $stmt->close();
+    }
 }

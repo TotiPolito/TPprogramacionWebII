@@ -26,10 +26,10 @@ class LoginController
         $resultado = $this->model->getUserWith($_POST["usuario"], $_POST["password"]);
 
         if ($resultado) {
-            $_SESSION["usuario"] = $resultado["usuario"];
+            $_SESSION["usuario"] = $resultado;
             $this->home();
         } else {
-            $this->renderer->render("login", ["error" => "Usuario o contraseña incorrecta"]);
+            $this->renderer->render("login", ["error" => "Usuario no validado o contraseña incorrecta"]);
         }
     }
 

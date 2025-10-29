@@ -8,6 +8,7 @@ include_once(__DIR__ . "/../controller/RegisterController.php");
 include_once(__DIR__ . "/../controller/IndexController.php");
 include_once(__DIR__ . "/../controller/HomeController.php");
 include_once(__DIR__ . "/../controller/GameController.php");
+include_once(__DIR__ . "/../controller/ValidarController.php");
 
 include_once(__DIR__ . "/../model/LoginModel.php");
 include_once(__DIR__ . "/../model/RegisterModel.php");
@@ -55,6 +56,11 @@ class ConfigFactory
         $this->objetos["GameController"] = new GameController(
             $this->renderer,
             new GameModel($this->conexion)
+        );
+
+        $this->objetos["ValidarController"] = new ValidarController(
+            new RegisterModel($this->conexion),
+            $this->renderer
         );
 
     }

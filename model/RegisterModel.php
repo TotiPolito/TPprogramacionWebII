@@ -1,5 +1,11 @@
 <?php
 require_once("helper/MyConexion.php");
+require_once __DIR__ . ("/../vendor/phpmailer/src/PHPMailer.php");
+require_once __DIR__ . ("/../vendor/phpmailer/src/SMTP.php");
+require_once __DIR__ . ("/../vendor/phpmailer/src/Exception.php");
+
+use PHPmailer\PHPMailer\PHPMailer;
+use PHPmailer\PHPMailer\Exception;
 
 class RegisterModel
 {
@@ -30,16 +36,19 @@ class RegisterModel
 
     public function crearUsuario($data)
     {
+
+        $token = bin2hex(random_bytes(32));
+
         $query = "INSERT INTO usuarios 
-                  (nombre_completo, anio_nacimiento, sexo, pais, ciudad, latitud, longitud, mail, usuario, password, foto_perfil)
-                  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                  (nombre_completo, anio_nacimiento, sexo, pais, ciudad, latitud, longitud, mail, usuario, password, foto_perfil, token_validacion)
+                  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         $stmt = $this->conexion->prepare($query);
 
         $passwordHash = password_hash($data["password"], PASSWORD_BCRYPT);
 
         $stmt->bind_param(
-            "sisssddssss",
+            "sisssddsssss",
             $data["nombre_completo"],
             $data["anio_nacimiento"],
             $data["sexo"],
@@ -50,10 +59,53 @@ class RegisterModel
             $data["mail"],
             $data["usuario"],
             $passwordHash,
-            $data["foto_perfil"]
+            $data["foto_perfil"],
+            $token
         );
 
         $stmt->execute();
+
+        $this->enviarMailValidacion($data["mail"], $data["usuario"], $token);
+    }
+
+    private function enviarMailValidacion($mail, $usuario, $token) {
+        $mailSender = new PHPMailer(true);
+
+        try {
+            $mailSender->IsSMTP();
+            $mailSender->Host = "smtp.gmail.com";
+            $mailSender->SMTPAuth = true;
+            $mailSender->Username = 'casanovarocio5@gmail.com';
+            $mailSender->Password = 'ssxd pflu savx vkbd';
+            $mailSender->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;;
+            $mailSender->Port = 587;
+
+            $mailSender->setFrom('casanovarocio5@gmail.com', 'Juego Web');
+            $mailSender->addAddress($mail, $usuario);
+            $mailSender->isHTML(true);
+            $mailSender->Subject = 'Validacion de cuenta';
+            $mailSender->Body = "
+            <p>Hola <strong>$usuario</strong>,</p>
+            <p>Gracias por registrarte. Para activar tu cuenta, hacé clic en el siguiente enlace:</p>
+            <p><a href='http://localhost/TPprogramacionWebII/index.php?controller=Validar&method=validarCuenta&token=$token'>
+                Activar cuenta
+            </a></p>
+            <p>Si no te registraste en nuestro sitio, podés ignorar este mensaje.</p>
+        ";
+
+            $mailSender->send();
+        } catch (Exception $e) {
+            error_log("Error enviando correo de validación: " . $mailSender->ErrorInfo);
+        }
+    }
+
+    public function activarCuenta($token) {
+        $query = "UPDATE usuarios SET validado = TRUE, token_validacion = NULL WHERE token_validacion = ?";
+        $stmt = $this->conexion->prepare($query);
+        $stmt->bind_param("s", $token);
+        $stmt->execute();
+
+        return $stmt->affected_rows > 0;
     }
 }
 ?>

@@ -165,3 +165,9 @@ Values
 ALTER TABLE usuarios
     ADD COLUMN latitud DOUBLE NULL,
 ADD COLUMN longitud DOUBLE NULL;
+
+ALTER TABLE usuarios
+ADD COLUMN token_validacion VARCHAR(64) UNIQUE;
+
+ALTER TABLE usuarios
+    ADD COLUMN puntaje INT DEFAULT 0;

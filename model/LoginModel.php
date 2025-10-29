@@ -12,7 +12,7 @@ class LoginModel
 
     public function getUserWith($user, $password)
     {
-        $stmt = $this->conexion->getConexion()->prepare("SELECT * FROM usuarios WHERE usuario = ?");
+        $stmt = $this->conexion->getConexion()->prepare("SELECT * FROM usuarios WHERE usuario = ? AND validado = 1");
         $stmt->bind_param("s", $user);
         $stmt->execute();
 

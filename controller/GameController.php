@@ -57,6 +57,10 @@ class GameController
         if ($_SESSION['num_preguntas'] >= 10) {
             $totalAciertos = $_SESSION['aciertos'];
 
+            if (isset($_SESSION['usuario']['id'])) {
+                $this->model->guardarPuntaje($_SESSION['usuario']['id'], $totalAciertos);
+            }
+
             $_SESSION['preguntas_vistas'] = [];
             $_SESSION['aciertos'] = 0;
             $_SESSION['num_preguntas'] = 0;
