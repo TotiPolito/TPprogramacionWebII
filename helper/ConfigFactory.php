@@ -12,6 +12,7 @@ include_once(__DIR__ . "/../controller/ValidarController.php");
 
 include_once(__DIR__ . "/../model/LoginModel.php");
 include_once(__DIR__ . "/../model/RegisterModel.php");
+include_once(__DIR__ . "/../model/HomeModel.php");
 include_once(__DIR__ . "/../model/GameModel.php");
 
 include_once(__DIR__ . "/../vendor/mustache/src/Mustache/Autoloader.php");
@@ -51,7 +52,10 @@ class ConfigFactory
 
         $this->objetos["IndexController"] = new IndexController($this->renderer);
 
-        $this->objetos["HomeController"] = new HomeController($this->renderer);
+        $this->objetos["HomeController"] = new HomeController(
+            $this->renderer,
+        new HomeModel($this->conexion)
+        );
 
         $this->objetos["GameController"] = new GameController(
             $this->renderer,

@@ -1,9 +1,12 @@
 const boton = document.querySelector('.btn_js');
 const popUp = document.querySelector('.select_box');
+const titulo = document.querySelector('h2');
 
 boton.addEventListener('click', function() {
 
     popUp.style.display = 'flex';
+    boton.style.display = 'none';
+    titulo.style.display = 'none';
 });
 
 function enviarRespuesta(idRespuesta, botonSeleccionado) {
