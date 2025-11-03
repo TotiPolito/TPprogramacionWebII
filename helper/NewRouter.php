@@ -46,7 +46,6 @@ class NewRouter
     public function getControllerName($controllerName)
     {
         if ($controllerName) {
-            // elimina extensión .php si la hay
             $controllerName = preg_replace('/\.php$/', '', $controllerName);
             return ucfirst($controllerName) . 'Controller';
         } else {

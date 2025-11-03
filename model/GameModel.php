@@ -17,9 +17,12 @@ class GameModel
             $excluir = "AND p.id NOT IN ($ids)";
         }
 
-        $sql = "SELECT p.*, c.descripcion AS nombre_categoria FROM preguntas p JOIN categorias c ON p.categoria = c.id
-            WHERE 1=1 $excluir
-            ORDER BY RAND() LIMIT 1";
+        $sql = "SELECT p.*, c.descripcion AS nombre_categoria 
+                FROM preguntas p 
+                JOIN categorias c ON p.categoria = c.id
+                WHERE 1=1 $excluir
+                ORDER BY RAND() 
+                LIMIT 1";
 
         $resultado = $this->conexion->query($sql);
         return $resultado->fetch_assoc();
@@ -36,14 +39,5 @@ class GameModel
     {
         $sql = "SELECT estado FROM respuestas WHERE id = $idRespuesta";
         return $this->conexion->query($sql)->fetch_assoc();
-    }
-
-    public function guardarPuntaje($idUsuario, $aciertos)
-    {
-        $sql = "UPDATE usuarios SET puntaje = puntaje + ? WHERE id = ?";
-        $stmt = $this->conexion->prepare($sql);
-        $stmt->bind_param("ii", $aciertos, $idUsuario);
-        $stmt->execute();
-        $stmt->close();
     }
 }

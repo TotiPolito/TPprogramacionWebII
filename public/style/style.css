@@ -127,6 +127,7 @@ h2 {
     height: 3rem;
     width: 6rem;
     position: relative;
+    cursor: pointer;
 }
 
 .btn_primary:hover {

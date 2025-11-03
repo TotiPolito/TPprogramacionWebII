@@ -7,7 +7,12 @@
     <link rel="stylesheet" href="public/style/headerFooter.css">
 </head>
 <header class="header">
-    <h1>Preguntados</h1>
+    {{#noLink}}
+        <h1>Preguntados</h1>
+    {{/noLink}}
+    {{^noLink}}
+        <h1><a href="/TPprogramacionWebII/index.php?controller=Home&method=Game">Preguntados</a></h1>
+    {{/noLink}}
     {{#logueado}}
         <form action="/TPprogramacionWebII/index.php?controller=Login&method=logout" method="post">
             <button type="submit">Cerrar sesión</button>

@@ -3,11 +3,11 @@
 class HomeController
 {
     private $renderer;
-    private $homeModel;
+    private $model;
 
-    public function __construct($renderer, $homeModel) {
+    public function __construct($renderer, $model) {
         $this->renderer = $renderer;
-        $this->homeModel = $homeModel;
+        $this->model = $model;
     }
 
     public function Game()
@@ -19,7 +19,7 @@ class HomeController
 
         $idUsuario = $_SESSION["usuario"]["id"];
 
-        $usuarioActualizado = $this->homeModel->obtenerUsuarioPorId($idUsuario);
+        $usuarioActualizado = $this->model->obtenerUsuarioPorId($idUsuario);
 
         $_SESSION["usuario"] = $usuarioActualizado;
 

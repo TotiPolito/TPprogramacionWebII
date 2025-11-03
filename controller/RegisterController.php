@@ -19,7 +19,7 @@ class RegisterController
 
     public function registerForm()
     {
-        $this->renderer->render("register");
+        $this->renderer->render("register", ["noLink" => true]);
     }
 
     public function register()

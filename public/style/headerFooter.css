@@ -24,6 +24,11 @@
     font-size: 1.8em;
 }
 
+.header h1 a {
+    color: white;
+    text-decoration: none;
+}
+
 .header form {
     margin: 0;
 }

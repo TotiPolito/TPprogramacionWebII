@@ -171,3 +171,11 @@ ADD COLUMN token_validacion VARCHAR(64) UNIQUE;
 
 ALTER TABLE usuarios
     ADD COLUMN puntaje INT DEFAULT 0;
+
+CREATE TABLE partida (
+                         id INT AUTO_INCREMENT PRIMARY KEY,
+                         id_usuario INT,
+                         puntaje INT,
+                         fecha DATETIME,
+                         FOREIGN KEY (id_usuario) REFERENCES usuarios(id)
+);

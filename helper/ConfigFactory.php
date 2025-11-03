@@ -9,11 +9,15 @@ include_once(__DIR__ . "/../controller/IndexController.php");
 include_once(__DIR__ . "/../controller/HomeController.php");
 include_once(__DIR__ . "/../controller/GameController.php");
 include_once(__DIR__ . "/../controller/ValidarController.php");
+include_once(__DIR__ . "/../controller/RankingController.php");
+include_once(__DIR__ . "/../controller/PartidasController.php");
 
 include_once(__DIR__ . "/../model/LoginModel.php");
 include_once(__DIR__ . "/../model/RegisterModel.php");
 include_once(__DIR__ . "/../model/HomeModel.php");
 include_once(__DIR__ . "/../model/GameModel.php");
+include_once(__DIR__ . "/../model/RankingModel.php");
+include_once(__DIR__ . "/../model/PartidasModel.php");
 
 include_once(__DIR__ . "/../vendor/mustache/src/Mustache/Autoloader.php");
 
@@ -40,6 +44,7 @@ class ConfigFactory
         $this->renderer = new MustacheRenderer(__DIR__ . "/../vista");
 
         $this->objetos["router"] = new NewRouter($this, "LoginController", "mostrarLogin");
+
         $this->objetos["LoginController"] = new LoginController(
             new LoginModel($this->conexion),
             $this->renderer
@@ -57,9 +62,15 @@ class ConfigFactory
         new HomeModel($this->conexion)
         );
 
+        $this->objetos["PartidasController"] = new PartidasController(
+            $this->renderer,
+            new PartidasModel($this->conexion)
+        );
+
         $this->objetos["GameController"] = new GameController(
             $this->renderer,
-            new GameModel($this->conexion)
+            new GameModel($this->conexion),
+            new PartidasModel($this->conexion)
         );
 
         $this->objetos["ValidarController"] = new ValidarController(
@@ -67,6 +78,10 @@ class ConfigFactory
             $this->renderer
         );
 
+        $this->objetos["RankingController"] = new RankingController(
+            $this->renderer,
+            new RankingModel($this->conexion)
+        );
     }
 
 

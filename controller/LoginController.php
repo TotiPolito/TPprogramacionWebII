@@ -18,7 +18,7 @@ class LoginController
 
     public function loginForm()
     {
-        $this->renderer->render("login");
+        $this->renderer->render("login", ["noLink" => true]);
     }
 
     public function login()
@@ -47,7 +47,7 @@ class LoginController
 
     public function mostrarLogin()
     {
-        echo $this->renderer->render("login", []);
+        echo $this->renderer->render("login");
     }
 
     public function redirectToIndex()

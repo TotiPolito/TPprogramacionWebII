@@ -4,10 +4,12 @@ class GameController
 {
     private $renderer;
     private $model;
+    private $partidasModel;
 
-    public function __construct($renderer, $model) {
+    public function __construct($renderer, $model, $partidasModel) {
         $this->renderer = $renderer;
         $this->model = $model;
+        $this->partidasModel = $partidasModel;
     }
 
     public function jugar()
@@ -44,21 +46,23 @@ class GameController
     public function responder()
     {
         $idRespuesta = $_POST['idRespuesta'];
-
         $resultado = $this->model->verificarRespuesta($idRespuesta);
 
         if (!isset($_SESSION['aciertos'])) $_SESSION['aciertos'] = 0;
-        if (!isset($_SESSION['num_preguntas'])) $_SESSION['num_preguntas'] = 0;
 
-        if ($resultado['estado'] == 1) $_SESSION['aciertos']++;
+        if ($resultado['estado'] == 1) {
+            $_SESSION['aciertos']++;
+            $_SESSION['num_preguntas'] = ($_SESSION['num_preguntas'] ?? 0) + 1;
 
-        $_SESSION['num_preguntas']++;
-
-        if ($_SESSION['num_preguntas'] >= 10) {
+            header("Location: /TPprogramacionWebII/index.php?controller=Game&method=jugar");
+            exit;
+        } else {
             $totalAciertos = $_SESSION['aciertos'];
 
             if (isset($_SESSION['usuario']['id'])) {
-                $this->model->guardarPuntaje($_SESSION['usuario']['id'], $totalAciertos);
+                $idUsuario = $_SESSION['usuario']['id'];
+                $this->partidasModel->guardarPartida($idUsuario, $totalAciertos);
+                $this->partidasModel->actualizarPuntajeUsuario($idUsuario, $totalAciertos);
             }
 
             $_SESSION['preguntas_vistas'] = [];
@@ -66,12 +70,10 @@ class GameController
             $_SESSION['num_preguntas'] = 0;
 
             echo $this->renderer->render("fin", [
-                'aciertos' => $totalAciertos
+                'aciertos' => $totalAciertos,
+                'mensaje' => '¡Perdiste!'
             ]);
             exit;
         }
-
-        header("Location: /TPprogramacionWebII/index.php?controller=Game&method=jugar");
-        exit;
     }
 }
