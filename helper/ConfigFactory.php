@@ -11,6 +11,7 @@ include_once(__DIR__ . "/../controller/GameController.php");
 include_once(__DIR__ . "/../controller/ValidarController.php");
 include_once(__DIR__ . "/../controller/RankingController.php");
 include_once(__DIR__ . "/../controller/PartidasController.php");
+include_once(__DIR__ . "/../controller/PerfilController.php");
 
 include_once(__DIR__ . "/../model/LoginModel.php");
 include_once(__DIR__ . "/../model/RegisterModel.php");
@@ -18,6 +19,7 @@ include_once(__DIR__ . "/../model/HomeModel.php");
 include_once(__DIR__ . "/../model/GameModel.php");
 include_once(__DIR__ . "/../model/RankingModel.php");
 include_once(__DIR__ . "/../model/PartidasModel.php");
+include_once(__DIR__ . "/../model/PerfilModel.php");
 
 include_once(__DIR__ . "/../vendor/mustache/src/Mustache/Autoloader.php");
 
@@ -81,6 +83,11 @@ class ConfigFactory
         $this->objetos["RankingController"] = new RankingController(
             $this->renderer,
             new RankingModel($this->conexion)
+        );
+
+        $this->objetos["PerfilController"] = new PerfilController(
+            $this->renderer,
+            new PerfilModel($this->conexion)
         );
     }
 

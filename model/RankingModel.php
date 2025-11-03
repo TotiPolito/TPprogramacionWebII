@@ -9,7 +9,7 @@ class RankingModel{
     }
 
     public function obtenerRanking(){
-        $sql = "SELECT DISTINCT usuario, puntaje 
+        $sql = "SELECT DISTINCT id, usuario, puntaje 
                 FROM usuarios
                 ORDER BY puntaje DESC
                 LIMIT 10";

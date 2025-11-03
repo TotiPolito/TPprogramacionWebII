@@ -24,7 +24,9 @@
         {{#ranking}}
             <tr>
                 <td data-label="Posición">{{posicion}}</td>
-                <td data-label="Usuario">{{usuario}}</td>
+                <td data-label="Usuario">
+                    <a href="/TPprogramacionWebII/index.php?controller=Perfil&method=mostrarPerfil&id={{id}}">{{usuario}}</a>
+                </td>
                 <td data-label="Puntaje">{{puntaje}}</td>
             </tr>
         {{/ranking}}
