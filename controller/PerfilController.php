@@ -1,4 +1,5 @@
 <?php
+require_once("helper/QrGenerator.php");
 
 class PerfilController {
 
@@ -22,7 +23,15 @@ class PerfilController {
         $perfil = $this->model->obtenerPerfilPorId($idJugador);
 
         if ($perfil) {
-            $this->renderer->render("perfil", ["perfil" => $perfil]);
+
+            $urlPerfil = "http://localhost/TPprogramacionWebII/index.php?controller=Perfil&method=mostrarPerfil&id=" . $idJugador;
+            $rutaQR = "public/imagenes/qrs/jugador_" . $idJugador . ".png";
+            QrGenerator::generarQR($urlPerfil, $rutaQR);
+
+            $this->renderer->render("perfil", [
+                "perfil" => $perfil,
+                "qr" => $rutaQR
+            ]);
         } else {
             echo "Jugador no encontrado";
         }

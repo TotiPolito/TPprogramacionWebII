@@ -11,13 +11,23 @@ class PerfilModel {
 
     public function obtenerPerfilPorId($idJugador)
     {
-        $sql = "SELECT u.nombre_completo, u.puntaje, COUNT(p.id) AS partidas, u.latitud, u.longitud
+        $sql = "SELECT 
+                    u.id,
+                    u.nombre_completo, 
+                    u.puntaje, 
+                    COUNT(p.id) AS partidas, 
+                    u.latitud, 
+                    u.longitud,
+                    u.qr AS qr
                 FROM usuarios u
                 LEFT JOIN partida p ON u.id = p.id_usuario
-                WHERE u.id = $idJugador
+                WHERE u.id = ?
                 GROUP BY u.id";
 
-        $resultado = $this->conexion->query($sql);
-        return $resultado ? $resultado->fetch_assoc() : null;
+        $stmt = $this->conexion->prepare($sql);
+        $stmt->bind_param("i", $idJugador);
+        $stmt->execute();
+        $resultado = $stmt->get_result();
+        return $resultado->fetch_assoc();
     }
 }

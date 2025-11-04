@@ -1,16 +1,17 @@
 <html>
 <head>
     <title>Home</title>
-    <link rel="stylesheet" href="public/style/style.css">
-    <link rel="stylesheet" href="public/style/game.css">
+    <link rel="stylesheet" href="{{BASE_URL}}public/style/style.css">
+    <link rel="stylesheet" href="{{BASE_URL}}public/style/game.css">
 </head>
 <body>
 <main class="contentBox">
-<h2>¡Juego terminado!</h2>
-<p class="resultados">Has acertado {{aciertos}} preguntas.</p>
+    <h2>¡Juego terminado!</h2>
+    <p class="resultados">Has acertado {{aciertos}} preguntas.</p>
+
     <div class="btns_fin">
-<a href="/TPprogramacionWebII/index.php?controller=Game&method=jugar" class="btn_secondary">Jugar de nuevo</a>
-<a href="/TPprogramacionWebII/index.php?controller=login&method=home" class="btn_secondary">Volver al home</a>
+        <a href="{{BASE_URL}}index.php?controller=Game&method=jugar" class="btn_secondary">Jugar de nuevo</a>
+        <a href="{{BASE_URL}}index.php?controller=login&method=home" class="btn_secondary">Volver al home</a>
     </div>
 </main>
 </body>

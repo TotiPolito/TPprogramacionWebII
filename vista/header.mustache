@@ -4,17 +4,17 @@
     <meta charset="utf-8">
     <title>Preguntados</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="public/style/headerFooter.css">
+    <link rel="stylesheet" href="{{BASE_URL}}public/style/headerFooter.css">
 </head>
 <header class="header">
     {{#noLink}}
         <h1>Preguntados</h1>
     {{/noLink}}
     {{^noLink}}
-        <h1><a href="/TPprogramacionWebII/index.php?controller=Home&method=Game">Preguntados</a></h1>
+        <h1><a href="{{BASE_URL}}index.php?controller=Home&method=Game">Preguntados</a></h1>
     {{/noLink}}
     {{#logueado}}
-        <form action="/TPprogramacionWebII/index.php?controller=Login&method=logout" method="post">
+        <form action="{{BASE_URL}}index.php?controller=Login&method=logout" method="post">
             <button type="submit">Cerrar sesión</button>
         </form>
     {{/logueado}}
