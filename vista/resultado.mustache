@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resultado de la Respuesta</title>
+    <link rel="stylesheet" href="{{BASE_URL}}/public/style/style.css">
+    <link rel="stylesheet" href="{{BASE_URL}}/public/style/headerFooter.css">
+</head>
+<body>
+<h2>Resultado de la Pregunta</h2>
+
+<p><strong>Pregunta:</strong> {{pregunta.descripcion}}</p>
+
+{{#respuestaCorrecta}}
+    <p>¡Correcto! La respuesta es correcta.</p>
+    <a href="/TPprogramacionWebII/index.php?controller=Game&method=jugar">Siguiente pregunta</a>
+{{/respuestaCorrecta}}
+
+{{^respuestaCorrecta}}
+    <p>Incorrecto. La respuesta correcta era:</p>
+    <ul>
+        {{#respuestas}}
+            {{#estado}}
+                <li>{{descripcion}} (Correcta)</li>
+            {{/estado}}
+        {{/respuestas}}
+    </ul>
+    <a href="/TPprogramacionWebII/index.php?controller=Home&method=Game">Volver al inicio</a>
+{{/respuestaCorrecta}}
+</body>
+</html>

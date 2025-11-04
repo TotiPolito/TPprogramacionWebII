@@ -40,4 +40,15 @@ class GameModel
         $sql = "SELECT estado FROM respuestas WHERE id = $idRespuesta";
         return $this->conexion->query($sql)->fetch_assoc();
     }
+
+    public function obtenerPreguntaPorId($idPregunta)
+    {
+        $sql = "SELECT p.*, c.descripcion AS nombre_categoria 
+                FROM preguntas p 
+                JOIN categorias c ON p.categoria = c.id
+                WHERE p.id = $idPregunta";
+
+        $resultado = $this->conexion->query($sql);
+        return $resultado->fetch_assoc();
+    }
 }

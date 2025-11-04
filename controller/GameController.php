@@ -47,16 +47,15 @@ class GameController
     {
         $idRespuesta = $_POST['idRespuesta'];
         $resultado = $this->model->verificarRespuesta($idRespuesta);
+        $respuestaCorrecta = $resultado['estado'] == 1;
 
         if (!isset($_SESSION['aciertos'])) $_SESSION['aciertos'] = 0;
 
-        if ($resultado['estado'] == 1) {
+        if($respuestaCorrecta) {
             $_SESSION['aciertos']++;
-            $_SESSION['num_preguntas'] = ($_SESSION['num_preguntas'] ?? 0) + 1;
+        }
 
-            header("Location: /TPprogramacionWebII/index.php?controller=Game&method=jugar");
-            exit;
-        } else {
+        if(!$respuestaCorrecta) {
             $totalAciertos = $_SESSION['aciertos'];
 
             if (isset($_SESSION['usuario']['id'])) {
@@ -69,11 +68,26 @@ class GameController
             $_SESSION['aciertos'] = 0;
             $_SESSION['num_preguntas'] = 0;
 
-            echo $this->renderer->render("fin", [
-                'aciertos' => $totalAciertos,
-                'mensaje' => '¡Perdiste!'
-            ]);
+            header("Location: /TPprogramacionWebII/index.php?controller=Game&method=mostrarResultado&idPregunta=" . $_POST['idPregunta'] . "&correcta=" . ($respuestaCorrecta ? "true" : "false"));
+            echo $this->renderer->render("fin", [ 'aciertos' => $totalAciertos, 'mensaje' => '¡Perdiste!' ]);
             exit;
         }
+        header("Location: /TPprogramacionWebII/index.php?controller=Game&method=mostrarResultado&idPregunta=" . $_POST['idPregunta'] . "&correcta=" . ($respuestaCorrecta ? "true" : "false"));
+        exit;
+        }
+
+    public function mostrarResultado()
+    {
+        $idPregunta = $_GET['idPregunta'];
+        $respuestaCorrecta = $_GET['correcta'] == 'true';
+
+        $pregunta = $this->model->obtenerPreguntaPorId($idPregunta);
+        $respuestas = $this->model->obtenerRespuestas($idPregunta);
+
+        echo $this->renderer->render("resultado", [
+            'pregunta' => $pregunta,
+            'respuestas' => $respuestas,
+            'respuestaCorrecta' => $respuestaCorrecta
+        ]);
     }
 }
