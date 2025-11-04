@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Partidas Jugadas</title>
-    <link rel="stylesheet" href="public/style/style.css">
-    <link rel="stylesheet" href="public/style/partida.css">
+    <link rel="stylesheet" href="{{BASE_URL}}public/style/style.css">
+    <link rel="stylesheet" href="{{BASE_URL}}public/style/partida.css">
 </head>
 <body>
 {{> header }}
@@ -12,22 +12,22 @@
 <main>
     <h2>Partidas Jugadas de {{nombre_completo}}</h2>
 
-        <table>
-            <thead>
+    <table>
+        <thead>
+        <tr>
+            <th>Fecha</th>
+            <th>Puntaje</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{#partidas}}
             <tr>
-                <th>Fecha</th>
-                <th>Puntaje</th>
+                <td data-label="Fecha">{{fecha}}</td>
+                <td data-label="Puntaje">{{puntaje}}</td>
             </tr>
-            </thead>
-            <tbody>
-            {{#partidas}}
-                <tr>
-                    <td data-label="Fecha">{{fecha}}</td>
-                    <td data-label="Puntaje">{{puntaje}}</td>
-                </tr>
-            {{/partidas}}
-            </tbody>
-        </table>
+        {{/partidas}}
+        </tbody>
+    </table>
 
     {{^partidas}}
         <p>No jugaste ninguna partida todavía.</p>

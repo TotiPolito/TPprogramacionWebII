@@ -1,8 +1,11 @@
 CREATE DATABASE IF NOT EXISTS preguntados;
 USE preguntados;
 
+DROP TABLE IF EXISTS partida;
+DROP TABLE IF EXISTS respuestas;
+DROP TABLE IF EXISTS preguntas;
+DROP TABLE IF EXISTS categorias;
 DROP TABLE IF EXISTS usuarios;
-
 
 CREATE TABLE usuarios (
                           id INT AUTO_INCREMENT PRIMARY KEY,
@@ -15,55 +18,59 @@ CREATE TABLE usuarios (
                           usuario VARCHAR(50) NOT NULL UNIQUE,
                           password VARCHAR(100) NOT NULL,
                           foto_perfil VARCHAR(255),
-                          validado BOOLEAN DEFAULT FALSE
+                          validado BOOLEAN DEFAULT FALSE,
+                          latitud DOUBLE NULL,
+                          longitud DOUBLE NULL,
+                          token_validacion VARCHAR(64) UNIQUE,
+                          puntaje INT DEFAULT 0,
+                          qr VARCHAR(255) NULL
 );
 
-DROP TABLE IF EXISTS categorias;
-
-CREATE TABLE categorias(
-                          id INT AUTO_INCREMENT PRIMARY KEY,
-                          descripcion VARCHAR(25)
+CREATE TABLE categorias (
+                            id INT AUTO_INCREMENT PRIMARY KEY,
+                            descripcion VARCHAR(25)
 );
-
-DROP TABLE IF EXISTS preguntas;
 
 CREATE TABLE preguntas (
-                            id tinyint AUTO_INCREMENT PRIMARY KEY,
-                            categoria int,
-                            dificultad VARCHAR(20) NOT NULL,
-                            FOREIGN KEY (categoria) REFERENCES categorias(id)
+                           id TINYINT AUTO_INCREMENT PRIMARY KEY,
+                           categoria INT,
+                           dificultad VARCHAR(20) NOT NULL,
+                           FOREIGN KEY (categoria) REFERENCES categorias(id)
 );
 
 ALTER TABLE preguntas
-    ADD descripcion varchar(200) AFTER dificultad;
+    ADD descripcion VARCHAR(200) AFTER dificultad;
 
 ALTER TABLE preguntas
-    ADD imagen varchar(500) after id;
+    ADD imagen VARCHAR(500) AFTER id;
 
 ALTER TABLE preguntas
     MODIFY COLUMN descripcion VARCHAR(500) AFTER dificultad;
 
-DROP TABLE IF EXISTS respuestas;
-
-CREATE TABLE respuestas(
-                           id INT AUTO_INCREMENT PRIMARY KEY,
-                           idPregunta tinyint,
-                           descripcion VARCHAR(50) NOT NULL,
-                           estado boolean,
-                           FOREIGN KEY (idPregunta) REFERENCES preguntas(id)
+CREATE TABLE respuestas (
+                            id INT AUTO_INCREMENT PRIMARY KEY,
+                            idPregunta TINYINT,
+                            descripcion VARCHAR(500) NOT NULL,
+                            estado BOOLEAN,
+                            FOREIGN KEY (idPregunta) REFERENCES preguntas(id)
 );
 
-ALTER TABLE respuestas
-    MODIFY COLUMN descripcion VARCHAR(500) AFTER idPregunta;
+CREATE TABLE partida (
+                         id INT AUTO_INCREMENT PRIMARY KEY,
+                         id_usuario INT,
+                         puntaje INT,
+                         fecha DATETIME,
+                         FOREIGN KEY (id_usuario) REFERENCES usuarios(id)
+);
 
 insert into categorias(descripcion)
 Values
-('deportes'),
-('historia'),
-('arte'),
-('ciencia'),
-('geografia'),
-('entretenimiento');
+    ('deportes'),
+    ('historia'),
+    ('arte'),
+    ('ciencia'),
+    ('geografia'),
+    ('entretenimiento');
 
 insert into preguntas(imagen, categoria, dificultad, descripcion)
 Values
@@ -161,21 +168,3 @@ Values
     (18, 'Edith Head', false),
     (18, 'Walt Disney', true),
     (18, 'Elizabeth Taylor', false);
-
-ALTER TABLE usuarios
-    ADD COLUMN latitud DOUBLE NULL,
-ADD COLUMN longitud DOUBLE NULL;
-
-ALTER TABLE usuarios
-ADD COLUMN token_validacion VARCHAR(64) UNIQUE;
-
-ALTER TABLE usuarios
-    ADD COLUMN puntaje INT DEFAULT 0;
-
-CREATE TABLE partida (
-                         id INT AUTO_INCREMENT PRIMARY KEY,
-                         id_usuario INT,
-                         puntaje INT,
-                         fecha DATETIME,
-                         FOREIGN KEY (id_usuario) REFERENCES usuarios(id)
-);

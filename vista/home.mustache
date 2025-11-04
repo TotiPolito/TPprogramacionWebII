@@ -1,8 +1,8 @@
 <html>
 <head>
     <title>Home</title>
-    <link rel="stylesheet" href="public/style/style.css">
-    <link rel="stylesheet" href="public/style/headerFooter.css">
+    <link rel="stylesheet" href="{{BASE_URL}}public/style/style.css">
+    <link rel="stylesheet" href="{{BASE_URL}}public/style/headerFooter.css">
 </head>
 <body class="body_home">
 
@@ -11,17 +11,20 @@
 <main class="home_main">
     <h2>{{nombre_completo}} <br> Puntaje: {{puntaje}}</h2>
     <button class="btn_primary btn_js"> Nueva Partida </button>
-    <a id="btnRanking" href="/TPprogramacionWebII/index.php?controller=Ranking&method=mostrar"
+    <a id="btnRanking" href="{{BASE_URL}}index.php?controller=Ranking&method=mostrar"
        class="btn_secondary btn_hover" style="height:3rem; width:6rem; font-size: 15px;">Ver Ranking</a>
-    <a id="btnPartida" href="/TPprogramacionWebII/index.php?controller=Partidas&method=listarPartidas"
+    <a id="btnPartida" href="{{BASE_URL}}index.php?controller=Partidas&method=listarPartidas"
        class="btn_secondary" style="height:3rem; width:6rem; font-size: 15px;">Ver Partidas</a>
+
     <div class="select_box box_js">
         <div class="btns">
-        <button class="btn_secondary disabled" disabled>  Online </button>
-        <a href="/TPprogramacionWebII/index.php?controller=Game&method=jugar" class="btn_secondary btn_hover game_link"> Offline </a>
+            <button class="btn_secondary disabled" disabled>Online</button>
+            <a href="{{BASE_URL}}index.php?controller=Game&method=jugar"
+               class="btn_secondary btn_hover game_link">Offline</a>
         </div>
     </div>
 </main>
-    <script src="public/js/dinamicStyle.js"> </script>
+
+<script src="{{BASE_URL}}public/js/dinamicStyle.js"></script>
 </body>
 </html>

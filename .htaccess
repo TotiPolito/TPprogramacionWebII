@@ -6,7 +6,7 @@ Options -Indexes
 
 <IfModule mod_rewrite.c>
     RewriteEngine On
-    RewriteBase /TPprogramacionWebII/
+    RewriteBase /
 
     RewriteRule ^(public)($|/) - [L,NC]
 

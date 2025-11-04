@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Perfil</title>
     <link rel="stylesheet" href="public/style/style.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 </head>
 <body>
 <h2>{{perfil.nombre_completo}}</h2>
@@ -14,7 +15,15 @@
 <h3>Ubicación en el mapa:</h3>
 <div id="map" style="height: 400px; width: 100%; border-radius: 8px; margin-bottom: 10px;"></div>
 
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<!-- 🧭 Sección del QR -->
+<section style="text-align: center; margin-top: 20px;">
+    <h3>Tu código QR</h3>
+    <img src="{{qr}}" alt="QR del perfil" width="200" height="200"
+         style="border: 1px solid #ccc; border-radius: 8px; padding: 8px;">
+    <p style="margin-top: 8px; color: #555;">Escaneá este código para ver tu perfil desde otro dispositivo.</p>
+</section>
+
+<!-- Leaflet JS -->
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
 <script>
