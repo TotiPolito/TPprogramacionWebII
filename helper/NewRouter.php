@@ -25,8 +25,9 @@ class NewRouter
         $controllerName = $this->getControllerName($controllerName);
         $controller = $this->configFactory->get($controllerName);
 
-        if ($controller === null) {
-            die("Error: El controller '$controllerName' no fue encontrado. Revisa ConfigFactory.php y los includes.");
+        if ($controller == null) {
+            header("location: /");
+            exit;
         }
 
         return $controller;
@@ -34,27 +35,27 @@ class NewRouter
 
     private function executeMethodFromController($controller, $methodName)
     {
-        $methodName = $this->getMethodName($controller, $methodName);
-
-        if (!method_exists($controller, $methodName)) {
-            die("Error: El método '$methodName' no existe en el controller '". get_class($controller) . "'.");
-        }
-
-        call_user_func([$controller, $methodName]);
+        call_user_func(
+            array(
+                $controller,
+                $this->getMethodName($controller, $methodName)
+            )
+        );
     }
 
     public function getControllerName($controllerName)
     {
-        if ($controllerName) {
-            $controllerName = preg_replace('/\.php$/', '', $controllerName);
-            return ucfirst($controllerName) . 'Controller';
-        } else {
-            return $this->defaultController;
-        }
+        return $controllerName ?
+            ucfirst($controllerName) . 'Controller' :
+            $this->defaultController;
     }
 
     public function getMethodName($controller, $methodName)
     {
-        return $methodName ?: $this->defaultMethod;
+        if (empty($methodName) || !is_string($methodName)) {
+            return $this->defaultMethod;
+        }
+
+        return method_exists($controller, $methodName) ? $methodName : $this->defaultMethod;
     }
 }

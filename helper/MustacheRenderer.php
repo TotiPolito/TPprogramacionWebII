@@ -14,7 +14,7 @@ class MustacheRenderer {
 
     public function render($contentFile, $data = []) {
         if (!isset($data['BASE_URL'])) {
-            $data['BASE_URL'] = '/';
+            $data['BASE_URL'] = '/TPprogramacionWebII';
         }
 
         echo $this->generateHtml($this->viewsFolder . '/' . $contentFile . ".mustache", $data);

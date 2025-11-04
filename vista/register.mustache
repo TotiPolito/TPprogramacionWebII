@@ -4,13 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Registro</title>
-    <link rel="stylesheet" href="{{BASE_URL}}public/style/style.css">
+    <link rel="stylesheet" href="{{BASE_URL}}/public/style/style.css">
 </head>
 
 <body>
 <h2>Registro de usuario</h2>
 
-<form class="form" action="{{BASE_URL}}index.php?controller=Register&method=register" method="POST" enctype="multipart/form-data">
+<form class="form" action="{{BASE_URL}}/index.php?controller=Register&method=register" method="POST" enctype="multipart/form-data">
 
     <label>Nombre completo:</label>
     <input type="text" name="nombre_completo">
@@ -39,7 +39,7 @@
 
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <script src="{{BASE_URL}}public/js/mapa.js"></script>
+    <script src="{{BASE_URL}}/public/js/mapa.js"></script>
 
     <label>Correo electrónico:</label>
     <input type="email" name="mail">
@@ -59,7 +59,7 @@
     <button type="submit">Registrarme</button>
 </form>
 
-<p>¿Ya tenés cuenta? <a href="{{BASE_URL}}index.php?controller=Login&method=loginForm">Inicia sesión</a></p>
+<p>¿Ya tenés cuenta? <a href="{{BASE_URL}}/index.php?controller=Login&method=loginForm">Inicia sesión</a></p>
 
 {{#error}}
     <p class="error-message">{{error}}</p>

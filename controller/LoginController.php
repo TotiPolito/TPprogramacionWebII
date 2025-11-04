@@ -52,7 +52,7 @@ class LoginController
 
     public function redirectToIndex()
     {
-        header("Location: /TPprogramacionWebII/index.php");
+        header("Location: /TPprogramacionWebII/index.php?controller=Login&method=loginForm");
         exit;
     }
 }
