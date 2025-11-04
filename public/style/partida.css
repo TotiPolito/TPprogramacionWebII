@@ -39,3 +39,8 @@ tbody tr:first-child td {
     font-weight: bold;
     color: #DAA520;
 }
+
+tbody tr:last-child td {
+    font-weight: bold;
+    color: #CD7F32;
+}

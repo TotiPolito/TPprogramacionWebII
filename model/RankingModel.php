@@ -8,11 +8,15 @@ class RankingModel{
         $this->conexion = $conexion;
     }
 
-    public function obtenerRanking(){
-        $sql = "SELECT DISTINCT id, usuario, puntaje 
-                FROM usuarios
-                ORDER BY puntaje DESC
-                LIMIT 10";
-                return $this->conexion->query($sql);
+    public function obtenerRanking()
+    {
+        $sql = "SELECT u.id, u.usuario,
+        ((u.puntaje) / COUNT(p.id)) AS promedio_puntaje
+        FROM usuarios u 
+        LEFT JOIN partida p ON u.id = p.id_usuario
+        GROUP BY u.id
+        ORDER BY promedio_puntaje DESC
+        LIMIT 10;";
+        return $this->conexion->query($sql);
     }
 }

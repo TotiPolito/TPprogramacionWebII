@@ -61,7 +61,7 @@ tbody tr:nth-child(2) td {
     font-weight: bold;
     color: #C0C0C0;
 }
-tbody tr:nth-child(3) td {
+tbody tr:last-child td {
     font-weight: bold;
     color: #CD7F32;
 }
