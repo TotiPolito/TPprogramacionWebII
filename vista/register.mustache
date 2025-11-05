@@ -64,5 +64,16 @@
 {{#error}}
     <p class="error-message">{{error}}</p>
 {{/error}}
+{{#mensaje}}
+    <div class="error-message">
+        {{mensaje}}
+    </div>
+    <script>
+        setTimeout(function() {
+            window.location.href = "{{BASE_URL}}/index.php?controller=Login&method=mostrarLogin";
+        }, 3000);
+    </script>
+{{/mensaje}}
+
 </body>
 </html>

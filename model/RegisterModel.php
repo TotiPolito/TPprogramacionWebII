@@ -3,6 +3,7 @@ require_once("helper/MyConexion.php");
 require_once __DIR__ . ("/../vendor/phpmailer/src/PHPMailer.php");
 require_once __DIR__ . ("/../vendor/phpmailer/src/SMTP.php");
 require_once __DIR__ . ("/../vendor/phpmailer/src/Exception.php");
+require_once __DIR__ . ("/../config/config.php");
 
 use PHPmailer\PHPMailer\PHPMailer;
 use PHPmailer\PHPMailer\Exception;
@@ -63,9 +64,16 @@ class RegisterModel
             $token
         );
 
-        $stmt->execute();
+        if($stmt->execute()) {
+            if($this->enviarMailValidacion($data["mail"], $data["usuario"], $token)) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
 
-        $this->enviarMailValidacion($data["mail"], $data["usuario"], $token);
     }
 
     private function enviarMailValidacion($mail, $usuario, $token) {
@@ -75,8 +83,8 @@ class RegisterModel
             $mailSender->IsSMTP();
             $mailSender->Host = "smtp.gmail.com";
             $mailSender->SMTPAuth = true;
-            $mailSender->Username = 'casanovarocio5@gmail.com';
-            $mailSender->Password = 'ssxd pflu savx vkbd';
+            $mailSender->Username = MAIL_USERNAME;
+            $mailSender->Password = MAIL_PASSWORD;
             $mailSender->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;;
             $mailSender->Port = 587;
 
@@ -94,8 +102,10 @@ class RegisterModel
         ";
 
             $mailSender->send();
+            return true;
         } catch (Exception $e) {
             error_log("Error enviando correo de validación: " . $mailSender->ErrorInfo);
+            return false;
         }
     }
 
