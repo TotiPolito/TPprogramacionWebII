@@ -75,10 +75,25 @@ class RegisterController
             $data["foto_perfil"] = $rutaDestino;
         }
 
-        $this->model->crearUsuario($data);
+        $registroExitoso = $this->model->crearUsuario($data);
 
-        header("Location: index.php?controller=Login&method=mostrarLogin");
+        if ($registroExitoso) {
+            $_SESSION['mensaje'] = "Se ha enviado un correo para confirmar su cuenta";
+        } else {
+            $_SESSION['mensaje'] = "Hubo un error al registrarse";
+        }
+
+        header("Location: index.php?controller=Register&method=mostrarRegister");
         exit;
+    }
+
+    public function mostrarRegister()
+    {
+        $mensaje = $_SESSION['mensaje'] ?? null;
+
+        unset($_SESSION['mensaje']);
+
+        $this->renderer->render("register", ["mensaje" => $mensaje]);
     }
 }
 ?>
