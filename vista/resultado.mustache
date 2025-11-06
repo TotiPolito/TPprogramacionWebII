@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Resultado de la Respuesta</title>
+    <link rel="stylesheet" href="{{BASE_URL}}/public/style/resultado.css">
     <link rel="stylesheet" href="{{BASE_URL}}/public/style/style.css">
     <link rel="stylesheet" href="{{BASE_URL}}/public/style/headerFooter.css">
 </head>
@@ -14,7 +15,7 @@
 
 {{#respuestaCorrecta}}
     <p>¡Correcto! La respuesta es correcta.</p>
-    <a href="/TPprogramacionWebII/index.php?controller=Game&method=jugar">Siguiente pregunta</a>
+    <a class="link_respuesta" href="/TPprogramacionWebII/index.php?controller=Game&method=jugar">Siguiente pregunta</a>
 {{/respuestaCorrecta}}
 
 {{^respuestaCorrecta}}
@@ -26,7 +27,7 @@
             {{/estado}}
         {{/respuestas}}
     </ul>
-    <a href="/TPprogramacionWebII/index.php?controller=Home&method=Game">Volver al inicio</a>
+    <a class="link_respuesta" href="/TPprogramacionWebII/index.php?controller=Home&method=Game">Volver al inicio</a>
 {{/respuestaCorrecta}}
 </body>
 </html>
