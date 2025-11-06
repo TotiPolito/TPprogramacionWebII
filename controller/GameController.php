@@ -33,7 +33,7 @@ class GameController
         }
 
         $_SESSION['preguntas_vistas'][] = $pregunta['id'];
-
+        $this->model->incrementarVistasPregunta($pregunta['id']);
         $respuestas = $this->model->obtenerRespuestas($pregunta['id']);
 
         echo $this->renderer->render("game", [
@@ -46,6 +46,7 @@ class GameController
     public function responder()
     {
         $idRespuesta = $_POST['idRespuesta'];
+        $idPregunta = $_POST['idPregunta'];
         $resultado = $this->model->verificarRespuesta($idRespuesta);
         $respuestaCorrecta = $resultado['estado'] == 1;
 
@@ -53,7 +54,9 @@ class GameController
 
         if($respuestaCorrecta) {
             $_SESSION['aciertos']++;
+            $this->model->incrementarAciertosPregunta($idPregunta);
         }
+        $this->model->actualizarDificultad($idPregunta);
 
         if(!$respuestaCorrecta) {
             $totalAciertos = $_SESSION['aciertos'];
@@ -68,11 +71,11 @@ class GameController
             $_SESSION['aciertos'] = 0;
             $_SESSION['num_preguntas'] = 0;
 
-            header("Location: /TPprogramacionWebII/index.php?controller=Game&method=mostrarResultado&idPregunta=" . $_POST['idPregunta'] . "&correcta=" . ($respuestaCorrecta ? "true" : "false"));
+            header("Location: /TPprogramacionWebII/index.php?controller=Game&method=mostrarResultado&idPregunta=" . $idPregunta . "&correcta=false");
             echo $this->renderer->render("fin", [ 'aciertos' => $totalAciertos, 'mensaje' => '¡Perdiste!' ]);
             exit;
         }
-        header("Location: /TPprogramacionWebII/index.php?controller=Game&method=mostrarResultado&idPregunta=" . $_POST['idPregunta'] . "&correcta=" . ($respuestaCorrecta ? "true" : "false"));
+        header("Location: /TPprogramacionWebII/index.php?controller=Game&method=mostrarResultado&idPregunta=" . $idPregunta . "&correcta=true");
         exit;
         }
 

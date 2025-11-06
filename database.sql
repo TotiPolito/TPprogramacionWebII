@@ -47,6 +47,11 @@ ALTER TABLE preguntas
 ALTER TABLE preguntas
     MODIFY COLUMN descripcion VARCHAR(500) AFTER dificultad;
 
+ALTER TABLE preguntas
+ADD COLUMN vistas INT DEFAULT 0,
+ADD COLUMN aciertos INT DEFAULT 0,
+MODIFY COLUMN dificultad VARCHAR(20) DEFAULT 'Sin datos';
+
 CREATE TABLE respuestas (
                             id INT AUTO_INCREMENT PRIMARY KEY,
                             idPregunta TINYINT,
@@ -72,26 +77,26 @@ Values
     ('geografia'),
     ('entretenimiento');
 
-insert into preguntas(imagen, categoria, dificultad, descripcion)
+insert into preguntas(imagen, categoria, descripcion)
 Values
-    ('imagenes/qatar.png', 1, 'facil', 'Que seleccion fue la ganadora del mundial qatar 2022?'),
-    ('imagenes/maravilla.jpg',1, 'moderada', 'En que año el boxeador Argentino Sergio "maravilla" Martinez salio campeon del mundo?'),
-    ('imagenes/messi.jpg',1, 'dificil', 'Cuantos goles anoto el futbolista Lionel Messi en toda su carrera?'),
-    ('imagenes/america.jpg',2, 'facil', 'En que año Cristobal Colon descubrio America?'),
-    ('imagenes/guerra.jpg',2, 'moderada', 'Cuantos años de duracion tuvo la segunda guerra mundial?'),
-    ('imagenes/renacimiento.jpg',2, 'dificil', 'En que siglo se desarrollo el renacestismo?'),
-    ('imagenes/monalisa.jpg',3, 'facil', 'Quien pinto la "monalisa"?'),
-    ('imagenes/album.jpg',3, 'moderada', 'Cual es el album mas vendido de la historia?'),
-    ('imagenes/escultura.jpg',3, 'dificil', 'Donde se encuentra exhibida la escultura "David de Miguel Ángel"?'),
-    ('imagenes/matematica.jpg',4, 'facil', 'Cuanto es 4 x 6?'),
-    ('imagenes/espacio.jpg',4, 'moderada', 'Cual es el planeta mas alejado del sol?'),
-    ('imagenes/nobel.png',4, 'dificil', 'Quien fue el ganador del premio nobel de física del año 1921?'),
-    ('imagenes/europa.jpg',5, 'facil', 'Que pais no pertenece al continente Europeo?'),
-    ('imagenes/pascua.jpg',5, 'moderada', 'A que pais pertenecen las islas de Pascua?'),
-    ('imagenes/groenlandia.jpg',5, 'dificil', 'Cual es la capital de Groenlandia?'),
-    ('imagenes/titanic.jpg',6, 'facil', 'Quien es el actor que interpreta el papel de "Jack" en Titanic?'),
-    ('imagenes/spiderman.jpg',6, 'moderada', 'Quien es el director de la famosa saga de peliculas "Spiderman" pertenecientes a Sony Pictures?'),
-    ('imagenes/oscar.jpg',6, 'dificil', 'Quien es la persona que posee mayor cantidad de premios Oscar ganados?');
+    ('imagenes/qatar.png', 1, 'Que seleccion fue la ganadora del mundial qatar 2022?'),
+    ('imagenes/maravilla.jpg',1, 'En que año el boxeador Argentino Sergio "maravilla" Martinez salio campeon del mundo?'),
+    ('imagenes/messi.jpg',1, 'Cuantos goles anoto el futbolista Lionel Messi en toda su carrera?'),
+    ('imagenes/america.jpg',2, 'En que año Cristobal Colon descubrio America?'),
+    ('imagenes/guerra.jpg',2, 'Cuantos años de duracion tuvo la segunda guerra mundial?'),
+    ('imagenes/renacimiento.jpg',2, 'En que siglo se desarrollo el renacestismo?'),
+    ('imagenes/monalisa.jpg',3, 'Quien pinto la "monalisa"?'),
+    ('imagenes/album.jpg',3, 'Cual es el album mas vendido de la historia?'),
+    ('imagenes/escultura.jpg',3, 'Donde se encuentra exhibida la escultura "David de Miguel Ángel"?'),
+    ('imagenes/matematica.jpg',4, 'Cuanto es 4 x 6?'),
+    ('imagenes/espacio.jpg',4, 'Cual es el planeta mas alejado del sol?'),
+    ('imagenes/nobel.png',4, 'Quien fue el ganador del premio nobel de física del año 1921?'),
+    ('imagenes/europa.jpg',5, 'Que pais no pertenece al continente Europeo?'),
+    ('imagenes/pascua.jpg',5, 'A que pais pertenecen las islas de Pascua?'),
+    ('imagenes/groenlandia.jpg',5, 'Cual es la capital de Groenlandia?'),
+    ('imagenes/titanic.jpg',6, 'Quien es el actor que interpreta el papel de "Jack" en Titanic?'),
+    ('imagenes/spiderman.jpg',6, 'Quien es el director de la famosa saga de peliculas "Spiderman" pertenecientes a Sony Pictures?'),
+    ('imagenes/oscar.jpg',6, 'Quien es la persona que posee mayor cantidad de premios Oscar ganados?');
 
 
 insert into respuestas(idPregunta, descripcion, estado)

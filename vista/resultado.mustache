@@ -13,13 +13,36 @@
 
 <p><strong>Pregunta:</strong> {{pregunta.descripcion}}</p>
 
+<p><strong>Ratio de aciertos:</strong>
+    {{#pregunta.ratio}}
+        {{pregunta.ratio}}
+    {{/pregunta.ratio}}
+    {{^pregunta.ratio}}
+        0
+    {{/pregunta.ratio}}
+</p>
+
+<p><strong>Dificultad:</strong>
+    {{#pregunta.dificultad_actual}}
+        {{pregunta.dificultad_actual}}
+    {{/pregunta.dificultad_actual}}
+    {{^pregunta.dificultad_actual}}
+        {{#pregunta.dificultad}}
+            {{pregunta.dificultad}}
+        {{/pregunta.dificultad}}
+        {{^pregunta.dificultad}}
+            Sin datos
+        {{/pregunta.dificultad}}
+    {{/pregunta.dificultad_actual}}
+</p>
+
 {{#respuestaCorrecta}}
-    <p>¡Correcto! La respuesta es correcta.</p>
-    <a class="link_respuesta" href="/TPprogramacionWebII/index.php?controller=Game&method=jugar">Siguiente pregunta</a>
+    <p class="resultado-correcto">¡Correcto! La respuesta es correcta.</p>
+    <a class="link_respuesta" href="{{BASE_URL}}/index.php?controller=Game&method=jugar">Siguiente pregunta</a>
 {{/respuestaCorrecta}}
 
 {{^respuestaCorrecta}}
-    <p>Incorrecto. La respuesta correcta era:</p>
+    <p class="resultado-incorrecto">Incorrecto. La respuesta correcta era:</p>
     <ul>
         {{#respuestas}}
             {{#estado}}
@@ -27,7 +50,12 @@
             {{/estado}}
         {{/respuestas}}
     </ul>
-    <a class="link_respuesta" href="/TPprogramacionWebII/index.php?controller=Home&method=Game">Volver al inicio</a>
+
+    {{#aciertos}}
+        <p><strong>Aciertos en esta partida:</strong> {{aciertos}}</p>
+    {{/aciertos}}
+
+    <a class="link_respuesta" href="{{BASE_URL}}/index.php?controller=Home&method=Game">Volver al inicio</a>
 {{/respuestaCorrecta}}
 </body>
 </html>
