@@ -54,3 +54,35 @@ button {
     left: 24rem;
     font-size: 1.5rem;
 }
+
+.categoria {
+    padding: 10px;
+    text-align: center;
+    color: white;
+    border-radius: 10px;
+    font-size: 1.5em;
+}
+
+.categoria.deportes{
+    background-color: #ef9222;
+}
+
+.categoria.historia{
+    background-color: #fdd730;
+}
+
+.categoria.arte{
+    background-color: #f63232;
+}
+
+.categoria.ciencia{
+    background-color: #4dfd3a;
+}
+
+.categoria.geografia{
+    background-color: #3498db;
+}
+
+.categoria.entretenimiento{
+    background-color: #ed479d;
+}

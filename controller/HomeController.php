@@ -12,6 +12,10 @@ class HomeController
 
     public function Game()
     {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+
         if(!isset($_SESSION["usuario"])) {
             header("Location:/TPprogramacionWebII/index.php?controller=Login&method=mostrarLogin");
             exit;
