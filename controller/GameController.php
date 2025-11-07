@@ -17,15 +17,12 @@ class GameController
     {
         if (session_status() === PHP_SESSION_NONE) session_start();
 
-        // Reiniciamos datos de la partida
         $_SESSION['preguntas_vistas'] = [];
         $_SESSION['aciertos'] = 0;
         $_SESSION['num_preguntas'] = 0;
 
-        // Permitimos entrar a jugar desde Home
         $_SESSION['permitir_siguiente'] = true;
 
-        // Redirigimos al método jugar
         header("Location: /TPprogramacionWebII/index.php?controller=Game&method=jugar");
         exit;
     }
@@ -33,13 +30,11 @@ class GameController
     {
         if (session_status() === PHP_SESSION_NONE) session_start();
 
-        // Si no viene con permiso desde "resultado", lo mandamos al home
         if (empty($_SESSION['permitir_siguiente']) || $_SESSION['permitir_siguiente'] !== true) {
             header("Location: /TPprogramacionWebII/index.php?controller=Home&method=Game");
             exit;
         }
 
-        // Consumimos el permiso para que no se pueda volver a usar
         unset($_SESSION['permitir_siguiente']);
 
 
@@ -49,6 +44,7 @@ class GameController
         if (!isset($_SESSION['num_preguntas'])) $_SESSION['num_preguntas'] = 0;
 
         $pregunta = $this->model->obtenerPreguntaRandomGlobal($_SESSION['preguntas_vistas']);
+        $colorFondo = $this->ObtenerColorPorCategoria($pregunta['nombre_categoria']);
 
         if (!$pregunta) {
             $totalAciertos = $_SESSION['aciertos'];
@@ -69,8 +65,23 @@ class GameController
         echo $this->renderer->render("game", [
             'categoria' => $pregunta['nombre_categoria'],
             'pregunta' => $pregunta,
-            'respuestas' => $respuestas
+            'respuestas' => $respuestas,
+            'color' => $colorFondo
         ]);
+    }
+
+    private function obtenerColorPorCategoria($categoria)
+    {
+        $colores = [
+            'deportes' => '#ef9222',
+            'historia' => '#fdd730',
+            'arte' => '#f63232',
+            'ciencia' => '#4dfd3a',
+            'geografia' => '#3498db',
+            'entretenimiento' => '#ed479d'
+        ];
+
+        return $colores[$categoria] ?? '#ffffff';
     }
 
     public function responder()
@@ -106,7 +117,6 @@ class GameController
             $_SESSION['num_preguntas'] = 0;
 
             header("Location: /TPprogramacionWebII/index.php?controller=Game&method=mostrarResultado&idPregunta=" . $idPregunta . "&correcta=false");
-            echo $this->renderer->render("fin", [ 'aciertos' => $totalAciertos, 'mensaje' => '¡Perdiste!' ]);
             exit;
         }
         $_SESSION['ultima_pregunta_resuelta'] = true;
@@ -118,10 +128,8 @@ class GameController
     {
         if (session_status() === PHP_SESSION_NONE) session_start();
 
-        // Permitir la carga de la siguiente pregunta solo desde la vista de resultado
         $_SESSION['permitir_siguiente'] = true;
 
-        //Deshabilitamos completamente la caché del navegador
         header("Expires: Tue, 01 Jan 2000 00:00:00 GMT");
         header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
         header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
