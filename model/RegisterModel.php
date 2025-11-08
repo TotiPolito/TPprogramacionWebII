@@ -64,8 +64,14 @@ class RegisterModel
             $token
         );
 
-        if($stmt->execute()) {
-            if($this->enviarMailValidacion($data["mail"], $data["usuario"], $token)) {
+        if ($stmt->execute()) {
+            $idUsuario = $this->conexion->insert_id;
+
+            $sqlStats = "INSERT INTO estadisticas_jugador (id_usuario, preguntas_vistas, aciertos)
+                     VALUES ($idUsuario, 0, 0)";
+            $this->conexion->query($sqlStats);
+
+            if ($this->enviarMailValidacion($data["mail"], $data["usuario"], $token)) {
                 return true;
             } else {
                 return false;
@@ -73,7 +79,6 @@ class RegisterModel
         } else {
             return false;
         }
-
     }
 
     private function enviarMailValidacion($mail, $usuario, $token) {

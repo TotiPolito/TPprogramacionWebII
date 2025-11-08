@@ -9,23 +9,36 @@ class GameModel
         $this->conexion = $conexion;
     }
 
-    public function obtenerPreguntaRandomGlobal($preguntasVistas = [])
+    public function obtenerPreguntaPorDificultad($idUsuario, $preguntasVistas)
     {
-        $excluir = "";
-        if (!empty($preguntasVistas)) {
-            $ids = implode(',', $preguntasVistas);
-            $excluir = "AND p.id NOT IN ($ids)";
+        $ratioJugador = $this->obtenerRatioJugador($idUsuario);
+
+        if ($ratioJugador === null) {
+            $ratioJugador = 0.5;
         }
 
-        $sql = "SELECT p.*, c.descripcion AS nombre_categoria 
-                FROM preguntas p 
-                JOIN categorias c ON p.categoria = c.id
-                WHERE 1=1 $excluir
-                ORDER BY RAND() 
-                LIMIT 1";
+        if ($ratioJugador >= 0.7) {
+            $condicion = "(p.aciertos / NULLIF(p.vistas, 0) <= 0.5 OR p.vistas = 0)";
+        } elseif ($ratioJugador >= 0.5) {
+            $condicion = "(p.aciertos / NULLIF(p.vistas, 0) BETWEEN 0.5 AND 0.7 OR p.vistas = 0)";
+        } else {
+            $condicion = "(p.aciertos / NULLIF(p.vistas, 0) >= 0.7 OR p.vistas = 0)";
+        }
+
+        $idsVistos = implode(',', $preguntasVistas ?: [0]);
+
+        $sql = "SELECT p.*, c.descripcion AS nombre_categoria
+            FROM preguntas p
+            JOIN categorias c ON p.categoria = c.id
+            WHERE p.id NOT IN ($idsVistos)
+              AND $condicion
+            ORDER BY RAND()
+            LIMIT 1";
 
         $resultado = $this->conexion->query($sql);
-        return $resultado->fetch_assoc();
+        $pregunta = $resultado->fetch_assoc();
+
+        return $pregunta;
     }
 
     public function obtenerRespuestas($preguntaId)
@@ -76,11 +89,27 @@ class GameModel
         $stmt->execute();
     }
 
-    public function incrementarAciertospregunta($idPregunta)
+    public function incrementarAciertosPregunta($idPregunta)
     {
         $sql = "UPDATE preguntas SET aciertos = aciertos + 1 WHERE id = ?";
         $stmt = $this->conexion->prepare($sql);
         $stmt->bind_param("i", $idPregunta);
+        $stmt->execute();
+    }
+
+    public function incrementarVistasJugador($idUsuario)
+    {
+        if ($idUsuario) {
+            $sql = "UPDATE estadisticas_jugador SET preguntas_vistas = preguntas_vistas + 1 WHERE id_usuario = $idUsuario";
+            $this->conexion->query($sql);
+        }
+    }
+
+    public function incrementarAciertosJugador($idUsuario)
+    {
+        $sql = "UPDATE estadisticas_jugador SET aciertos = aciertos + 1 WHERE id_usuario = ?";
+        $stmt = $this->conexion->prepare($sql);
+        $stmt->bind_param("i", $idUsuario);
         $stmt->execute();
     }
 
@@ -96,5 +125,22 @@ class GameModel
         $stmt = $this->conexion->prepare($sql);
         $stmt->bind_param("i", $idPregunta);
         $stmt->execute();
+    }
+
+    public function obtenerRatioJugador($idUsuario)
+    {
+        $sql = "SELECT 
+                CASE 
+                    WHEN preguntas_vistas = 0 THEN 0
+                    ELSE ROUND(aciertos / preguntas_vistas, 2)
+                END AS ratio
+            FROM estadisticas_jugador
+            WHERE id_usuario = ?";
+        $stmt = $this->conexion->prepare($sql);
+        $stmt->bind_param("i", $idUsuario);
+        $stmt->execute();
+        $resultado = $stmt->get_result();
+        $fila = $resultado->fetch_assoc();
+        return $fila ? $fila['ratio'] : null;
     }
 }

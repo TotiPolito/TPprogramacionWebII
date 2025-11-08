@@ -38,6 +38,13 @@ CREATE TABLE preguntas (
                            FOREIGN KEY (categoria) REFERENCES categorias(id)
 );
 
+CREATE TABLE estadisticas_jugador (
+                                      id_usuario INT PRIMARY KEY,
+                                      preguntas_vistas INT DEFAULT 0,
+                                      aciertos INT DEFAULT 0,
+                                      FOREIGN KEY (id_usuario) REFERENCES usuarios(id)
+);
+
 ALTER TABLE preguntas
     ADD descripcion VARCHAR(200) AFTER dificultad;
 

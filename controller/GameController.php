@@ -43,18 +43,18 @@ class GameController
         if (!isset($_SESSION['aciertos'])) $_SESSION['aciertos'] = 0;
         if (!isset($_SESSION['num_preguntas'])) $_SESSION['num_preguntas'] = 0;
 
-        $pregunta = $this->model->obtenerPreguntaRandomGlobal($_SESSION['preguntas_vistas']);
-        $colorFondo = $this->ObtenerColorPorCategoria($pregunta['nombre_categoria']);
+        $idUsuario = $_SESSION['usuario']['id'] ?? null;
+
+        $pregunta = $this->model->obtenerPreguntaPorDificultad($idUsuario, $_SESSION['preguntas_vistas']);
+        $nombreCategoria = $pregunta['nombre_categoria'] ?? 'Sin categoría';
+        $colorFondo = $this->ObtenerColorPorCategoria($nombreCategoria);
 
         if (!$pregunta) {
             $totalAciertos = $_SESSION['aciertos'];
             $_SESSION['preguntas_vistas'] = [];
             $_SESSION['aciertos'] = 0;
             $_SESSION['num_preguntas'] = 0;
-
-            echo $this->renderer->render("fin", [
-                'aciertos' => $totalAciertos
-            ]);
+            echo $this->renderer->render("fin", ['aciertos' => $totalAciertos]);
             exit;
         }
 
@@ -93,9 +93,18 @@ class GameController
 
         if (!isset($_SESSION['aciertos'])) $_SESSION['aciertos'] = 0;
 
+        $idUsuario = $_SESSION['usuario']['id'] ?? null;
+
+        if ($idUsuario) {
+            $this->model->incrementarVistasJugador($idUsuario);
+        }
+
         if($respuestaCorrecta) {
             $_SESSION['aciertos']++;
             $this->model->incrementarAciertosPregunta($idPregunta);
+            if ($idUsuario) {
+                $this->model->incrementarAciertosJugador($idUsuario);
+            }
         }
         $this->model->actualizarDificultad($idPregunta);
 
@@ -142,10 +151,32 @@ class GameController
         $pregunta = $this->model->obtenerPreguntaPorId($idPregunta);
         $respuestas = $this->model->obtenerRespuestas($idPregunta);
 
+        $idUsuario = $_SESSION['usuario']['id'] ?? null;
+        $ratioJugador = 0;
+        $nivelJugador = 'Sin datos';
+
+        if ($idUsuario) {
+            $ratioJugador = $this->model->obtenerRatioJugador($idUsuario);
+
+            $ratioJugador = floatval($ratioJugador);
+
+            if ($ratioJugador >= 0.7) {
+                $nivelJugador = 'Alto';
+            } elseif ($ratioJugador >= 0.5) {
+                $nivelJugador = 'Medio';
+            } else {
+                $nivelJugador = 'Bajo';
+            }
+        }
+
         echo $this->renderer->render("resultado", [
             'pregunta' => $pregunta,
             'respuestas' => $respuestas,
-            'respuestaCorrecta' => $respuestaCorrecta
+            'respuestaCorrecta' => $respuestaCorrecta,
+            'ratioJugador' => number_format($ratioJugador, 2),
+            'nivelJugador' => $nivelJugador,
+            'aciertos' => $_SESSION['aciertos'] ?? 0
         ]);
     }
+
 }
