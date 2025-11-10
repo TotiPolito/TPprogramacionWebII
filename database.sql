@@ -48,7 +48,7 @@ INSERT INTO usuarios (
              'San Justo',
              'editor@gmail.com',
              'editor',
-             'editor',
+             '$2y$10$kuFWF1FXR./MyRn0MLyPveTga9tVqMwjZpqjPjO2fl2QOtql36/5a',
              1,
              'editor'
          );
