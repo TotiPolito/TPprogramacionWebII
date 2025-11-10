@@ -5,7 +5,8 @@ class HomeController
     private $renderer;
     private $model;
 
-    public function __construct($renderer, $model) {
+    public function __construct($renderer, $model)
+    {
         $this->renderer = $renderer;
         $this->model = $model;
     }
@@ -16,23 +17,34 @@ class HomeController
             session_start();
         }
 
-        if(!isset($_SESSION["usuario"])) {
+        if (!isset($_SESSION["usuario"])) {
             header("Location:/TPprogramacionWebII/index.php?controller=Login&method=mostrarLogin");
             exit;
-    }
+        }
 
-        $idUsuario = $_SESSION["usuario"]["id"];
+        $usuario = $_SESSION["usuario"];
 
-        $usuarioActualizado = $this->model->obtenerUsuarioPorId($idUsuario);
+        if ($usuario["rol"] !== "jugador") {
+            switch ($usuario["rol"]) {
+                case "editor":
+                    header("Location:/TPprogramacionWebII/index.php?controller=Editor&method=panel");
+                    break;
+                case "admin":
+                    break;
+            }
+            exit;
 
-        $_SESSION["usuario"] = $usuarioActualizado;
+            $idUsuario = $usuario["id"];
+            $usuarioActualizado = $this->model->obtenerUsuarioPorId($idUsuario);
+            $_SESSION["usuario"] = $usuarioActualizado;
 
-        $data = [
-            "logueado" => true,
-            "nombre_completo" => $usuarioActualizado["nombre_completo"],
-            "puntaje" => $usuarioActualizado["puntaje"]
-        ];
+            $data = [
+                "logueado" => true,
+                "nombre_completo" => $usuarioActualizado["nombre_completo"],
+                "puntaje" => $usuarioActualizado["puntaje"]
+            ];
 
-        $this->renderer->render("home", $data);
+            $this->renderer->render("home", $data);
+        }
     }
 }
