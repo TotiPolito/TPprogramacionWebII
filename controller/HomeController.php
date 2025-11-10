@@ -28,23 +28,22 @@ class HomeController
             switch ($usuario["rol"]) {
                 case "editor":
                     header("Location:/TPprogramacionWebII/index.php?controller=Editor&method=panel");
-                    break;
+                    exit;
                 case "admin":
-                    break;
+                    exit;
             }
-            exit;
-
-            $idUsuario = $usuario["id"];
-            $usuarioActualizado = $this->model->obtenerUsuarioPorId($idUsuario);
-            $_SESSION["usuario"] = $usuarioActualizado;
-
-            $data = [
-                "logueado" => true,
-                "nombre_completo" => $usuarioActualizado["nombre_completo"],
-                "puntaje" => $usuarioActualizado["puntaje"]
-            ];
-
-            $this->renderer->render("home", $data);
         }
+        $idUsuario = $usuario["id"];
+        $usuarioActualizado = $this->model->obtenerUsuarioPorId($idUsuario);
+        $_SESSION["usuario"] = $usuarioActualizado;
+
+        $data = [
+            "logueado" => true,
+            "nombre_completo" => $usuarioActualizado["nombre_completo"],
+            "puntaje" => $usuarioActualizado["puntaje"]
+        ];
+
+        $this->renderer->render("home", $data);
     }
+
 }
