@@ -6,6 +6,7 @@
     <title>Panel del Editor</title>
     <link rel="stylesheet" href="{{BASE_URL}}/public/style/headerFooter.css">
     <link rel="stylesheet" href="{{BASE_URL}}/public/style/style.css">
+    <link rel="stylesheet" href="{{BASE_URL}}/public/style/preguntasSugeridasPendientes.css">
 </head>
 <body>
 
@@ -24,10 +25,10 @@
         </ul>
 
         <a href="{{BASE_URL}}/index.php?controller=PreguntaSugerida&method=aprobar&idSugerida={{id}}"
-        onclick="return confirm('¿Desea aprobar esta pregunta?')">✅ Aprobar</a>
+        onclick="return confirm('¿Desea aprobar esta pregunta?')">Aprobar</a>
 
         <a href="{{BASE_URL}}/index.php?controller=PreguntaSugerida&method=rechazar&idSugerida={{id}}"
-        onclick="return confirm('¿Desea rechazar esta pregunta?')">❌ Rechazar</a>
+        onclick="return confirm('¿Desea rechazar esta pregunta?')">Rechazar</a>
     </div>
     <hr>
 {{/sugerencias}}

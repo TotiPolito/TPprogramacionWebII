@@ -1,13 +1,111 @@
-.panel{
-    position: relative;
-    top: 25%;
+body {
+    background: linear-gradient(135deg, #eef2ff, #cfd9ff);
+    font-family: 'Poppins', sans-serif;
+    color: #222;
+    margin: 0;
+    padding: 0;
 }
 
-ul{
-    gap: 20px;
+.panel {
+    max-width: 600px;
+    width: 90%;
+    background: #fff;
+    margin: 80px auto;
+    padding: 40px 30px;
+    border-radius: 18px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    text-align: center;
+    box-sizing: border-box;
 }
 
-a{
+.panel h2 {
+    color: #2b1055;
+    font-size: 1.9em;
+    margin-bottom: 10px;
+}
+
+.panel p {
+    font-size: 1rem;
+    margin: 8px 0;
+}
+
+.panel section {
+    background: #f5f7ff;
+    border-radius: 10px;
+    padding: 15px;
+    margin: 20px 0 30px 0;
+    border: 1px solid #e1e4ff;
+}
+
+.panel section p {
+    margin: 8px 0;
+    font-weight: 500;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+}
+
+nav ul li {
+    width: 100%;
+    max-width: 300px;
+}
+
+nav ul li a {
+    display: block;
+    width: 100%;
+    padding: 12px 20px;
+    border-radius: 10px;
+    font-weight: 600;
     text-decoration: none;
-    color: white;
+    text-align: center;
+    transition: background-color 0.2s ease;
+    color: #fff;
+    box-sizing: border-box;
+}
+
+nav ul li a[href*="Reportes"] {
+    background-color: #007bff;
+}
+
+nav ul li a[href*="Reportes"]:hover {
+    background-color: #0056d8;
+}
+
+nav ul li a[href*="Sugerida"] {
+    background-color: #28a745;
+}
+
+nav ul li a[href*="Sugerida"]:hover {
+    background-color: #218838;
+}
+
+nav ul li a[href*="logout"] {
+    background-color: #dc3545;
+}
+
+nav ul li a[href*="logout"]:hover {
+    background-color: #b02a37;
+}
+
+@media (max-width: 480px) {
+    .panel {
+        width: 95%;
+        padding: 25px 20px;
+    }
+
+    nav ul li {
+        max-width: 100%;
+    }
+
+    nav ul li a {
+        font-size: 0.95em;
+        padding: 10px;
+    }
 }

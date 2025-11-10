@@ -1,0 +1,100 @@
+body {
+    background: linear-gradient(135deg, #eef2ff, #cfd9ff);
+    font-family: 'Poppins', sans-serif;
+    color: #222;
+    margin: 0;
+    padding: 40px 20px;
+    box-sizing: border-box;
+}
+
+h2 {
+    text-align: center;
+    color: #2b1055;
+    font-size: 1.9em;
+    margin-bottom: 30px;
+}
+
+.sugerencia {
+    background: #fff;
+    border-radius: 14px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+    padding: 20px 25px;
+    margin: 25px auto;
+    max-width: 700px;
+    box-sizing: border-box;
+}
+
+.sugerencia p {
+    margin: 8px 0;
+    font-size: 1rem;
+}
+
+.sugerencia ul {
+    list-style-type: disc;
+    padding-left: 25px;
+    margin-top: 10px;
+    margin-bottom: 15px;
+}
+
+.sugerencia ul li {
+    margin: 4px 0;
+    font-size: 0.95rem;
+}
+
+.sugerencia strong {
+    color: #2b1055;
+}
+
+.sugerencia a {
+    display: inline-block;
+    padding: 10px 18px;
+    margin: 5px 10px 0 0;
+    border-radius: 8px;
+    font-weight: 600;
+    text-decoration: none;
+    color: #fff;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.sugerencia a[href*="aprobar"] {
+    background-color: #28a745;
+}
+
+.sugerencia a[href*="aprobar"]:hover {
+    background-color: #218838;
+    transform: translateY(-2px);
+}
+
+.sugerencia a[href*="rechazar"] {
+    background-color: #dc3545;
+}
+
+.sugerencia a[href*="rechazar"]:hover {
+    background-color: #b02a37;
+    transform: translateY(-2px);
+}
+
+hr {
+    border: none;
+    border-top: 1px solid #ddd;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+body > p {
+    text-align: center;
+    font-size: 1.1rem;
+    color: #444;
+}
+
+@media (max-width: 600px) {
+    .sugerencia {
+        padding: 15px 18px;
+        width: 95%;
+    }
+
+    .sugerencia a {
+        display: block;
+        margin: 8px 0;
+    }
+}
