@@ -29,6 +29,30 @@ CREATE TABLE usuarios (
 ALTER TABLE usuarios
     ADD COLUMN rol ENUM('jugador', 'editor', 'admin') NOT NULL DEFAULT 'jugador';
 
+INSERT INTO usuarios (
+    nombre_completo,
+    anio_nacimiento,
+    sexo,
+    pais,
+    ciudad,
+    mail,
+    usuario,
+    password,
+    validado,
+    rol
+) VALUES (
+             'Editor del Sitio',
+             2006,
+             'Femenino',
+             'Argentina',
+             'San Justo',
+             'editor@gmail.com',
+             'editor',
+             'editor',
+             1,
+             'editor'
+         );
+
 CREATE TABLE categorias (
                             id INT AUTO_INCREMENT PRIMARY KEY,
                             descripcion VARCHAR(25)
