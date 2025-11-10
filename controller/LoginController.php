@@ -35,7 +35,22 @@ class LoginController
 
 
     public function home() {
-        header("Location: /TPprogramacionWebII/index.php?controller=Home&method=Game");
+        $usuario = $_SESSION["usuario"];
+
+        switch ($usuario["rol"]) {
+            case "editor":
+                header("Location: /TPprogramacionWebII/index.php?controller=Editor&method=panel");
+                break;
+
+            case "admin":
+                header("Location: /TPprogramacionWebII/index.php?controller=Admin&method=panel");
+                break;
+
+            default:
+                header("Location: /TPprogramacionWebII/index.php?controller=Home&method=Game");
+                break;
+        }
+
         exit;
     }
 

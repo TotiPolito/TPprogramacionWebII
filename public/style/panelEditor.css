@@ -1,0 +1,13 @@
+.panel{
+    position: relative;
+    top: 25%;
+}
+
+ul{
+    gap: 20px;
+}
+
+a{
+    text-decoration: none;
+    color: white;
+}

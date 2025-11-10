@@ -121,6 +121,7 @@ h2 {
     align-items: center;
     text-decoration: none;
     box-sizing: border-box;
+    text-align: center;
 }
 
 .btn_hover:hover {

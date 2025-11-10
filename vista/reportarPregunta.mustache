@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reportar Pregunta</title>
+    <link rel="stylesheet" href="{{BASE_URL}}/public/style/style.css">
+    <link rel="stylesheet" href="{{BASE_URL}}/public/style/headerFooter.css">
+    <link rel="stylesheet" href="{{BASE_URL}}/public/style/reporte.css">
+</head>
+
+<body>
+<h2>Reportar Pregunta</h2>
+
+{{#mensaje}}
+    <p class="mensaje">{{mensaje}}</p>
+{{/mensaje}}
+
+{{#error}}
+    <p class="error">{{error}}</p>
+{{/error}}
+
+<form action="/TPprogramacionWebII/index.php?controller=Reportar&method=guardar" method="POST">
+    <input type="hidden" name="idPregunta" value="{{pregunta.id}}">
+
+    <p><strong>{{pregunta.descripcion}}</strong></p>
+
+    <label for="motivo">Motivo del reporte:</label><br>
+    <textarea id="motivo" name="motivo" placeholder="Describe brevemente el motivo..." required></textarea><br>
+
+    <button type="submit">Enviar reporte</button>
+</form>
+</body>
+</html>

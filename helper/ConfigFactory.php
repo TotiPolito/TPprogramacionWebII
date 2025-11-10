@@ -12,6 +12,11 @@ include_once(__DIR__ . "/../controller/ValidarController.php");
 include_once(__DIR__ . "/../controller/RankingController.php");
 include_once(__DIR__ . "/../controller/PartidasController.php");
 include_once(__DIR__ . "/../controller/PerfilController.php");
+include_once(__DIR__ . "/../controller/PreguntaSugeridaController.php");
+include_once(__DIR__ . "/../controller/ReportarController.php");
+include_once(__DIR__ . "/../controller/ReportesController.php");
+include_once(__DIR__ . "/../controller/EditorController.php");
+
 
 include_once(__DIR__ . "/../model/LoginModel.php");
 include_once(__DIR__ . "/../model/RegisterModel.php");
@@ -20,6 +25,10 @@ include_once(__DIR__ . "/../model/GameModel.php");
 include_once(__DIR__ . "/../model/RankingModel.php");
 include_once(__DIR__ . "/../model/PartidasModel.php");
 include_once(__DIR__ . "/../model/PerfilModel.php");
+include_once(__DIR__ . "/../model/PreguntaSugeridaModel.php");
+include_once(__DIR__ . "/../model/ReportarModel.php");
+include_once(__DIR__ . "/../model/ReportesModel.php");
+include_once(__DIR__ . "/../model/EditorModel.php");
 
 include_once(__DIR__ . "/../vendor/mustache/src/Mustache/Autoloader.php");
 
@@ -88,6 +97,26 @@ class ConfigFactory
         $this->objetos["PerfilController"] = new PerfilController(
             $this->renderer,
             new PerfilModel($this->conexion)
+        );
+
+        $this->objetos["PreguntaSugeridaController"] = new PreguntaSugeridaController(
+            new PreguntaSugeridaModel($this->conexion),
+            $this->renderer
+        );
+
+        $this->objetos["ReportarController"] = new ReportarController(
+            new ReportarModel($this->conexion),
+            $this->renderer
+        );
+
+        $this->objetos["ReportesController"] = new ReportesController(
+            new ReportesModel($this->conexion),
+            $this->renderer
+        );
+
+        $this->objetos["EditorController"] = new EditorController(
+            new EditorModel($this->conexion),
+            $this->renderer
         );
     }
 

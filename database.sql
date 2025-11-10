@@ -26,6 +26,9 @@ CREATE TABLE usuarios (
                           qr VARCHAR(255) NULL
 );
 
+ALTER TABLE usuarios
+    ADD COLUMN rol ENUM('jugador', 'editor', 'admin') NOT NULL DEFAULT 'jugador';
+
 CREATE TABLE categorias (
                             id INT AUTO_INCREMENT PRIMARY KEY,
                             descripcion VARCHAR(25)
@@ -36,6 +39,35 @@ CREATE TABLE preguntas (
                            categoria INT,
                            dificultad VARCHAR(20) NOT NULL,
                            FOREIGN KEY (categoria) REFERENCES categorias(id)
+);
+
+CREATE TABLE preguntas_sugeridas (
+                                     id INT AUTO_INCREMENT PRIMARY KEY,
+                                     texto VARCHAR(255) NOT NULL,
+                                     categoria_id INT NOT NULL,
+                                     sugerida_por INT NOT NULL,
+                                     FOREIGN KEY (sugerida_por) REFERENCES usuarios(id),
+                                     FOREIGN KEY (categoria_id) REFERENCES categorias(id)
+);
+
+CREATE TABLE preguntas_reportadas(
+                                     id INT AUTO_INCREMENT PRIMARY KEY,
+                                     idPregunta TINYINT,
+                                     idUsuario INT,
+                                     motivo VARCHAR(255),
+                                     FOREIGN KEY (idPregunta) REFERENCES preguntas (id),
+                                     FOREIGN KEY (idUsuario) REFERENCES usuarios (id)
+);
+
+ALTER TABLE preguntas_sugeridas
+    ADD aprobada BOOLEAN DEFAULT NULL AFTER sugerida_por; -- null=pendiente
+
+CREATE TABLE respuestas_preguntas_sugeridas(
+                                     id INT AUTO_INCREMENT PRIMARY KEY,
+                                     idPregunta INT NOT NULL,
+                                     descripcion VARCHAR(500) NOT NULL,
+                                     estado BOOLEAN,
+                                     FOREIGN KEY (idPregunta) REFERENCES preguntas_sugeridas(id)
 );
 
 CREATE TABLE estadisticas_jugador (
@@ -55,6 +87,9 @@ ALTER TABLE preguntas
     MODIFY COLUMN descripcion VARCHAR(500) AFTER dificultad;
 
 ALTER TABLE preguntas
+    ADD reportada BOOLEAN DEFAULT 0;
+
+ALTER TABLE preguntas
 ADD COLUMN vistas INT DEFAULT 0,
 ADD COLUMN aciertos INT DEFAULT 0,
 MODIFY COLUMN dificultad VARCHAR(20) DEFAULT 'Sin datos';
@@ -68,11 +103,11 @@ CREATE TABLE respuestas (
 );
 
 CREATE TABLE partida (
-                         id INT AUTO_INCREMENT PRIMARY KEY,
-                         id_usuario INT,
-                         puntaje INT,
-                         fecha DATETIME,
-                         FOREIGN KEY (id_usuario) REFERENCES usuarios(id)
+                           id INT AUTO_INCREMENT PRIMARY KEY,
+                           id_usuario INT,
+                           puntaje INT,
+                           fecha DATETIME,
+                           FOREIGN KEY (id_usuario) REFERENCES usuarios(id)
 );
 
 insert into categorias(descripcion)
