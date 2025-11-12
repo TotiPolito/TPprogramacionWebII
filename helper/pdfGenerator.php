@@ -6,8 +6,8 @@ class PDFGenerator extends FPDF
     function Header()
     {
         $this->SetFont('Arial', 'B', 18);
-        $this->SetTextColor(139, 0, 0); // #8B0000
-        $this->Cell(0, 12, 'Panel de Administración - Estadísticas Generales', 0, 1, 'C');
+        $this->SetTextColor(139, 0, 0);
+        $this->Cell(0, 12, 'Panel de Administracion - Estadisticas Generales', 0, 1, 'C');
         $this->Ln(5);
 
         $this->SetDrawColor(139, 0, 0);
