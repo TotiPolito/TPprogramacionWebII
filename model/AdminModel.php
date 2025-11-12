@@ -17,7 +17,7 @@ class AdminModel
 
         $stats["total_usuarios"] = $db->query("SELECT COUNT(*) as total FROM usuarios")->fetch_assoc()["total"];
         $stats["total_jugadores"] = $db->query("SELECT COUNT(*) as total FROM usuarios WHERE rol='jugador'")->fetch_assoc()["total"];
-        $stats["total_partidas"] = $db->query("SELECT COUNT(*) as total FROM partida WHERE rol='jugador'")->fetch_assoc()["total"];
+        $stats["total_partidas"] = $db->query("SELECT COUNT(*) as total FROM partida p INNER JOIN usuarios u on p.id_usuario = u.id WHERE u.rol = 'jugador'")->fetch_assoc()["total"];
         $stats["promedio_puntaje"] = $db->query("SELECT AVG(puntaje) as promedio FROM usuarios WHERE rol='jugador'")->fetch_assoc()["promedio"];
         $stats["mejor_jugador"] = $db->query("SELECT usuario, puntaje FROM usuarios WHERE rol='jugador' ORDER BY puntaje DESC LIMIT 1")->fetch_assoc();
 

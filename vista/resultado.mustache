@@ -59,6 +59,12 @@
         {{/respuestas}}
     </ul>
 
+    {{^respuestaCorrecta}}
+        {{#timeout}}
+            <p class="resultado-incorrecto">⏰ ¡Se acabó el tiempo!</p>
+        {{/timeout}}
+    {{/respuestaCorrecta}}
+
     {{#aciertos}}
         <p><strong>Aciertos en esta partida:</strong> {{aciertos}}</p>
     {{/aciertos}}

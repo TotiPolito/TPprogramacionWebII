@@ -1,13 +1,22 @@
 CREATE DATABASE IF NOT EXISTS preguntados;
 USE preguntados;
 
+SET FOREIGN_KEY_CHECKS = 0;
+
 DROP TABLE IF EXISTS partida;
 DROP TABLE IF EXISTS respuestas;
 DROP TABLE IF EXISTS preguntas;
 DROP TABLE IF EXISTS categorias;
 DROP TABLE IF EXISTS usuarios;
+DROP TABLE IF EXISTS preguntas_sugeridas;
+DROP TABLE IF EXISTS preguntas_reportadas;
+DROP TABLE IF EXISTS respuestas_preguntas_sugeridas;
+DROP TABLE IF EXISTS estadisticas_jugador;
 
-CREATE TABLE usuarios (
+
+SET FOREIGN_KEY_CHECKS = 1;
+
+    CREATE TABLE usuarios (
                           id INT AUTO_INCREMENT PRIMARY KEY,
                           nombre_completo VARCHAR(100) NOT NULL,
                           anio_nacimiento INT NOT NULL,
@@ -76,6 +85,8 @@ INSERT INTO usuarios (
              1,
              'admin'
          );
+
+
 
 
 CREATE TABLE categorias (
@@ -150,6 +161,9 @@ CREATE TABLE respuestas (
                             estado BOOLEAN,
                             FOREIGN KEY (idPregunta) REFERENCES preguntas(id)
 );
+
+ALTER TABLE preguntas MODIFY COLUMN id INT AUTO_INCREMENT PRIMARY KEY;
+ALTER TABLE respuestas MODIFY COLUMN idPregunta INT;
 
 CREATE TABLE partida (
                            id INT AUTO_INCREMENT PRIMARY KEY,

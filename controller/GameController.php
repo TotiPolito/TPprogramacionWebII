@@ -79,9 +79,33 @@ class GameController
         return $colores[$categoria] ?? '#ffffff';
     }
 
-    public function responder()
-    {
-        $idRespuesta = $_POST['idRespuesta'];
+    public function responder() {
+
+            if (session_status() === PHP_SESSION_NONE) session_start();
+
+            $idRespuesta = $_POST['idRespuesta'];
+            $idPregunta = $_POST['idPregunta'];
+            $timeout = isset($_POST['timeout']) && $_POST['timeout'] === 'true';
+            $tiempoInicio = $_POST['tiempoInicio'] ?? null;
+            $tiempoActual = round(microtime(true) * 1000); // en milisegundos
+
+            $fueraDeTiempo = false;
+
+            if ($tiempoInicio) {
+                $diferenciaSegundos = ($tiempoActual - $tiempoInicio) / 1000;
+                if ($diferenciaSegundos > 10) { // límite de 10 segundos
+                    $fueraDeTiempo = true;
+                }
+            }
+
+            // Si el tiempo se agotó o viene marcado como timeout, tratamos como incorrecta
+            if ($timeout || $fueraDeTiempo) {
+                $this->registrarPartidaIncorrecta($idPregunta);
+                header("Location: /TPprogramacionWebII/index.php?controller=Game&method=mostrarResultado&idPregunta=$idPregunta&correcta=false");
+                exit;
+            }
+
+            $idRespuesta = $_POST['idRespuesta'];
         $idPregunta = $_POST['idPregunta'];
         $resultado = $this->model->verificarRespuesta($idRespuesta);
         $respuestaCorrecta = $resultado['estado'] == 1;
@@ -128,8 +152,7 @@ class GameController
         exit;
         }
 
-    public function mostrarResultado()
-    {
+    public function mostrarResultado() {
         if (session_status() === PHP_SESSION_NONE) session_start();
 
         $_SESSION['permitir_siguiente'] = true;
@@ -139,6 +162,12 @@ class GameController
         header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
         header("Cache-Control: post-check=0, pre-check=0", false);
         header("Pragma: no-cache");
+
+        // Si llega el parámetro timeout, mostramos el mensaje
+        $mensaje = null;
+        if (isset($_GET['timeout']) && $_GET['timeout'] == 'true') {
+            $mensaje = "¡Se acabó el tiempo!";
+        }
 
         $idPregunta = $_GET['idPregunta'];
         $respuestaCorrecta = $_GET['correcta'] == 'true';
@@ -172,6 +201,22 @@ class GameController
             'nivelJugador' => $nivelJugador,
             'aciertos' => $_SESSION['aciertos'] ?? 0
         ]);
+    }
+
+    private function registrarPartidaIncorrecta($idPregunta) {
+        if (session_status() === PHP_SESSION_NONE) session_start();
+
+        $totalAciertos = $_SESSION['aciertos'] ?? 0;
+        $idUsuario = $_SESSION['usuario']['id'] ?? null;
+
+        if ($idUsuario) {
+            $this->partidasModel->guardarPartida($idUsuario, $totalAciertos);
+            $this->partidasModel->actualizarPuntajeUsuario($idUsuario, $totalAciertos);
+        }
+
+        $_SESSION['preguntas_vistas'] = [];
+        $_SESSION['aciertos'] = 0;
+        $_SESSION['num_preguntas'] = 0;
     }
 
 }
