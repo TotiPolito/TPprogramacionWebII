@@ -1,4 +1,4 @@
-> Implementación deliberadamente simple y repetitiva (sin prepared statements, sin helpers, conexión duplicada) para usar en clase y luego refactorizar.
+Guia de Instalacion 
 
 ## Requisitos
 - PHP 7+ con mysqli
