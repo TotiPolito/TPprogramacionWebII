@@ -26,13 +26,15 @@ textarea {
 }
 
 button {
-    margin-top: 15px;
-    padding: 10px 20px;
+    margin-top: 20px;
+    padding: 12px 28px;
     border: none;
-    border-radius: 6px;
+    border-radius: 25px;
     background-color: #8B0000;
     color: white;
     cursor: pointer;
+    font-weight: 600;
+    transition: all 0.25s ease;
 }
 
 button:hover {

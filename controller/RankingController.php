@@ -18,6 +18,9 @@ class RankingController {
         $pos = 1;
         while ($fila = $resultado->fetch_assoc()) {
             $fila['posicion'] = $pos++;
+            $fila['usuario'] = $fila['usuario'] ?? 'Desconocido';
+            $fila['promedio_puntaje'] = $fila['promedio_puntaje'] ?? 0;
+            $fila['id'] = $fila['id'] ?? 0;
             $ranking[] = $fila;
         }
         $data["ranking"] = $ranking;

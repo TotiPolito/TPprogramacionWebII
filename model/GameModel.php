@@ -38,6 +38,18 @@ class GameModel
         $resultado = $this->conexion->query($sql);
         $pregunta = $resultado->fetch_assoc();
 
+        if (!$pregunta) {
+            $sql = "SELECT p.*, c.descripcion AS nombre_categoria
+                FROM preguntas p
+                JOIN categorias c ON p.categoria = c.id
+                WHERE p.id NOT IN ($idsVistos)
+                ORDER BY RAND()
+                LIMIT 1";
+
+            $resultado = $this->conexion->query($sql);
+            $pregunta = $resultado->fetch_assoc();
+        }
+
         return $pregunta;
     }
 

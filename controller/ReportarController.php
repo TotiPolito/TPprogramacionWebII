@@ -12,6 +12,7 @@ class ReportarController {
     // Muestra el formulario para reportar una pregunta
     public function reporte() {
         $idPregunta = $_GET["idPregunta"] ?? null;
+        $respuestaCorrecta = isset($_GET["respuestaCorrecta"]) && $_GET["respuestaCorrecta"] === "true";
 
         if (!$idPregunta) {
             header("Location: /TPprogramacionWebII/index.php?controller=Home&method=Game");
@@ -21,7 +22,8 @@ class ReportarController {
         $pregunta = $this->model->obtenerPreguntaPorId($idPregunta);
 
         $this->renderer->render("reportarPregunta", [
-            "pregunta" => $pregunta
+            "pregunta" => $pregunta,
+            "respuestaCorrecta" => $respuestaCorrecta == "true",
         ]);
     }
 

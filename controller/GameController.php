@@ -37,8 +37,6 @@ class GameController
 
         unset($_SESSION['permitir_siguiente']);
 
-
-
         if (!isset($_SESSION['preguntas_vistas'])) $_SESSION['preguntas_vistas'] = [];
         if (!isset($_SESSION['aciertos'])) $_SESSION['aciertos'] = 0;
         if (!isset($_SESSION['num_preguntas'])) $_SESSION['num_preguntas'] = 0;
@@ -46,17 +44,14 @@ class GameController
         $idUsuario = $_SESSION['usuario']['id'] ?? null;
 
         $pregunta = $this->model->obtenerPreguntaPorDificultad($idUsuario, $_SESSION['preguntas_vistas']);
-        $nombreCategoria = $pregunta['nombre_categoria'] ?? 'Sin categoría';
-        $colorFondo = $this->ObtenerColorPorCategoria($nombreCategoria);
 
         if (!$pregunta) {
-            $totalAciertos = $_SESSION['aciertos'];
             $_SESSION['preguntas_vistas'] = [];
-            $_SESSION['aciertos'] = 0;
-            $_SESSION['num_preguntas'] = 0;
-            echo $this->renderer->render("fin", ['aciertos' => $totalAciertos]);
-            exit;
+            $pregunta = $this->model->obtenerPreguntaPorDificultad($idUsuario, []);
         }
+
+        $nombreCategoria = $pregunta['nombre_categoria'] ?? 'Sin categoría';
+        $colorFondo = $this->ObtenerColorPorCategoria($nombreCategoria);
 
         $_SESSION['preguntas_vistas'][] = $pregunta['id'];
         $this->model->incrementarVistasPregunta($pregunta['id']);

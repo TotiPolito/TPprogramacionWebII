@@ -29,8 +29,14 @@
     <label for="motivo">Motivo del reporte:</label><br>
     <textarea id="motivo" name="motivo" placeholder="Describe brevemente el motivo..." required></textarea><br>
 
+{{#respuestaCorrecta}}
     <button type="submit">Enviar reporte</button>
     <a class="link_respuesta" href="{{BASE_URL}}/index.php?controller=Game&method=jugar">Siguiente pregunta</a>
+{{/respuestaCorrecta}}
+{{^respuestaCorrecta}}
+    <button type="submit">Enviar reporte</button>
+    <a class="link_respuesta" href="{{BASE_URL}}/index.php?controller=Home&method=Game">Volver al inicio</a>
+{{/respuestaCorrecta}}
 </form>
 </body>
 </html>

@@ -30,6 +30,7 @@ class HomeController
                     header("Location:/TPprogramacionWebII/index.php?controller=Editor&method=panel");
                     exit;
                 case "admin":
+                    header("Location: /TPprogramacionWebII/index.php?controller=Admin&method=panel");
                     exit;
             }
         }

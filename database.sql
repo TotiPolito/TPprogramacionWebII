@@ -72,7 +72,7 @@ INSERT INTO usuarios (
              'Buenos Aires',
              'admin@gmail.com',
              'admin',
-             '$2y$10$kuFWF1FXR./MyRn0MLyPveTga9tVqMwjZpqjPjO2fl2QOtql36/5a',
+             '$2y$10$PCcMBcdhssLc4Ye.JrUl6.sCSpSiPdn/aIBPx4JEkeroKqdCQuPJm',
              1,
              'admin'
          );
