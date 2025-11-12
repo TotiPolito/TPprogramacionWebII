@@ -1,8 +1,6 @@
 CREATE DATABASE IF NOT EXISTS preguntados;
 USE preguntados;
 
-SET FOREIGN_KEY_CHECKS = 0;
-
 DROP TABLE IF EXISTS partida;
 DROP TABLE IF EXISTS respuestas;
 DROP TABLE IF EXISTS preguntas;
@@ -13,10 +11,7 @@ DROP TABLE IF EXISTS preguntas_reportadas;
 DROP TABLE IF EXISTS respuestas_preguntas_sugeridas;
 DROP TABLE IF EXISTS estadisticas_jugador;
 
-
-SET FOREIGN_KEY_CHECKS = 1;
-
-    CREATE TABLE usuarios (
+CREATE TABLE usuarios (
                           id INT AUTO_INCREMENT PRIMARY KEY,
                           nombre_completo VARCHAR(100) NOT NULL,
                           anio_nacimiento INT NOT NULL,
@@ -87,8 +82,6 @@ INSERT INTO usuarios (
          );
 
 
-
-
 CREATE TABLE categorias (
                             id INT AUTO_INCREMENT PRIMARY KEY,
                             descripcion VARCHAR(25)
@@ -123,11 +116,11 @@ ALTER TABLE preguntas_sugeridas
     ADD aprobada BOOLEAN DEFAULT NULL AFTER sugerida_por; -- null=pendiente
 
 CREATE TABLE respuestas_preguntas_sugeridas(
-                                     id INT AUTO_INCREMENT PRIMARY KEY,
-                                     idPregunta INT NOT NULL,
-                                     descripcion VARCHAR(500) NOT NULL,
-                                     estado BOOLEAN,
-                                     FOREIGN KEY (idPregunta) REFERENCES preguntas_sugeridas(id)
+                                               id INT AUTO_INCREMENT PRIMARY KEY,
+                                               idPregunta INT NOT NULL,
+                                               descripcion VARCHAR(500) NOT NULL,
+                                               estado BOOLEAN,
+                                               FOREIGN KEY (idPregunta) REFERENCES preguntas_sugeridas(id)
 );
 
 CREATE TABLE estadisticas_jugador (
@@ -150,7 +143,7 @@ ALTER TABLE preguntas
     ADD reportada BOOLEAN DEFAULT 0;
 
 ALTER TABLE preguntas
-ADD COLUMN vistas INT DEFAULT 0,
+    ADD COLUMN vistas INT DEFAULT 0,
 ADD COLUMN aciertos INT DEFAULT 0,
 MODIFY COLUMN dificultad VARCHAR(20) DEFAULT 'Sin datos';
 
@@ -162,15 +155,12 @@ CREATE TABLE respuestas (
                             FOREIGN KEY (idPregunta) REFERENCES preguntas(id)
 );
 
-ALTER TABLE preguntas MODIFY COLUMN id INT AUTO_INCREMENT PRIMARY KEY;
-ALTER TABLE respuestas MODIFY COLUMN idPregunta INT;
-
 CREATE TABLE partida (
-                           id INT AUTO_INCREMENT PRIMARY KEY,
-                           id_usuario INT,
-                           puntaje INT,
-                           fecha DATETIME,
-                           FOREIGN KEY (id_usuario) REFERENCES usuarios(id)
+                         id INT AUTO_INCREMENT PRIMARY KEY,
+                         id_usuario INT,
+                         puntaje INT,
+                         fecha DATETIME,
+                         FOREIGN KEY (id_usuario) REFERENCES usuarios(id)
 );
 
 insert into categorias(descripcion)

@@ -7,6 +7,7 @@
 </head>
 <body>
 
+<div id="timer">Tiempo restante: <span id="tiempo">10</span> segundos</div>
 <h2  style="background-color: {{color}};">Categoría: {{categoria}}</h2>
 <img src="{{BASE_URL}}/public/{{pregunta.imagen}}" alt="imagen de la pregunta" class="pregunta_imagen">
 <p>{{pregunta.descripcion}}</p>
@@ -26,65 +27,7 @@
     {{/respuestas}}
 </div>
 
+<script src="{{BASE_URL}}/public/js/gameTimer.js"></script>
 <script src="{{BASE_URL}}/public/js/dinamicStyle.js"></script>
-
-<div id="timer">Tiempo restante: <span id="tiempo">10</span> segundos</div>
-
-<script>
-    let tiempo = 10;
-    const contador = document.getElementById("tiempo");
-    const form = document.getElementById("respuestaForm");
-    const inicio = Date.now();
-
-    // guardamos inicio para backend
-    const inputTiempoInicio = document.createElement("input");
-    inputTiempoInicio.type = "hidden";
-    inputTiempoInicio.name = "tiempoInicio";
-    inputTiempoInicio.value = inicio;
-    form.appendChild(inputTiempoInicio);
-
-    // cuenta regresiva
-    const interval = setInterval(() => {
-        tiempo--;
-        contador.textContent = tiempo;
-
-        if (tiempo <= 0) {
-            clearInterval(interval);
-            enviarTimeout();
-        }
-    }, 1000);
-
-    // 🔹 función única para colorear y enviar
-    function enviarRespuesta(idRespuesta, botonSeleccionado) {
-        clearInterval(interval); // detiene el timer
-        const esCorrecta = botonSeleccionado.getAttribute('data-correcta') === '1';
-
-        // color visual
-        if (esCorrecta) {
-            botonSeleccionado.classList.add('correcta');
-        } else {
-            botonSeleccionado.classList.add('incorrecta');
-        }
-
-        // desactivar botones
-        document.querySelectorAll('.respuestas button').forEach(b => b.disabled = true);
-
-        // esperar 1 segundo y enviar
-        setTimeout(() => {
-            document.getElementById("idRespuesta").value = idRespuesta;
-            form.submit();
-        }, 1000);
-    }
-
-    function enviarTimeout() {
-        document.getElementById("idRespuesta").value = 0;
-        const inputTimeout = document.createElement("input");
-        inputTimeout.type = "hidden";
-        inputTimeout.name = "timeout";
-        inputTimeout.value = "true";
-        form.appendChild(inputTimeout);
-        form.submit();
-    }
-</script>
 </body>
 </html>

@@ -98,14 +98,13 @@ class GameController
                 }
             }
 
-            // Si el tiempo se agotó o viene marcado como timeout, tratamos como incorrecta
-            if ($timeout || $fueraDeTiempo) {
-                $this->registrarPartidaIncorrecta($idPregunta);
-                header("Location: /TPprogramacionWebII/index.php?controller=Game&method=mostrarResultado&idPregunta=$idPregunta&correcta=false");
-                exit;
-            }
+        if ($timeout || $fueraDeTiempo) {
+            $this->registrarPartidaIncorrecta($idPregunta);
+            header("Location: /TPprogramacionWebII/index.php?controller=Game&method=mostrarResultado&idPregunta=$idPregunta&correcta=false&timeout=true");
+            exit;
+        }
 
-            $idRespuesta = $_POST['idRespuesta'];
+        $idRespuesta = $_POST['idRespuesta'];
         $idPregunta = $_POST['idPregunta'];
         $resultado = $this->model->verificarRespuesta($idRespuesta);
         $respuestaCorrecta = $resultado['estado'] == 1;
@@ -163,7 +162,6 @@ class GameController
         header("Cache-Control: post-check=0, pre-check=0", false);
         header("Pragma: no-cache");
 
-        // Si llega el parámetro timeout, mostramos el mensaje
         $mensaje = null;
         if (isset($_GET['timeout']) && $_GET['timeout'] == 'true') {
             $mensaje = "¡Se acabó el tiempo!";
@@ -199,7 +197,8 @@ class GameController
             'respuestaCorrecta' => $respuestaCorrecta,
             'ratioJugador' => number_format($ratioJugador, 2),
             'nivelJugador' => $nivelJugador,
-            'aciertos' => $_SESSION['aciertos'] ?? 0
+            'aciertos' => $_SESSION['aciertos'] ?? 0,
+            'mensaje' => $mensaje
         ]);
     }
 
