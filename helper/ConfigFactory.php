@@ -16,6 +16,7 @@ include_once(__DIR__ . "/../controller/PreguntaSugeridaController.php");
 include_once(__DIR__ . "/../controller/ReportarController.php");
 include_once(__DIR__ . "/../controller/ReportesController.php");
 include_once(__DIR__ . "/../controller/EditorController.php");
+include_once(__DIR__ . "/../controller/AdminController.php");
 
 
 include_once(__DIR__ . "/../model/LoginModel.php");
@@ -29,6 +30,7 @@ include_once(__DIR__ . "/../model/PreguntaSugeridaModel.php");
 include_once(__DIR__ . "/../model/ReportarModel.php");
 include_once(__DIR__ . "/../model/ReportesModel.php");
 include_once(__DIR__ . "/../model/EditorModel.php");
+include_once(__DIR__ . "/../model/AdminModel.php");
 
 include_once(__DIR__ . "/../vendor/mustache/src/Mustache/Autoloader.php");
 
@@ -118,6 +120,12 @@ class ConfigFactory
             new EditorModel($this->conexion),
             $this->renderer
         );
+
+        $this->objetos["AdminController"] = new AdminController(
+            $this->renderer,
+            new AdminModel($this->conexion)
+        );
+
     }
 
 

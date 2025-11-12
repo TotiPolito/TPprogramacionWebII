@@ -53,6 +53,31 @@ INSERT INTO usuarios (
              'editor'
          );
 
+INSERT INTO usuarios (
+    nombre_completo,
+    anio_nacimiento,
+    sexo,
+    pais,
+    ciudad,
+    mail,
+    usuario,
+    password,
+    validado,
+    rol
+) VALUES (
+             'Administrador del Sitio',
+             2000,
+             'Masculino',
+             'Argentina',
+             'Buenos Aires',
+             'admin@gmail.com',
+             'admin',
+             '$2y$10$kuFWF1FXR./MyRn0MLyPveTga9tVqMwjZpqjPjO2fl2QOtql36/5a',
+             1,
+             'admin'
+         );
+
+
 CREATE TABLE categorias (
                             id INT AUTO_INCREMENT PRIMARY KEY,
                             descripcion VARCHAR(25)
