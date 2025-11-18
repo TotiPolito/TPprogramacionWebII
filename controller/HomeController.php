@@ -22,6 +22,7 @@ class HomeController
             exit;
         }
 
+        $_SESSION['partida_en_curso'] = false;
         $usuario = $_SESSION["usuario"];
 
         if ($usuario["rol"] !== "jugador") {

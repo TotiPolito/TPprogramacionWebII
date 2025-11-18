@@ -1,0 +1,98 @@
+<html>
+<head>
+    <title>Ruleta</title>
+    <link rel="stylesheet" href="{{BASE_URL}}/public/style/style.css">
+    <link rel="stylesheet" href="{{BASE_URL}}/public/style/headerFooter.css">
+    <link rel="stylesheet" href="{{BASE_URL}}/public/style/ruleta.css">
+</head>
+
+<body class="body_ruleta">
+
+<h2>Girá la ruleta</h2>
+
+<div class="ruleta-container" style="width: 260px; height:260px;">
+    <div class="puntero"></div>
+
+    <div id="ruleta"></div>
+
+    <!-- badge resultado -->
+    <div id="resultado" class="resultado">
+        <span id="textoResultado">...</span>
+        <span id="detalle" class="detalle"></span>
+    </div>
+</div>
+
+<button id="btnGirar" class="btnGirar">Girar</button>
+
+<script>
+    const categorias = ["deportes","historia","arte","ciencia","geografia","entretenimiento"];
+    const colores = ["#ef9222","#fdd730","#f63232","#4dfd3a","#3498db","#ed479d"];
+
+    const ruleta = document.getElementById("ruleta");
+    const btn = document.getElementById("btnGirar");
+    const resultadoDiv = document.getElementById("resultado");
+    const textoResultado = document.getElementById("textoResultado");
+    const detalle = document.getElementById("detalle");
+
+    const sector = 360 / categorias.length; // 60°
+
+    let rotacionActual = 0;
+    let girando = false;
+
+    btn.onclick = () => {
+        if (girando) return;
+        girando = true;
+        resultadoDiv.classList.remove("show");
+
+        const extra = Math.floor(Math.random() * 360);
+        const vueltas = 3600; // 10 vueltas para "efecto"
+        const rotacionFinal = vueltas + extra;
+
+        rotacionActual += rotacionFinal;
+        ruleta.style.transform = `rotate(${rotacionActual}deg)`;
+
+        const onEnd = (ev) => {
+            ruleta.removeEventListener('transitionend', onEnd);
+
+            let angulo = rotacionActual % 360;
+
+            angulo = (angulo + 270) % 360;
+
+            const index = Math.floor(angulo / sector);
+
+            const idx = (index + categorias.length) % categorias.length;
+            const categoriaElegida = categorias[idx];
+            const colorElegido = colores[idx];
+
+            console.log("rotacionActual (deg):", rotacionActual);
+            console.log("angulo (0-359) antes ajuste:", rotacionActual % 360);
+            console.log("angulo ajustado al puntero (0-359):", angulo);
+            console.log("sectorIndex:", idx, "categoria:", categoriaElegida);
+
+            textoResultado.textContent = categoriaElegida;
+            resultadoDiv.classList.add("show");
+
+            ruleta.style.borderColor = colorElegido;
+            ruleta.style.boxShadow = `0 0 30px ${hexToRgba(colorElegido, 0.9)}`;
+
+            setTimeout(() => {
+               window.location.href = "{{BASE_URL}}/Game/jugar?categoria=" + categoriaElegida;
+                girando = false;
+            }, 900);
+        };
+
+        ruleta.addEventListener('transitionend', onEnd);
+    };
+
+    function hexToRgba(hex, alpha = 1) {
+        const h = hex.replace('#','');
+        const bigint = parseInt(h, 16);
+        const r = (bigint >> 16) & 255;
+        const g = (bigint >> 8) & 255;
+        const b = bigint & 255;
+        return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+    }
+</script>
+
+</body>
+</html>

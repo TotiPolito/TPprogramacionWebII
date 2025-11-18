@@ -30,6 +30,8 @@ class GameController
     {
         if (session_status() === PHP_SESSION_NONE) session_start();
 
+        $categoriaElegida = $_GET['categoria'] ?? null;
+
         if (empty($_SESSION['permitir_siguiente']) || $_SESSION['permitir_siguiente'] !== true) {
             header("Location: /TPprogramacionWebII/Home/Game");
             exit;
@@ -43,7 +45,11 @@ class GameController
 
         $idUsuario = $_SESSION['usuario']['id'] ?? null;
 
-        $pregunta = $this->model->obtenerPreguntaPorDificultad($idUsuario, $_SESSION['preguntas_vistas']);
+        if ($categoriaElegida) {
+            $pregunta = $this->model->obtenerPreguntaPorCategoria($categoriaElegida, $_SESSION['preguntas_vistas']);
+        } else {
+            $pregunta = $this->model->obtenerPreguntaPorDificultad($idUsuario, $_SESSION['preguntas_vistas']);
+        }
 
         if (!$pregunta) {
             $_SESSION['preguntas_vistas'] = [];
@@ -77,6 +83,23 @@ class GameController
         ];
 
         return $colores[$categoria] ?? '#ffffff';
+    }
+
+    public function ruleta()
+    {
+        if (session_status() === PHP_SESSION_NONE) session_start();
+
+        if (!isset($_SESSION['partida_en_curso']) || $_SESSION['partida_en_curso'] == false) {
+            $_SESSION['preguntas_vistas'] = [];
+            $_SESSION['aciertos'] = 0;
+            $_SESSION['num_preguntas'] = 0;
+
+            $_SESSION['partida_en_curso'] = true;
+        }
+
+        $_SESSION['permitir_siguiente'] = true;
+
+        echo $this->renderer->render("ruleta");
     }
 
     public function responder() {

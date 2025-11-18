@@ -53,6 +53,25 @@ class GameModel
         return $pregunta;
     }
 
+    public function obtenerPreguntaPorCategoria($categoria, $preguntasVistas)
+    {
+        $idsVistos = implode(',', $preguntasVistas ?: [0]);
+
+        $sql = "SELECT p.*, c.descripcion AS nombre_categoria
+            FROM preguntas p
+            JOIN categorias c ON p.categoria = c.id
+            WHERE c.descripcion = ?
+            AND p.id NOT IN ($idsVistos)
+            ORDER BY RAND()
+            LIMIT 1";
+
+        $stmt = $this->conexion->prepare($sql);
+        $stmt->bind_param("s", $categoria);
+        $stmt->execute();
+        return $stmt->get_result()->fetch_assoc();
+    }
+
+
     public function obtenerRespuestas($preguntaId)
     {
         $sql = "SELECT * FROM respuestas WHERE idPregunta = $preguntaId";
