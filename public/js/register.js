@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", function() {
         const mail = inputMail.value.trim();
         if (!mail) return; // no enviar vacío
 
-        fetch("{{BASE_URL}}/index.php?controller=Register&method=verificarMailAjax", {
+        fetch("{{BASE_URL}}/Register/verificarMailAjax", {
             method: "POST",
             headers: { "Content-Type": "application/x-www-form-urlencoded" },
             body: "mail=" + encodeURIComponent(mail)

@@ -12,7 +12,7 @@ class ReportesController {
     // Muestra todos los reportes pendientes
     public function listar() {
         if (!isset($_SESSION['usuario']) || $_SESSION['usuario']['rol'] !== 'editor') {
-            header("Location: /TPprogramacionWebII/index.php?controller=Login&method=loginForm");
+            header("Location: /TPprogramacionWebII/Login/loginForm");
             exit;
         }
 
@@ -25,7 +25,7 @@ class ReportesController {
 
         $this->model->aceptarReporte($idReporte);
 
-        header("Location: /TPprogramacionWebII/index.php?controller=Editor&method=panel");
+        header("Location: /TPprogramacionWebII/Editor/panel");
         exit;
     }
 
@@ -35,7 +35,7 @@ class ReportesController {
 
         $this->model->rechazarReporte($idReporte);
 
-        header("Location: /TPprogramacionWebII/index.php?controller=Editor&method=panel");
+        header("Location: /TPprogramacionWebII/Editor/panel");
         exit;
     }
 }

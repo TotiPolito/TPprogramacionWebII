@@ -21,7 +21,7 @@
     <p class="error">{{error}}</p>
 {{/error}}
 
-<form action="/TPprogramacionWebII/index.php?controller=Reportar&method=guardar" method="POST">
+<form action="/Reportar/guardar" method="POST">
     <input type="hidden" name="idPregunta" value="{{pregunta.id}}">
 
     <p><strong>{{pregunta.descripcion}}</strong></p>
@@ -31,11 +31,11 @@
 
 {{#respuestaCorrecta}}
     <button type="submit">Enviar reporte</button>
-    <a class="link_respuesta" href="{{BASE_URL}}/index.php?controller=Game&method=jugar">Siguiente pregunta</a>
+    <a class="link_respuesta" href="{{BASE_URL}}/Game/jugar">Siguiente pregunta</a>
 {{/respuestaCorrecta}}
 {{^respuestaCorrecta}}
     <button type="submit">Enviar reporte</button>
-    <a class="link_respuesta" href="{{BASE_URL}}/index.php?controller=Home&method=Game">Volver al inicio</a>
+    <a class="link_respuesta" href="{{BASE_URL}}/Home/Game">Volver al inicio</a>
 {{/respuestaCorrecta}}
 </form>
 </body>

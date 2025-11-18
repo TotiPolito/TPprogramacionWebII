@@ -24,7 +24,7 @@ class PerfilController {
 
         if ($perfil) {
 
-            $urlPerfil = "http://localhost/TPprogramacionWebII/index.php?controller=Perfil&method=mostrarPerfil&id=" . $idJugador;
+            $urlPerfil = "/TPprogramacionWebII/Perfil/mostrarPerfil&id=" . $idJugador;
             $rutaQR = "public/imagenes/qrs/jugador_" . $idJugador . ".png";
             QrGenerator::generarQR($urlPerfil, $rutaQR);
 

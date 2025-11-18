@@ -3,10 +3,10 @@
         <h1>Preguntados</h1>
     {{/noLink}}
     {{^noLink}}
-        <h1><a href="{{BASE_URL}}/index.php?controller=Home&method=Game">Preguntados</a></h1>
+        <h1><a href="{{BASE_URL}}/Home/Game">Preguntados</a></h1>
     {{/noLink}}
     {{#logueado}}
-        <form action="{{BASE_URL}}/index.php?controller=Login&method=logout" method="post">
+        <form action="{{BASE_URL}}/Login/logout" method="post">
             <button type="submit">Cerrar sesión</button>
         </form>
     {{/logueado}}

@@ -43,8 +43,8 @@
 
 {{#respuestaCorrecta}}
     <p class="resultado-correcto">¡Correcto! La respuesta es correcta.</p>
-    <a class="link_respuesta" href="{{BASE_URL}}/index.php?controller=Game&method=jugar">Siguiente pregunta</a>
-    <a class="link_respuesta" href="{{BASE_URL}}/index.php?controller=Reportar&method=reporte&idPregunta={{pregunta.id}}&respuestaCorrecta=true">
+    <a class="link_respuesta" href="{{BASE_URL}}/Game/jugar">Siguiente pregunta</a>
+    <a class="link_respuesta" href="{{BASE_URL}}/Reportar/reporte&idPregunta={{pregunta.id}}&respuestaCorrecta=true">
     Reportar pregunta
     </a>
 {{/respuestaCorrecta}}
@@ -67,8 +67,8 @@
         <p><strong>Aciertos en esta partida:</strong> {{aciertos}}</p>
     {{/aciertos}}
 
-    <a class="link_respuesta" href="{{BASE_URL}}/index.php?controller=Home&method=Game">Volver al inicio</a>
-    <a class="link_respuesta" href="{{BASE_URL}}/index.php?controller=Reportar&method=reporte&idPregunta={{pregunta.id}}&respuestaCorrecta=false">
+    <a class="link_respuesta" href="{{BASE_URL}}/Home/Game">Volver al inicio</a>
+    <a class="link_respuesta" href="{{BASE_URL}}/Reportar/reporte&idPregunta={{pregunta.id}}&respuestaCorrecta=false">
     Reportar pregunta
     </a>
 {{/respuestaCorrecta}}

@@ -9,13 +9,12 @@ class ReportarController {
         $this->renderer = $renderer;
     }
 
-    // Muestra el formulario para reportar una pregunta
     public function reporte() {
         $idPregunta = $_GET["idPregunta"] ?? null;
         $respuestaCorrecta = isset($_GET["respuestaCorrecta"]) && $_GET["respuestaCorrecta"] === "true";
 
         if (!$idPregunta) {
-            header("Location: /TPprogramacionWebII/index.php?controller=Home&method=Game");
+            header("Location: /TPprogramacionWebII/Home/Game");
             exit;
         }
 
@@ -30,7 +29,7 @@ class ReportarController {
     // Guarda el reporte en la base de datos
     public function guardar() {
         if (!isset($_SESSION["usuario"])) {
-            header("Location: /TPprogramacionWebII/index.php?controller=Login&method=loginForm");
+            header("Location: /TPprogramacionWebII/Login/loginForm");
             exit;
         }
 

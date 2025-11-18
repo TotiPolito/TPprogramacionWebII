@@ -18,10 +18,10 @@
         <p><strong>Motivo:</strong> {{motivo}}</p>
         <p><strong>Reportado por:</strong> {{usuario}}</p>
 
-        <a href="/TPprogramacionWebII/index.php?controller=Reportes&method=aceptar&idReporte={{idReporte}}"
+        <a href="{{BASE_URL}}/Reportes/aceptar&idReporte={{idReporte}}"
         onclick="return confirm('¿Seguro que quieres eliminar esta pregunta?')">✅ Aceptar</a>
 
-        <a href="/TPprogramacionWebII/index.php?controller=Reportes&method=rechazar&idReporte={{idReporte}}"
+        <a href="{{BASE_URL}}/Reportes/rechazar&idReporte={{idReporte}}"
         onclick="return confirm('¿Seguro que quieres rechazar este reporte?')">❌ Rechazar</a>
     </div>
     <hr>

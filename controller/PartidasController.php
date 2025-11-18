@@ -14,7 +14,7 @@ class PartidasController
     public function listarPartidas()
     {
         if (!isset($_SESSION['usuario'])) {
-            header("Location: /TPprogramacionWebII/index.php?controller=Login&method=mostrarLogin");
+            header("Location: /TPprogramacionWebII/Login/loginForm");
             exit;
         }
 

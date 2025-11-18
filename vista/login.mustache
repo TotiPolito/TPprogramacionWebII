@@ -10,13 +10,13 @@
 
 <body>
 <h2>Iniciar Sesión</h2>
-<form class="form" action="{{BASE_URL}}/index.php?controller=Login&method=login" method="POST">
+<form class="form" action="{{BASE_URL}}/Login/login" method="POST">
     <input type="text" name="usuario" placeholder="Usuario">
     <input type="password" name="password" placeholder="Contraseña">
     <button type="submit">Ingresar</button>
 </form>
 
-<p>¿No tenés cuenta? <a href="{{BASE_URL}}/index.php?controller=Register&method=registerForm">Registrate</a></p>
+<p>¿No tenés cuenta? <a href="{{BASE_URL}}/Register/registerForm">Registrate</a></p>
 
 {{#error}}
     <p class="error-message">{{error}}</p>

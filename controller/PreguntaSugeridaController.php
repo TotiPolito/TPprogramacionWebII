@@ -9,7 +9,6 @@ class PreguntaSugeridaController {
         $this->renderer = $renderer;
     }
 
-    // Muestra el formulario para sugerir una pregunta
     public function sugerirForm() {
         $categorias = $this->model->obtenerCategorias();
 
@@ -17,10 +16,9 @@ class PreguntaSugeridaController {
         $this->renderer->render("sugerirPregunta", ["categorias" => $categorias]);
     }
 
-    // Procesa el formulario al enviarse
     public function guardar() {
         if (!isset($_SESSION["usuario"])) {
-            header("Location: /TPprogramacionWebII/index.php?controller=Login&method=loginForm");
+            header("Location: /TPprogramacionWebII/Login/loginForm");
             exit;
         }
 
@@ -45,10 +43,9 @@ class PreguntaSugeridaController {
         $this->renderer->render("sugerirPregunta", [ "mensaje" => "¡Tu pregunta fue enviada para revisión!", "categorias" => $categorias]);
     }
 
-    // Listar las sugerencias pendientes para el editor
     public function listarPendientes() {
         if (!isset($_SESSION['usuario']) || $_SESSION['usuario']['rol'] !== 'editor') {
-            header("Location: /TPprogramacionWebII/index.php?controller=Login&method=loginForm");
+            header("Location: /TPprogramacionWebII/Login/loginForm");
             exit;
         }
 
@@ -61,7 +58,7 @@ class PreguntaSugeridaController {
         $id = $_GET['idSugerida'];
         $this->model->aprobarSugerencia($id);
 
-        header("Location: /TPprogramacionWebII/index.php?controller=PreguntaSugerida&method=listarPendientes");
+        header("Location: /TPprogramacionWebII/PreguntaSugerida/listarPendientes");
         exit;
     }
 
@@ -70,7 +67,7 @@ class PreguntaSugeridaController {
         $id = $_GET['idSugerida'];
         $this->model->rechazarSugerencia($id);
 
-        header("Location: /TPprogramacionWebII/index.php?controller=PreguntaSugerida&method=listarPendientes");
+        header("Location: /TPprogramacionWebII/PreguntaSugerida/listarPendientes");
         exit;
     }
 }

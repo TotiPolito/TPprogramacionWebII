@@ -13,11 +13,10 @@ class EditorController {
     public function panel()
     {
         if (!isset($_SESSION["usuario"]) || $_SESSION["usuario"]["rol"] !== "editor") {
-            header("Location: /TPprogramacionWebII/index.php?controller=Login&method=loginForm");
+            header("Location: /TPprogramacionWebII/Login/loginForm");
             exit;
         }
 
-        // Podés obtener estadísticas o datos relevantes del editor
         $data = [
             "usuario" => $_SESSION["usuario"],
             "cantidadReportes" => $this->model->contarReportesPendientes(),

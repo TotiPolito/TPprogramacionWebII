@@ -18,7 +18,7 @@ class HomeController
         }
 
         if (!isset($_SESSION["usuario"])) {
-            header("Location:/TPprogramacionWebII/index.php?controller=Login&method=mostrarLogin");
+            header("Location:/TPprogramacionWebII/Login/loginForm");
             exit;
         }
 
@@ -27,10 +27,10 @@ class HomeController
         if ($usuario["rol"] !== "jugador") {
             switch ($usuario["rol"]) {
                 case "editor":
-                    header("Location:/TPprogramacionWebII/index.php?controller=Editor&method=panel");
+                    header("Location:/TPprogramacionWebII/Editor/panel");
                     exit;
                 case "admin":
-                    header("Location: /TPprogramacionWebII/index.php?controller=Admin&method=panel");
+                    header("Location: /TPprogramacionWebII/Admin/panel");
                     exit;
             }
         }

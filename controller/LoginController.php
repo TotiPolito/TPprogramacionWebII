@@ -39,15 +39,15 @@ class LoginController
 
         switch ($usuario["rol"]) {
             case "editor":
-                header("Location: /TPprogramacionWebII/index.php?controller=Editor&method=panel");
+                header("Location: /TPprogramacionWebII/Editor/panel");
                 break;
 
             case "admin":
-                header("Location: /TPprogramacionWebII/index.php?controller=Admin&method=panel");
+                header("Location: /TPprogramacionWebII/Admin/panel");
                 break;
 
             default:
-                header("Location: /TPprogramacionWebII/index.php?controller=Home&method=Game");
+                header("Location: /TPprogramacionWebII/Home/Game");
                 break;
         }
 
@@ -67,7 +67,7 @@ class LoginController
 
     public function redirectToIndex()
     {
-        header("Location: /TPprogramacionWebII/index.php?controller=Login&method=loginForm");
+        header("Location: /TPprogramacionWebII/Login/loginForm");
         exit;
     }
 }

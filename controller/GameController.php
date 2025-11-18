@@ -23,7 +23,7 @@ class GameController
 
         $_SESSION['permitir_siguiente'] = true;
 
-        header("Location: /TPprogramacionWebII/index.php?controller=Game&method=jugar");
+        header("Location: /TPprogramacionWebII/Game/jugar");
         exit;
     }
     public function jugar()
@@ -31,7 +31,7 @@ class GameController
         if (session_status() === PHP_SESSION_NONE) session_start();
 
         if (empty($_SESSION['permitir_siguiente']) || $_SESSION['permitir_siguiente'] !== true) {
-            header("Location: /TPprogramacionWebII/index.php?controller=Home&method=Game");
+            header("Location: /TPprogramacionWebII/Home/Game");
             exit;
         }
 
@@ -100,7 +100,7 @@ class GameController
 
         if ($timeout || $fueraDeTiempo) {
             $this->registrarPartidaIncorrecta($idPregunta);
-            header("Location: /TPprogramacionWebII/index.php?controller=Game&method=mostrarResultado&idPregunta=$idPregunta&correcta=false&timeout=true");
+            header("Location: /TPprogramacionWebII/Game/mostrarResultado&idPregunta=$idPregunta&correcta=false&timeout=true");
             exit;
         }
 
@@ -143,11 +143,11 @@ class GameController
             $_SESSION['aciertos'] = 0;
             $_SESSION['num_preguntas'] = 0;
 
-            header("Location: /TPprogramacionWebII/index.php?controller=Game&method=mostrarResultado&idPregunta=" . $idPregunta . "&correcta=false");
+            header("Location: /TPprogramacionWebII/Game/mostrarResultado&idPregunta=" . $idPregunta . "&correcta=false");
             exit;
         }
         $_SESSION['ultima_pregunta_resuelta'] = true;
-        header("Location: /TPprogramacionWebII/index.php?controller=Game&method=mostrarResultado&idPregunta=" . $idPregunta . "&correcta=true");
+        header("Location: /TPprogramacionWebII/Game/mostrarResultado&idPregunta=" . $idPregunta . "&correcta=true");
         exit;
         }
 

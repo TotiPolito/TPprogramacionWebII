@@ -83,7 +83,7 @@ class RegisterController
             $_SESSION['mensaje'] = "Hubo un error al registrarse";
         }
 
-        header("Location: index.php?controller=Register&method=mostrarRegister");
+        header("Location: /TPprogramacionWebII/Register/mostrarRegister");
         exit;
     }
 
@@ -98,10 +98,8 @@ class RegisterController
 
     public function verificarMailAjax()
     {
-        // Asegura que la respuesta sea JSON
         header('Content-Type: application/json');
 
-        // Obtenemos el mail enviado por AJAX
         $mail = $_POST['mail'] ?? '';
 
         if (empty($mail)) {
@@ -109,10 +107,8 @@ class RegisterController
             return;
         }
 
-        // Consultamos si existe en la base
         $existe = $this->model->mailExiste($mail);
 
-        // Respondemos con JSON
         echo json_encode(['existe' => $existe]);
     }
 }

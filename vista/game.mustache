@@ -12,7 +12,7 @@
 <img src="{{BASE_URL}}/public/{{pregunta.imagen}}" alt="imagen de la pregunta" class="pregunta_imagen">
 <p>{{pregunta.descripcion}}</p>
 
-<form id="respuestaForm" action="{{BASE_URL}}/index.php?controller=Game&method=responder" method="POST">
+<form id="respuestaForm" action="{{BASE_URL}}/Game/responder" method="POST">
     <input type="hidden" name="idPregunta" value="{{pregunta.id}}">
     <input type="hidden" name="idRespuesta" id="idRespuesta">
 </form>
