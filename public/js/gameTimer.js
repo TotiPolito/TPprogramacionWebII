@@ -45,8 +45,8 @@ function enviarTimeout() {
 }
 
 (function(){
-    const HOME_URL = "{{BASE_URL}}/index.php?controller=Home&method=Game";
-    const SIGUIENTE_URL = "{{BASE_URL}}/index.php?controller=Game&method=jugar";
+    const HOME_URL = "{{BASE_URL}}/Home/Game";
+    const SIGUIENTE_URL = "{{BASE_URL}}/Game/jugar";
 
     window.history.pushState(null, "", window.location.href);
     window.addEventListener("popstate", function () {
