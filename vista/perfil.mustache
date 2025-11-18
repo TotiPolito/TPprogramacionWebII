@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Perfil</title>
+    <link rel="stylesheet" href="{{BASE_URL}}/public/style/style.css">
+    <link rel="stylesheet" href="{{BASE_URL}}/public/style/headerFooter.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+</head>
+<body>
+<h2>{{perfil.nombre_completo}}</h2>
+<p>Puntaje: {{perfil.puntaje}}</p>
+<p>Partidas jugadas: {{perfil.partidas}}</p>
+
+<h3>Ubicación en el mapa:</h3>
+<div id="map" style="height: 400px; width: 100%; border-radius: 8px; margin-bottom: 10px;"></div>
+
+<!-- 🧭 Sección del QR -->
+<section style="text-align: center; margin-top: 20px;">
+    <h3>Tu código QR</h3>
+    <img src="{{qr}}" alt="QR del perfil" width="200" height="200"
+         style="border: 1px solid #ccc; border-radius: 8px; padding: 8px;">
+    <p style="margin-top: 8px; color: #555;">Escaneá este código para ver tu perfil desde otro dispositivo.</p>
+</section>
+
+<!-- Leaflet JS -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<script>
+    const lat = parseFloat("{{perfil.latitud}}");
+    const lng = parseFloat("{{perfil.longitud}}");
+
+    let map = null;
+
+    if (!isNaN(lat) && !isNaN(lng)) {
+        map = L.map('map').setView([lat, lng], 13);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; OpenStreetMap contributors'
+        }).addTo(map);
+
+        L.marker([lat, lng]).addTo(map)
+                .bindPopup("Ubicación de {{perfil.nombre_completo}}")
+                .openPopup();
+    } else {
+        map = L.map('map').setView([-34.61, -58.38], 5);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; OpenStreetMap contributors'
+        }).addTo(map);
+    }
+</script>
+</body>
+</html>

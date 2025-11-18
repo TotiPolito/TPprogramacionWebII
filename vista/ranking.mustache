@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Ranking</title>
+    <link rel="stylesheet" href="{{BASE_URL}}/public/style/style.css">
+    <link rel="stylesheet" href="{{BASE_URL}}/public/style/ranking.css">
+    <link rel="stylesheet" href="{{BASE_URL}}/public/style/headerFooter.css">
+</head>
+
+<body>
+{{> header }}
+
+<div class="ranking-container">
+    <h2 class="ranking-title">Ranking de Jugadores</h2>
+
+    <table>
+        <thead>
+        <tr>
+            <th>Posición</th>
+            <th>Usuario</th>
+            <th>Puntaje</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{#ranking}}
+            <tr>
+                <td data-label="Posición">{{posicion}}</td>
+                <td data-label="Usuario">
+                    <a href="{{BASE_URL}}/Perfil/mostrarPerfil&id={{id}}">{{usuario}}</a>
+                </td>
+                <td data-label="Puntaje">{{promedio_puntaje}}</td>
+            </tr>
+        {{/ranking}}
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>

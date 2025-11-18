@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resultado de la Respuesta</title>
+    <link rel="stylesheet" href="{{BASE_URL}}/public/style/resultado.css">
+    <link rel="stylesheet" href="{{BASE_URL}}/public/style/style.css">
+    <link rel="stylesheet" href="{{BASE_URL}}/public/style/headerFooter.css">
+</head>
+<body>
+<h2>Resultado de la Pregunta</h2>
+
+<div class="nivel-jugador">
+    <p><strong>Nivel del jugador:</strong> {{nivelJugador}}</p>
+    <p><strong>Ratio del jugador:</strong> {{ratioJugador}}</p>
+</div>
+
+<p><strong>Pregunta:</strong> {{pregunta.descripcion}}</p>
+
+<p><strong>Ratio de aciertos:</strong>
+    {{#pregunta.ratio}}
+        {{pregunta.ratio}}
+    {{/pregunta.ratio}}
+    {{^pregunta.ratio}}
+        0
+    {{/pregunta.ratio}}
+</p>
+
+<p><strong>Dificultad:</strong>
+    {{#pregunta.dificultad_actual}}
+        {{pregunta.dificultad_actual}}
+    {{/pregunta.dificultad_actual}}
+    {{^pregunta.dificultad_actual}}
+        {{#pregunta.dificultad}}
+            {{pregunta.dificultad}}
+        {{/pregunta.dificultad}}
+        {{^pregunta.dificultad}}
+            Sin datos
+        {{/pregunta.dificultad}}
+    {{/pregunta.dificultad_actual}}
+</p>
+
+{{#respuestaCorrecta}}
+    <p class="resultado-correcto">¡Correcto! La respuesta es correcta.</p>
+    <a class="link_respuesta" href="{{BASE_URL}}/Game/jugar">Siguiente pregunta</a>
+    <a class="link_respuesta" href="{{BASE_URL}}/Reportar/reporte&idPregunta={{pregunta.id}}&respuestaCorrecta=true">
+    Reportar pregunta
+    </a>
+{{/respuestaCorrecta}}
+
+{{^respuestaCorrecta}}
+    <p class="resultado-incorrecto">Incorrecto. La respuesta correcta era:</p>
+    <ul>
+        {{#respuestas}}
+            {{#estado}}
+                <li>{{descripcion}} (Correcta)</li>
+            {{/estado}}
+        {{/respuestas}}
+    </ul>
+
+        {{#mensaje}}
+            <p class="resultado-incorrecto">¡Se acabó el tiempo!</p>
+        {{/mensaje}}
+
+    {{#aciertos}}
+        <p><strong>Aciertos en esta partida:</strong> {{aciertos}}</p>
+    {{/aciertos}}
+
+    <a class="link_respuesta" href="{{BASE_URL}}/Home/Game">Volver al inicio</a>
+    <a class="link_respuesta" href="{{BASE_URL}}/Reportar/reporte&idPregunta={{pregunta.id}}&respuestaCorrecta=false">
+    Reportar pregunta
+    </a>
+{{/respuestaCorrecta}}
+
+</body>
+</html>

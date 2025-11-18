@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reportes de Preguntas</title>
+    <link rel="stylesheet" href="{{BASE_URL}}/public/style/headerFooter.css">
+    <link rel="stylesheet" href="{{BASE_URL}}/public/style/style.css">
+    <link rel="stylesheet" href="{{BASE_URL}}/public/style/preguntasSugeridasPendientes.css">
+</head>
+<body>
+
+<h2>Preguntas Reportadas</h2>
+
+{{#reportes}}
+    <div class="reporte">
+        <p><strong>Pregunta:</strong> {{pregunta}}</p>
+        <p><strong>Motivo:</strong> {{motivo}}</p>
+        <p><strong>Reportado por:</strong> {{usuario}}</p>
+
+        <a href="{{BASE_URL}}/Reportes/aceptar&idReporte={{idReporte}}"
+        onclick="return confirm('¿Seguro que quieres eliminar esta pregunta?')">✅ Aceptar</a>
+
+        <a href="{{BASE_URL}}/Reportes/rechazar&idReporte={{idReporte}}"
+        onclick="return confirm('¿Seguro que quieres rechazar este reporte?')">❌ Rechazar</a>
+    </div>
+    <hr>
+{{/reportes}}
+
+{{^reportes}}
+    <p>No hay reportes pendientes.</p>
+{{/reportes}}
+
+</body>
+</html>

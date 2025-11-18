@@ -1,0 +1,13 @@
+<header class="header" style="background-color: {{color}};">
+    {{#noLink}}
+        <h1>Preguntados</h1>
+    {{/noLink}}
+    {{^noLink}}
+        <h1><a href="{{BASE_URL}}/Home/Game">Preguntados</a></h1>
+    {{/noLink}}
+    {{#logueado}}
+        <form action="{{BASE_URL}}/Login/logout" method="post">
+            <button type="submit">Cerrar sesión</button>
+        </form>
+    {{/logueado}}
+</header>

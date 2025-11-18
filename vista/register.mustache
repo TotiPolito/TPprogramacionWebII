@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Registro</title>
+    <link rel="stylesheet" href="{{BASE_URL}}/public/style/headerFooter.css">
+    <link rel="stylesheet" href="{{BASE_URL}}/public/style/style.css">
+</head>
+
+<body>
+<h2>Registro de usuario</h2>
+
+<form class="form" action="{{BASE_URL}}/Register/register" method="POST" enctype="multipart/form-data">
+
+    <label>Nombre completo:</label>
+    <input type="text" name="nombre_completo">
+
+    <label>Año de nacimiento:</label>
+    <input type="number" name="anio_nacimiento">
+
+    <label>Sexo:</label>
+    <select name="sexo">
+        <option value="Masculino">Masculino</option>
+        <option value="Femenino">Femenino</option>
+        <option value="Prefiero no cargarlo">Prefiero no cargarlo</option>
+    </select>
+
+    <label>País:</label>
+    <input type="text" name="pais">
+
+    <label>Ciudad:</label>
+    <input type="text" name="ciudad">
+
+    <h3>Seleccioná tu ubicación en el mapa:</h3>
+    <div id="map" style="height: 400px; width: 100%; border-radius: 8px; margin-bottom: 10px;"></div>
+
+    <input type="hidden" name="latitud" id="latitud">
+    <input type="hidden" name="longitud" id="longitud">
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="{{BASE_URL}}/public/js/mapa.js"></script>
+
+    <label>Correo electrónico:</label>
+    <input type="email" name="mail">
+
+    <label>Nombre de usuario:</label>
+    <input type="text" name="usuario">
+
+    <label>Contraseña:</label>
+    <input type="password" name="password">
+
+    <label>Repetir contraseña:</label>
+    <input type="password" name="repassword">
+
+    <label>Foto de perfil:</label>
+    <input type="file" name="foto_perfil">
+
+    <button type="submit">Registrarme</button>
+</form>
+
+<p>¿Ya tenés cuenta? <a href="{{BASE_URL}}/Login/loginForm">Inicia sesión</a></p>
+
+{{#error}}
+    <p class="error-message">{{error}}</p>
+{{/error}}
+{{#mensaje}}
+    <div class="error-message">
+        {{mensaje}}
+    </div>
+    <script>
+        setTimeout(function() {
+            window.location.href = "{{BASE_URL}}/Login/mostrarLogin";
+        }, 3000);
+    </script>
+{{/mensaje}}
+
+
+<script src="{{BASE_URL}}/public/js/register.js"></script>
+
+</body>
+</html>

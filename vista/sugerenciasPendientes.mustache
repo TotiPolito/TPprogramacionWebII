@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel del Editor</title>
+    <link rel="stylesheet" href="{{BASE_URL}}/public/style/headerFooter.css">
+    <link rel="stylesheet" href="{{BASE_URL}}/public/style/style.css">
+    <link rel="stylesheet" href="{{BASE_URL}}/public/style/preguntasSugeridasPendientes.css">
+</head>
+<body>
+
+<h2>Preguntas Sugeridas Pendientes</h2>
+
+{{#sugerencias}}
+    <div class="sugerencia">
+        <p><strong>Pregunta:</strong> {{texto}}</p>
+        <p><strong>Categoría:</strong> {{categoria}}</p>
+        <p><strong>Usuario:</strong> {{usuario}}</p>
+
+        <ul>
+            {{#respuestas}}
+                <li>{{descripcion}} {{#estado}}(Correcta){{/estado}}</li>
+            {{/respuestas}}
+        </ul>
+
+        <a href="{{BASE_URL}}/PreguntaSugerida/aprobar&idSugerida={{id}}"
+        onclick="return confirm('¿Desea aprobar esta pregunta?')">Aprobar</a>
+
+        <a href="{{BASE_URL}}/PreguntaSugerida/rechazar&idSugerida={{id}}"
+        onclick="return confirm('¿Desea rechazar esta pregunta?')">Rechazar</a>
+    </div>
+    <hr>
+{{/sugerencias}}
+
+{{^sugerencias}}
+    <p>No hay sugerencias pendientes.</p>
+{{/sugerencias}}
+
+</body>
+</html>

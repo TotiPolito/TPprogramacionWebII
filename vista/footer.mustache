@@ -1,0 +1,18 @@
+<div class="music-player" id="musicPlayer">
+    <audio id="backgroundMusic" loop preload="metadata">
+        <source src="{{BASE_URL}}/public/audio/Fondo.mp3" type="audio/mpeg">
+        Tu navegador no soporta audio.
+    </audio>
+
+    <div class="music-controls">
+        <button id="toggleMusic" class="music-btn" aria-label="Reproducir/pausar música">🎵</button>
+        <input type="range" id="volumeControl" min="0" max="1" step="0.01" value="0.5" aria-label="Volumen">
+    </div>
+</div>
+
+<script src="{{BASE_URL}}/public/js/Musica.js"></script>
+
+<footer style="background-color: {{color}};">
+    <p>© 2025 Preguntados - Trabajo Práctico Final</p>
+</footer>
+</html>
