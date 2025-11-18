@@ -18,7 +18,7 @@ class AdminController
         }
 
         if (!isset($_SESSION["usuario"]) || $_SESSION["usuario"]["rol"] !== "admin") {
-            header("Location:/TPprogramacionWebII/Login/loginForm");
+            header("Location:/TPprogramacionWebII/index.php?controller=Login&method=loginForm");
             exit;
         }
 
@@ -40,7 +40,7 @@ class AdminController
         }
 
         if (!isset($_SESSION["usuario"]) || $_SESSION["usuario"]["rol"] !== "admin") {
-            header("Location:/TPprogramacionWebII/Login/loginForm");
+            header("Location:/TPprogramacionWebII/index.php?controller=Login&method=loginForm");
             exit;
         }
 
@@ -61,7 +61,7 @@ class AdminController
         }
 
         if (!isset($_SESSION["usuario"]) || $_SESSION["usuario"]["rol"] !== "admin") {
-            header("Location:/TPprogramacionWebII/Login/loginForm");
+            header("Location:/TPprogramacionWebII/index.php?controller=Login&method=loginForm");
             exit;
         }
 
