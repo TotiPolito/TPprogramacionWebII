@@ -1,5 +1,6 @@
 <?php
 require_once("helper/QrGenerator.php");
+require_once("config/config.php");
 
 class PerfilController {
 
@@ -24,7 +25,7 @@ class PerfilController {
 
         if ($perfil) {
 
-            $urlPerfil = "/TPprogramacionWebII/Perfil/mostrarPerfil&id=" . $idJugador;
+            $urlPerfil = BASE_URL . "/Perfil/mostrarPerfil&id=" . $idJugador;
             $rutaQR = "public/imagenes/qrs/jugador_" . $idJugador . ".png";
             QrGenerator::generarQR($urlPerfil, $rutaQR);
 

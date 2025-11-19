@@ -1,12 +1,12 @@
 <?php
 require_once("helper/MyConexion.php");
-require_once __DIR__ . ("/../vendor/phpmailer/src/PHPMailer.php");
-require_once __DIR__ . ("/../vendor/phpmailer/src/SMTP.php");
-require_once __DIR__ . ("/../vendor/phpmailer/src/Exception.php");
-require_once __DIR__ . ("/../config/config.php");
+require_once __DIR__ . "/../vendor/phpmailer/src/PHPMailer.php";
+require_once __DIR__ . "/../vendor/phpmailer/src/SMTP.php";
+require_once __DIR__ . "/../vendor/phpmailer/src/Exception.php";
+require_once __DIR__ . "/../config/config.php";
 
-use PHPmailer\PHPMailer\PHPMailer;
-use PHPmailer\PHPMailer\Exception;
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
 
 class RegisterModel
 {
@@ -37,7 +37,6 @@ class RegisterModel
 
     public function crearUsuario($data)
     {
-
         $token = bin2hex(random_bytes(32));
 
         $query = "INSERT INTO usuarios 
@@ -68,20 +67,17 @@ class RegisterModel
             $idUsuario = $this->conexion->insert_id;
 
             $sqlStats = "INSERT INTO estadisticas_jugador (id_usuario, preguntas_vistas, aciertos)
-                     VALUES ($idUsuario, 0, 0)";
+                         VALUES ($idUsuario, 0, 0)";
             $this->conexion->query($sqlStats);
 
-            if ($this->enviarMailValidacion($data["mail"], $data["usuario"], $token)) {
-                return true;
-            } else {
-                return false;
-            }
-        } else {
-            return false;
+            return $this->enviarMailValidacion($data["mail"], $data["usuario"], $token);
         }
+
+        return false;
     }
 
-    private function enviarMailValidacion($mail, $usuario, $token) {
+    private function enviarMailValidacion($mail, $usuario, $token)
+    {
         $mailSender = new PHPMailer(true);
 
         try {
@@ -90,36 +86,38 @@ class RegisterModel
             $mailSender->SMTPAuth = true;
             $mailSender->Username = MAIL_USERNAME;
             $mailSender->Password = MAIL_PASSWORD;
-            $mailSender->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;;
+            $mailSender->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
             $mailSender->Port = 587;
 
-            $mailSender->setFrom('casanovarocio5@gmail.com', 'Juego Web');
+            $mailSender->setFrom(MAIL_USERNAME, 'Juego Web');
             $mailSender->addAddress($mail, $usuario);
             $mailSender->isHTML(true);
             $mailSender->Subject = 'Validacion de cuenta';
+
+            $urlValidacion = BASE_URL . "/TPprogramacionWebII/index.php?controller=Validar&method=validarCuenta&token=$token";
+
             $mailSender->Body = "
-            <p>Hola <strong>$usuario</strong>,</p>
-            <p>Gracias por registrarte. Para activar tu cuenta, hacé clic en el siguiente enlace:</p>
-            <p><a href='http://localhost/TPprogramacionWebII/index.php?controller=Validar&method=validarCuenta&token=$token'>
-                Activar cuenta
-            </a></p>
-            <p>Si no te registraste en nuestro sitio, podés ignorar este mensaje.</p>
-        ";
+                <p>Hola <strong>$usuario</strong>,</p>
+                <p>Gracias por registrarte. Para activar tu cuenta, hacé clic en el siguiente enlace:</p>
+                <p><a href='$urlValidacion'>Activar cuenta</a></p>
+                <p>Si no te registraste en nuestro sitio, podés ignorar este mensaje.</p>
+            ";
 
             $mailSender->send();
             return true;
+
         } catch (Exception $e) {
             error_log("Error enviando correo de validación: " . $mailSender->ErrorInfo);
             return false;
         }
     }
 
-    public function activarCuenta($token) {
+    public function activarCuenta($token)
+    {
         $query = "UPDATE usuarios SET validado = TRUE, token_validacion = NULL WHERE token_validacion = ?";
         $stmt = $this->conexion->prepare($query);
         $stmt->bind_param("s", $token);
         $stmt->execute();
-
         return $stmt->affected_rows > 0;
     }
 }
