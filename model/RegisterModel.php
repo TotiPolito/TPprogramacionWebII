@@ -1,5 +1,6 @@
 <?php
 require_once("helper/MyConexion.php");
+require_once __DIR__ . "/../helper/QrGenerator.php";
 require_once __DIR__ . "/../vendor/phpmailer/src/PHPMailer.php";
 require_once __DIR__ . "/../vendor/phpmailer/src/SMTP.php";
 require_once __DIR__ . "/../vendor/phpmailer/src/Exception.php";
@@ -66,21 +67,54 @@ class RegisterModel
         if ($stmt->execute()) {
             $idUsuario = $this->conexion->insert_id;
 
+            if ($_SERVER['HTTP_HOST'] === 'localhost') {
+                $baseURL = "http://localhost/TPprogramacionWebII";
+            } else {
+                $baseURL = "https://" . $_SERVER['HTTP_HOST'];
+            }
+
+            $urlPerfil = $baseURL . "/Perfil/mostrarPerfil&id=" . $idUsuario;
+            $rutaFisicaQR = __DIR__ . "/../public/imagenes/qrs/jugador_" . $idUsuario . ".png";
+            $rutaPublicaQR = $baseURL . "/public/imagenes/qrs/jugador_" . $idUsuario . ".png";
+            QrGenerator::generarQR($urlPerfil, $rutaFisicaQR);
+            $this->guardarQR($idUsuario, $rutaPublicaQR);
+
             $sqlStats = "INSERT INTO estadisticas_jugador (id_usuario, preguntas_vistas, aciertos)
                          VALUES ($idUsuario, 0, 0)";
             $this->conexion->query($sqlStats);
 
-            return $this->enviarMailValidacion($data["mail"], $data["usuario"], $token);
+            if ($this->enviarMailValidacion($data["mail"], $data["usuario"], $token)) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
         }
-
-        return false;
     }
+
+    public function guardarQR($idUsuario, $rutaQR)
+    {
+        $query = "UPDATE usuarios SET qr = ? WHERE id = ?";
+        $stmt = $this->conexion->prepare($query);
+        $stmt->bind_param("si", $rutaQR, $idUsuario);
+        $stmt->execute();
+    }
+
 
     private function enviarMailValidacion($mail, $usuario, $token)
     {
         $mailSender = new PHPMailer(true);
 
         try {
+            if ($_SERVER['HTTP_HOST'] === 'localhost') {
+                $baseURL = "http://localhost/TPprogramacionWebII";
+            } else {
+                $baseURL = "https://" . $_SERVER['HTTP_HOST'];
+            }
+
+            $enlaceValidacion = $baseURL . "/Validar/validarCuenta&token=" . $token;
+
             $mailSender->IsSMTP();
             $mailSender->Host = "smtp.gmail.com";
             $mailSender->SMTPAuth = true;
@@ -94,14 +128,12 @@ class RegisterModel
             $mailSender->isHTML(true);
             $mailSender->Subject = 'Validacion de cuenta';
 
-            $urlValidacion = BASE_URL . "/TPprogramacionWebII/index.php?controller=Validar&method=validarCuenta&token=$token";
-
             $mailSender->Body = "
-                <p>Hola <strong>$usuario</strong>,</p>
-                <p>Gracias por registrarte. Para activar tu cuenta, hacé clic en el siguiente enlace:</p>
-                <p><a href='$urlValidacion'>Activar cuenta</a></p>
-                <p>Si no te registraste en nuestro sitio, podés ignorar este mensaje.</p>
-            ";
+            <p>Hola <strong>$usuario</strong>,</p>
+            <p>Gracias por registrarte. Para activar tu cuenta, hacé clic en el siguiente enlace:</p>
+            <p><a href='$enlaceValidacion'>Activar cuenta</a></p>
+            <p>Si no te registraste, podés ignorar este mensaje.</p>
+        ";
 
             $mailSender->send();
             return true;

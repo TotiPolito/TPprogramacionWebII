@@ -1,6 +1,5 @@
 <?php
 require_once("helper/QrGenerator.php");
-require_once("config/config.php");
 
 class PerfilController {
 
@@ -24,14 +23,9 @@ class PerfilController {
         $perfil = $this->model->obtenerPerfilPorId($idJugador);
 
         if ($perfil) {
-
-            $urlPerfil = BASE_URL . "/Perfil/mostrarPerfil&id=" . $idJugador;
-            $rutaQR = "public/imagenes/qrs/jugador_" . $idJugador . ".png";
-            QrGenerator::generarQR($urlPerfil, $rutaQR);
-
             $this->renderer->render("perfil", [
                 "perfil" => $perfil,
-                "qr" => $rutaQR
+                "qr" => $perfil["qr"]
             ]);
         } else {
             echo "Jugador no encontrado";
