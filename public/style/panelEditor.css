@@ -2,8 +2,6 @@ body {
     background: linear-gradient(135deg, #eef2ff, #cfd9ff);
     font-family: 'Poppins', sans-serif;
     color: #222;
-    margin: 0;
-    padding: 0;
 }
 
 .panel {
