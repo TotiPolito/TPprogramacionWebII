@@ -402,3 +402,32 @@ INSERT INTO respuestas(idPregunta, descripcion, estado) VALUES
                                                             (44, 'Siglo XX', true),
                                                             (44, 'Siglo XII', false),
                                                             (44, 'Siglo XIX', false);
+
+INSERT INTO preguntas(imagen, categoria, descripcion) VALUES
+('imagenes/biathlon.jpg', 1, 'En que deporte se combinan esqui de fondo y tiro con rifle?'),
+('imagenes/pelota_netball.jpg', 1, 'En que deporte se juega sin poder botar la pelota mientras caminas?'),
+('imagenes/bizancio.jpg', 2, 'Que imperio tuvo su capital en Constantinopla?'),
+('imagenes/piramide_social.jpg', 2, 'Como se llamaba la clase social dominante en la Edad Media europea?'),
+('imagenes/caravaggio.jpg', 3, 'Que pintor es conocido por el uso extremo del claroscuro?'),
+('imagenes/arquitectura_brutalista.jpg', 3, 'Como se llama el estilo arquitectonico famoso por usar hormigon crudo?'),
+('imagenes/ondas.jpg', 4, 'Como se llama el fenomeno en el que una onda cambia de direccion al pasar a otro medio?'),
+('imagenes/genes.jpg', 4, 'Como se llama el proceso de copia del ADN antes de la division celular?'),
+('imagenes/fiordos.jpg', 5, 'En que pais se encuentran los fiordos mas famosos del mundo?'),
+('imagenes/cataratas.jpg', 5, 'Que rio alimenta las Cataratas del Iguazu?'),
+('imagenes/violin.jpg', 6, 'Como se llama la pieza de madera que sostiene las cuerdas del violin?'),
+('imagenes/idioma_malta.jpg', 6, 'Ademas del ingles, que idioma es oficial en Malta?');
+
+INSERT INTO respuestas(idPregunta, descripcion, estado) VALUES
+
+(45,'Biathlon',true),(45,'Pentatlon moderno',false),(45,'Cross-country sprint',false),(45,'Nordic combined',false),
+(46,'Netball',true),(46,'Handball',false),(46,'Rugby 7',false),(46,'Ultimate frisbee',false),
+(47,'Imperio Bizantino',true),(47,'Imperio Carolingio',false),(47,'Imperio Otomano',false),(47,'Imperio Austrohungaro',false),
+(48,'La nobleza',true),(48,'Los burgueses',false),(48,'Los siervos',false),(48,'El clero bajo',false),
+(49,'Caravaggio',true),(49,'Velazquez',false),(49,'Rembrandt',false),(49,'Goya',false),
+(50,'Brutalismo',true),(50,'Neoclasico',false),(50,'Barroco moderno',false),(50,'Posmodernismo organico',false),
+(51,'Refraccion',true),(51,'Difraccion',false),(51,'Interferencia',false),(51,'Polarizacion',false),
+(52,'Replicacion',true),(52,'Transcripcion',false),(52,'Traduccion',false),(52,'Mutacion',false),
+(53,'Noruega',true),(53,'Islandia',false),(53,'Nueva Zelanda',false),(53,'Canada',false),
+(54,'Rio Iguazu',true),(54,'Rio Parana',false),(54,'Rio Uruguay',false),(54,'Rio Pilcomayo',false),
+(55,'El puente',true),(55,'El alma',false),(55,'El marco',false),(55,'El tirador',false),
+(56,'Maltes',true),(56,'Italiano',false),(56,'Griego',false),(56,'Arabe moderno',false);
