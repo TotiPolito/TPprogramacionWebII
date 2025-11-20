@@ -57,7 +57,7 @@ class GameController
         }
 
         $nombreCategoria = $pregunta['nombre_categoria'] ?? 'Sin categoría';
-        $colorFondo = $this->ObtenerColorPorCategoria($nombreCategoria);
+        $colorFondo = $_GET['color'] ?? '#ffffff';
 
         $_SESSION['preguntas_vistas'][] = $pregunta['id'];
         $this->model->incrementarVistasPregunta($pregunta['id']);
@@ -69,11 +69,17 @@ class GameController
 
         $rutaImagenes = $root . "imagenes/" . $imagen;
         $rutaSugeridas = $root . "imagenes_sugeridas/" . $imagen;
+        $rutaPreguntas = $root . "imagenesPreguntas/" . $imagen;
 
         if (file_exists($rutaImagenes)) {
             $rutaFinal = "/TPprogramacionWebII/public/imagenes/$imagen";
+
         } elseif (file_exists($rutaSugeridas)) {
             $rutaFinal = "/TPprogramacionWebII/public/imagenes_sugeridas/$imagen";
+
+        } elseif (file_exists($rutaPreguntas)) {
+            $rutaFinal = "/TPprogramacionWebII/public/imagenesPreguntas/$imagen";
+
         } else {
             $rutaFinal = null;
         }
@@ -85,20 +91,6 @@ class GameController
             'color' => $colorFondo,
             'rutaImagen' => $rutaFinal
         ]);
-    }
-
-    private function obtenerColorPorCategoria($categoria)
-    {
-        $colores = [
-            'deportes' => '#ef9222',
-            'historia' => '#fdd730',
-            'arte' => '#f63232',
-            'ciencia' => '#4dfd3a',
-            'geografia' => '#3498db',
-            'entretenimiento' => '#ed479d'
-        ];
-
-        return $colores[$categoria] ?? '#ffffff';
     }
 
     public function ruleta()
@@ -115,8 +107,13 @@ class GameController
 
         $_SESSION['permitir_siguiente'] = true;
 
-        echo $this->renderer->render("ruleta");
+        $categorias = $this->model->obtenerCategorias();
+
+        echo $this->renderer->render("ruleta", [
+            "categorias" => $categorias
+        ]);
     }
+
 
     public function responder() {
 

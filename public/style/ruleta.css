@@ -18,16 +18,8 @@
     border: 8px solid #222;
     transition: 3s cubic-bezier(.2,.9,.2,1);
     box-shadow: 0 0 15px rgba(0,0,0,0.4);
-    background: conic-gradient(
-            #ef9222 0 60deg,
-            #fdd730 60deg 120deg,
-            #f63232 120deg 180deg,
-            #4dfd3a 180deg 240deg,
-            #3498db 240deg 300deg,
-            #ed479d 300deg 360deg
-    );
-    transform: rotate(0deg);
 }
+
 
 .puntero {
     position: absolute;

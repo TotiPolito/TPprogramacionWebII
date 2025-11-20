@@ -34,20 +34,20 @@ class EditorController {
 
     public function agregarPregunta()
     {
-        // Procesar imagen
         $rutaImagen = null;
 
-        if (isset($_FILES["imagen"]) && $_FILES["imagen"]["error"] === UPLOAD_ERR_OK) {
+        if (!empty($_FILES["imagen"]["name"])) {
+            $ruta = "public/imagenesPreguntas/";
+            if (!file_exists($ruta)) {
+                mkdir($ruta, 0777, true);
+            }
 
-            $origen = $_FILES["imagen"]["tmp_name"];
+            $imagenNombre = time() . "_" . basename($_FILES["imagen"]["name"]);
+            $rutaCompleta = $ruta . $imagenNombre;
 
-            $nombre = uniqid() . "_" . basename($_FILES["imagen"]["name"]);
+            move_uploaded_file($_FILES["imagen"]["tmp_name"], $rutaCompleta);
 
-            $destino = __DIR__ . "/../../public/imagenesPreguntas/" . $nombre;
-
-            move_uploaded_file($origen, $destino);
-
-            $rutaImagen = "public/imagenesPreguntas/" . $nombre;
+            $rutaImagen = $imagenNombre;
         }
 
         $_POST["imagen"] = $rutaImagen;

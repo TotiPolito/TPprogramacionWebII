@@ -174,4 +174,17 @@ class GameModel
         $fila = $resultado->fetch_assoc();
         return $fila ? $fila['ratio'] : null;
     }
+
+    public function obtenerCategorias()
+    {
+        $sql = "SELECT descripcion FROM categorias ORDER BY descripcion ASC";
+        $resultado = $this->conexion->query($sql);
+
+        $categorias = [];
+        while ($fila = $resultado->fetch_assoc()) {
+            $categorias[] = $fila['descripcion'];
+        }
+
+        return $categorias;
+    }
 }

@@ -10,12 +10,11 @@
 
 <h2>Girá la ruleta</h2>
 
-<div class="ruleta-container" style="width: 260px; height:260px;">
+<div class="ruleta-container" style="width:260px; height:260px;">
     <div class="puntero"></div>
 
     <div id="ruleta"></div>
 
-    <!-- badge resultado -->
     <div id="resultado" class="resultado">
         <span id="textoResultado">...</span>
         <span id="detalle" class="detalle"></span>
@@ -25,16 +24,55 @@
 <button id="btnGirar" class="btnGirar">Girar</button>
 
 <script>
-    const categorias = ["deportes","historia","arte","ciencia","geografia","entretenimiento"];
-    const colores = ["#ef9222","#fdd730","#f63232","#4dfd3a","#3498db","#ed479d"];
+    const categorias = [
+        {{#categorias}}
+            "{{.}}",
+        {{/categorias}}
+    ];
+
+    console.log("Categorias detectadas:", categorias);
+    const coloresFijos = {
+        deportes: "#ef9222",
+        historia: "#fdd730",
+        arte: "#f63232",
+        ciencia: "#4dfd3a",
+        geografia: "#3498db",
+        entretenimiento: "#ed479d"
+    };
+    function generarColorDesdeHash(texto) {
+        const hash = parseInt(md5(texto).substring(0, 6), 16);
+        return "#" + hash.toString(16).padStart(6, "0");
+    }
+    function md5(str){return CryptoJS.MD5(str).toString();}
+
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+
+<script>
+    const colores = categorias.map(cat =>
+            coloresFijos[cat.toLowerCase()] ?? generarColorDesdeHash(cat)
+    );
+
+    console.log("Colores asignados:", colores);
 
     const ruleta = document.getElementById("ruleta");
     const btn = document.getElementById("btnGirar");
     const resultadoDiv = document.getElementById("resultado");
     const textoResultado = document.getElementById("textoResultado");
-    const detalle = document.getElementById("detalle");
 
-    const sector = 360 / categorias.length; // 60°
+    const sector = 360 / categorias.length;
+
+    function generarGradiente() {
+        let partes = [];
+        for (let i = 0; i < categorias.length; i++) {
+            const inicio = i * sector;
+            const fin = inicio + sector;
+            partes.push(`${colores[i]} ${inicio}deg ${fin}deg`);
+        }
+        return "conic-gradient(" + partes.join(",") + ")";
+    }
+
+    ruleta.style.background = generarGradiente();
 
     let rotacionActual = 0;
     let girando = false;
@@ -42,56 +80,46 @@
     btn.onclick = () => {
         if (girando) return;
         girando = true;
+
         resultadoDiv.classList.remove("show");
 
         const extra = Math.floor(Math.random() * 360);
-        const vueltas = 3600; // 10 vueltas para "efecto"
+        const vueltas = 3600;
         const rotacionFinal = vueltas + extra;
 
         rotacionActual += rotacionFinal;
         ruleta.style.transform = `rotate(${rotacionActual}deg)`;
 
-        const onEnd = (ev) => {
-            ruleta.removeEventListener('transitionend', onEnd);
+        const onEnd = () => {
+            ruleta.removeEventListener("transitionend", onEnd);
 
             let angulo = rotacionActual % 360;
-
-            angulo = (angulo + 270) % 360;
+            angulo = (angulo + 270) % 360; // alineación con puntero superior
 
             const index = Math.floor(angulo / sector);
-
             const idx = (index + categorias.length) % categorias.length;
-            const categoriaElegida = categorias[idx];
-            const colorElegido = colores[idx];
 
-            console.log("rotacionActual (deg):", rotacionActual);
-            console.log("angulo (0-359) antes ajuste:", rotacionActual % 360);
-            console.log("angulo ajustado al puntero (0-359):", angulo);
-            console.log("sectorIndex:", idx, "categoria:", categoriaElegida);
+            const categoria = categorias[idx];
+            const color = colores[idx];
 
-            textoResultado.textContent = categoriaElegida;
+            textoResultado.textContent = categoria;
             resultadoDiv.classList.add("show");
 
-            ruleta.style.borderColor = colorElegido;
-            ruleta.style.boxShadow = `0 0 30px ${hexToRgba(colorElegido, 0.9)}`;
+            ruleta.style.borderColor = color;
 
             setTimeout(() => {
-               window.location.href = "{{BASE_URL}}/Game/jugar?categoria=" + categoriaElegida;
+                window.location.href =
+                        "{{BASE_URL}}/Game/jugar?categoria=" +
+                        encodeURIComponent(categoria) +
+                        "&color=" +
+                        encodeURIComponent(color);
                 girando = false;
             }, 900);
         };
 
-        ruleta.addEventListener('transitionend', onEnd);
+        ruleta.addEventListener("transitionend", onEnd);
     };
 
-    function hexToRgba(hex, alpha = 1) {
-        const h = hex.replace('#','');
-        const bigint = parseInt(h, 16);
-        const r = (bigint >> 16) & 255;
-        const g = (bigint >> 8) & 255;
-        const b = bigint & 255;
-        return `rgba(${r}, ${g}, ${b}, ${alpha})`;
-    }
 </script>
 
 </body>

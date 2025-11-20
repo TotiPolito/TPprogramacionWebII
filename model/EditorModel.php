@@ -41,7 +41,10 @@ class EditorModel {
     {
         $conn = $this->conexion->getConexion();
 
-        $stmt = $conn->prepare("INSERT INTO preguntas(imagen, categoria, dificultad, descripcion) VALUES (?,?,?,?)");
+        $stmt = $conn->prepare("
+        INSERT INTO preguntas(imagen, categoria, dificultad, descripcion) 
+        VALUES (?,?,?,?)
+    ");
 
         $stmt->bind_param("siss",
             $data["imagen"],
@@ -51,7 +54,6 @@ class EditorModel {
         );
 
         $stmt->execute();
-
         $idPregunta = $conn->insert_id;
 
         $respuestas = [
@@ -61,12 +63,15 @@ class EditorModel {
             $data["resp4"]
         ];
 
+        $correctaIndex = intval($data["correcta"]);
+
         foreach ($respuestas as $index => $texto) {
             if (!empty($texto)) {
-                $estado = ($data["correcta"] == $index) ? 1 : 0;
+
+                $estado = ($index === $correctaIndex) ? 1 : 0;
 
                 $stmt = $conn->prepare("
-                INSERT INTO respuestas(idPregunta, descripcion, estado) 
+                INSERT INTO respuestas(idPregunta, descripcion, estado)
                 VALUES (?, ?, ?)
             ");
                 $stmt->bind_param("isi", $idPregunta, $texto, $estado);
@@ -74,4 +79,5 @@ class EditorModel {
             }
         }
     }
+
 }
