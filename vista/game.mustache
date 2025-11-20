@@ -9,7 +9,9 @@
 
 <div id="timer">Tiempo restante: <span id="tiempo">10</span> segundos</div>
 <h2  style="background-color: {{color}};">Categoría: {{categoria}}</h2>
-<img src="{{BASE_URL}}/public/{{pregunta.imagen}}" alt="imagen de la pregunta" class="pregunta_imagen">
+{{#rutaImagen}}
+    <img src="{{rutaImagen}}" alt="Imagen de la pregunta" class="pregunta_imagen">
+{{/rutaImagen}}
 <p>{{pregunta.descripcion}}</p>
 
 <form id="respuestaForm" action="{{BASE_URL}}/Game/responder" method="POST">

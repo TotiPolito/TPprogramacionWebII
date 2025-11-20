@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Panel del Editor</title>
+    <link rel="stylesheet" href="{{BASE_URL}}/public/style/game.css">
     <link rel="stylesheet" href="{{BASE_URL}}/public/style/headerFooter.css">
     <link rel="stylesheet" href="{{BASE_URL}}/public/style/style.css">
     <link rel="stylesheet" href="{{BASE_URL}}/public/style/preguntasSugeridasPendientes.css">
@@ -15,6 +16,9 @@
 {{#sugerencias}}
     <div class="sugerencia">
         <p><strong>Pregunta:</strong> {{texto}}</p>
+        <img src="{{BASE_URL}}/public/imagenes_sugeridas/{{imagen}}"
+             alt="imagen de la pregunta"
+             class="pregunta_imagen">
         <p><strong>Categoría:</strong> {{categoria}}</p>
         <p><strong>Usuario:</strong> {{usuario}}</p>
 

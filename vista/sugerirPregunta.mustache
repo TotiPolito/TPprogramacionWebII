@@ -14,10 +14,15 @@
 <p style="color: green;">{{mensaje}}</p>
 {{/mensaje}}
 
-<form action="/PreguntaSugerida/guardar" method="POST">
+<form action="{{BASE_URL}}/PreguntaSugerida/guardar" method="POST" enctype="multipart/form-data">
 
     <label for="pregunta">Texto de la pregunta:</label>
     <input type="text" id="pregunta" name="pregunta" required>
+
+    <div>
+        <label>Imagen:</label>
+        <input type="file" name="imagen" accept="image/*" required>
+    </div>
 
     <h4>Marcar la correcta:</h4>
 

@@ -103,6 +103,9 @@ CREATE TABLE preguntas_sugeridas (
                                      FOREIGN KEY (categoria_id) REFERENCES categorias(id)
 );
 
+ALTER TABLE preguntas_sugeridas
+    ADD COLUMN imagen VARCHAR(255) NULL;
+
 CREATE TABLE preguntas_reportadas(
                                      id INT AUTO_INCREMENT PRIMARY KEY,
                                      idPregunta TINYINT,

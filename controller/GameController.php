@@ -63,11 +63,27 @@ class GameController
         $this->model->incrementarVistasPregunta($pregunta['id']);
         $respuestas = $this->model->obtenerRespuestas($pregunta['id']);
 
+        $root = $_SERVER['DOCUMENT_ROOT'] . "/TPprogramacionWebII/public/";
+
+        $imagen = basename($pregunta['imagen']);
+
+        $rutaImagenes = $root . "imagenes/" . $imagen;
+        $rutaSugeridas = $root . "imagenes_sugeridas/" . $imagen;
+
+        if (file_exists($rutaImagenes)) {
+            $rutaFinal = "/TPprogramacionWebII/public/imagenes/$imagen";
+        } elseif (file_exists($rutaSugeridas)) {
+            $rutaFinal = "/TPprogramacionWebII/public/imagenes_sugeridas/$imagen";
+        } else {
+            $rutaFinal = null;
+        }
+
         echo $this->renderer->render("game", [
             'categoria' => $pregunta['nombre_categoria'],
             'pregunta' => $pregunta,
             'respuestas' => $respuestas,
-            'color' => $colorFondo
+            'color' => $colorFondo,
+            'rutaImagen' => $rutaFinal
         ]);
     }
 

@@ -23,10 +23,21 @@ class PreguntaSugeridaController {
         }
 
         $texto = $_POST["pregunta"];
-
         $categoria_id = $_POST["categoria"];
-
         $sugerida_por = $_SESSION["usuario"]["id"];
+        $imagenNombre = null;
+
+        if (!empty($_FILES["imagen"]["name"])) {
+            $ruta = "public/imagenes_sugeridas/";
+            if (!file_exists($ruta)) {
+                mkdir($ruta, 0777, true);
+            }
+
+            $imagenNombre = time() . "_" . basename($_FILES["imagen"]["name"]);
+            $rutaCompleta = $ruta . $imagenNombre;
+
+            move_uploaded_file($_FILES["imagen"]["tmp_name"], $rutaCompleta);
+        }
 
         $respuestas = [
             $_POST["respuesta1"],
@@ -36,12 +47,15 @@ class PreguntaSugeridaController {
         ];
         $correcta = $_POST["correcta"];
 
-        $this->model->guardarPreguntaSugerida($texto, $categoria_id, $sugerida_por, $respuestas, $correcta);
-
+        $this->model->guardarPreguntaSugerida($texto, $categoria_id, $sugerida_por, $respuestas, $correcta, S);
 
         $categorias = $this->model->obtenerCategorias();
-        $this->renderer->render("sugerirPregunta", [ "mensaje" => "¡Tu pregunta fue enviada para revisión!", "categorias" => $categorias]);
+        $this->renderer->render("sugerirPregunta", [
+            "mensaje" => "¡Tu pregunta fue enviada para revisión!",
+            "categorias" => $categorias
+        ]);
     }
+
 
     public function listarPendientes() {
         if (!isset($_SESSION['usuario']) || $_SESSION['usuario']['rol'] !== 'editor') {
@@ -53,7 +67,6 @@ class PreguntaSugeridaController {
         $this->renderer->render("sugerenciasPendientes", ["sugerencias" => $sugerencias]);
     }
 
-    // Aprobar una sugerencia
     public function aprobar() {
         $id = $_GET['idSugerida'];
         $this->model->aprobarSugerencia($id);
@@ -62,7 +75,6 @@ class PreguntaSugeridaController {
         exit;
     }
 
-    // Rechazar una sugerencia
     public function rechazar() {
         $id = $_GET['idSugerida'];
         $this->model->rechazarSugerencia($id);
