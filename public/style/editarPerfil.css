@@ -1,0 +1,20 @@
+.editarPerfilForm{
+    max-width: 600px;
+    width: 90%;
+    background: #fff;
+    margin: 80px auto;
+    padding: 40px 30px;
+    border-radius: 18px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    text-align: center;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.formItem{
+    width: 100%;
+}

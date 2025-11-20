@@ -10,6 +10,10 @@
 
 <main class="home_main">
     <h2>{{nombre_completo}} <br> Puntaje: {{puntaje}}</h2>
+    <a href="{{BASE_URL}}/Perfil/mostrarEditar&id={{perfil.id}}"
+    class="btn_secondary btn_hover" style="height:3rem; width:6rem; font-size: 13px;">
+    Editar Perfil
+    </a>
     <a class="btn_secondary btn_hover" style="height:3rem; width:6rem; font-size: 13px;" href="{{BASE_URL}}/Game/ruleta">Nueva Partida</a>
     <a id="btnRanking" href="{{BASE_URL}}/Ranking/mostrar"
        class="btn_secondary btn_hover" style="height:3rem; width:6rem; font-size: 13px;">Ver Ranking</a>

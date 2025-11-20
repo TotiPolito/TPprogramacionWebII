@@ -1,0 +1,63 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel del Editor</title>
+    <link rel="stylesheet" href="{{BASE_URL}}/public/style/headerFooter.css">
+    <link rel="stylesheet" href="{{BASE_URL}}/public/style/style.css">
+    <link rel="stylesheet" href="{{BASE_URL}}/public/style/agregarPreguntaEditor.css">
+</head>
+<body>
+<h2>Agregar pregunta</h2>
+
+<form method="POST" action="{{BASE_URL}}/Editor/agregarPregunta" enctype="multipart/form-data" class="formAgregarPregunta">
+
+    <label>Descripción:</label>
+    <input type="text" name="descripcion" required>
+
+    <label>Categoría:</label>
+    <select name="categoria" required>
+        {{#categorias}}
+            <option value="{{id}}">{{descripcion}}</option>
+        {{/categorias}}
+    </select>
+
+    <label>Dificultad:</label>
+    <select name="dificultad">
+        <option value="Fácil">Fácil</option>
+        <option value="Media">Media</option>
+        <option value="Difícil">Difícil</option>
+    </select>
+
+    <div>
+        <label>Imagen:</label>
+        <input type="file" name="imagen" accept="image/*" required>
+    </div>
+
+    <h3>Respuestas:</h3>
+
+    <div>
+        <input type="radio" name="correcta" value="0" required>
+        <input type="text" name="resp1" placeholder="Respuesta 1" required>
+    </div>
+
+    <div>
+        <input type="radio" name="correcta" value="1">
+        <input type="text" name="resp2" placeholder="Respuesta 2" required>
+    </div>
+
+    <div>
+        <input type="radio" name="correcta" value="2">
+        <input type="text" name="resp3" placeholder="Respuesta 3" required>
+    </div>
+
+    <div>
+        <input type="radio" name="correcta" value="3">
+        <input type="text" name="resp4" placeholder="Respuesta 4" required>
+    </div>
+
+    <button type="submit" class="btn_confirm">Guardar</button>
+</form>
+
+</body>
+</html>

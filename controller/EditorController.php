@@ -25,4 +25,47 @@ class EditorController {
 
         echo $this->renderer->render("panelEditor", $data);
     }
+
+    public function agregarPreguntaForm()
+    {
+        $categorias = $this->model->getCategorias();
+        echo $this->renderer->render("agregarPregunta", ["categorias" => $categorias]);
+    }
+
+    public function agregarPregunta()
+    {
+        // Procesar imagen
+        $rutaImagen = null;
+
+        if (isset($_FILES["imagen"]) && $_FILES["imagen"]["error"] === UPLOAD_ERR_OK) {
+
+            $origen = $_FILES["imagen"]["tmp_name"];
+
+            $nombre = uniqid() . "_" . basename($_FILES["imagen"]["name"]);
+
+            $destino = __DIR__ . "/../../public/imagenesPreguntas/" . $nombre;
+
+            move_uploaded_file($origen, $destino);
+
+            $rutaImagen = "public/imagenesPreguntas/" . $nombre;
+        }
+
+        $_POST["imagen"] = $rutaImagen;
+
+        $this->model->guardarPregunta($_POST);
+
+        header("Location: /TPprogramacionWebII/Editor/panel");
+    }
+
+
+    public function agregarCategoriaForm()
+    {
+        echo $this->renderer->render("agregarCategoria");
+    }
+
+    public function agregarCategoria()
+    {
+        $this->model->guardarCategoria($_POST["descripcion"]);
+        header("Location: /TPprogramacionWebII/Editor/panel");
+    }
 }

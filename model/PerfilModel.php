@@ -9,25 +9,57 @@ class PerfilModel {
         $this->conexion = $conexion;
     }
 
-    public function obtenerPerfilPorId($idJugador)
+    public function obtenerPerfilPorId($idUsuario)
     {
-        $sql = "SELECT 
-                    u.id,
-                    u.nombre_completo, 
-                    u.puntaje, 
-                    COUNT(p.id) AS partidas, 
-                    u.latitud, 
-                    u.longitud,
-                    u.qr AS qr
-                FROM usuarios u
-                LEFT JOIN partida p ON u.id = p.id_usuario
-                WHERE u.id = ?
-                GROUP BY u.id";
-
+        $sql = "SELECT * FROM usuarios WHERE id = ?";
         $stmt = $this->conexion->prepare($sql);
-        $stmt->bind_param("i", $idJugador);
+        $stmt->bind_param("i", $idUsuario);
         $stmt->execute();
         $resultado = $stmt->get_result();
-        return $resultado->fetch_assoc();
+        $usuario = $resultado->fetch_assoc();
+        $stmt->close();
+        return $usuario;
     }
+
+    public function editarPerfil($id, $usuario, $password, $fotoPerfil)
+    {
+        $sql = "UPDATE usuarios SET ";
+        $paramTypes = "";
+        $params = [];
+
+        if (!empty($usuario)) {
+            $sql .= "usuario=?, ";
+            $paramTypes .= "s";
+            $params[] = $usuario;
+        }
+
+        if (!empty($password)) {
+            $sql .= "password=?, ";
+            $paramTypes .= "s";
+            $params[] = password_hash($password, PASSWORD_DEFAULT);
+        }
+
+        if (!empty($fotoPerfil)) {
+            $sql .= "foto_perfil=?, ";
+            $paramTypes .= "s";
+            $params[] = $fotoPerfil;
+        }
+
+        if (empty($params)) {
+            return false;
+        }
+
+        $sql = rtrim($sql, ", ");
+
+        $sql .= " WHERE id=?";
+        $paramTypes .= "i";
+        $params[] = $id;
+
+        $stmt = $this->conexion->prepare($sql);
+        $stmt->bind_param($paramTypes, ...$params);
+
+        return $stmt->execute();
+    }
+
 }
+

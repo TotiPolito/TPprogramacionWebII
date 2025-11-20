@@ -11,21 +11,23 @@
 <body>
 
 <div class="form panel">
-<h2>Bienvenido, {{usuario.nombre_completo}}</h2>
-<p>Rol: <strong>{{usuario.rol}}</strong></p>
+    <h2>Bienvenido, {{usuario.nombre_completo}}</h2>
+    <p>Rol: <strong>{{usuario.rol}}</strong></p>
 
-<section>
-    <p>Preguntas reportadas pendientes: {{cantidadReportes}}</p>
-    <p>Preguntas sugeridas por revisar: {{cantidadSugerencias}}</p>
-</section>
+    <section>
+        <p>Preguntas reportadas pendientes: {{cantidadReportes}}</p>
+        <p>Preguntas sugeridas por revisar: {{cantidadSugerencias}}</p>
+    </section>
 
-<nav>
-    <ul>
-        <li><a href="{{BASE_URL}}/Reportes/listar">Ver preguntas reportadas</a></li>
-        <li><a href="{{BASE_URL}}/PreguntaSugerida/listarPendientes">Ver sugerencias</a></li>
-        <li><a href="{{BASE_URL}}/Login/logout">Cerrar sesión</a></li>
-    </ul>
-</nav>
+    <nav>
+        <ul>
+            <li><a href="{{BASE_URL}}/Reportes/listar">Ver preguntas reportadas</a></li>
+            <li><a href="{{BASE_URL}}/PreguntaSugerida/listarPendientes">Ver sugerencias</a></li>
+            <li><a href="{{BASE_URL}}/Editor/agregarPreguntaForm">Agregar pregunta</a></li>
+            <li><a href="{{BASE_URL}}/Editor/agregarCategoriaForm">Agregar categoría</a></li>
+            <li><a href="{{BASE_URL}}/Login/logout">Cerrar sesión</a></li>
+        </ul>
+    </nav>
 </div>
 
 </body>

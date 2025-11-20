@@ -79,10 +79,26 @@ nav ul li a[href*="Reportes"]:hover {
 }
 
 nav ul li a[href*="Sugerida"] {
-    background-color: #28a745;
+    background-color: #007bff;
 }
 
 nav ul li a[href*="Sugerida"]:hover {
+    background-color: #0056d8;
+}
+
+nav ul li a[href*="agregarPreguntaForm"] {
+    background-color: #28a745;
+}
+
+nav ul li a[href*="agregarPreguntaForm"]:hover {
+    background-color: #218838;
+}
+
+nav ul li a[href*="agregarCategoriaForm"] {
+    background-color: #28a745;
+}
+
+nav ul li a[href*="agregarCategoriaForm"]:hover {
     background-color: #218838;
 }
 
