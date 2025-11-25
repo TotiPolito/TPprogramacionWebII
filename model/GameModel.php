@@ -9,7 +9,7 @@ class GameModel
         $this->conexion = $conexion;
     }
 
-    public function obtenerPreguntaPorDificultad($idUsuario, $preguntasVistas)
+    public function obtenerPreguntaPorDificultad($categoriaElegida, $idUsuario, $preguntasVistas)
     {
         $ratioJugador = $this->obtenerRatioJugador($idUsuario);
 
@@ -18,59 +18,46 @@ class GameModel
         }
 
         if ($ratioJugador >= 0.7) {
-            $condicion = "(p.aciertos / NULLIF(p.vistas, 0) <= 0.5 OR p.vistas = 0)";
+            $dificultadBuscada = "Dificil";
         } elseif ($ratioJugador >= 0.5) {
-            $condicion = "(p.aciertos / NULLIF(p.vistas, 0) BETWEEN 0.5 AND 0.7 OR p.vistas = 0)";
+            $dificultadBuscada = "Normal";
         } else {
-            $condicion = "(p.aciertos / NULLIF(p.vistas, 0) >= 0.7 OR p.vistas = 0)";
+            $dificultadBuscada = "Facil";
         }
 
-        $idsVistos = implode(',', $preguntasVistas ?: [0]);
-
-        $sql = "SELECT p.*, c.descripcion AS nombre_categoria
-            FROM preguntas p
-            JOIN categorias c ON p.categoria = c.id
-            WHERE p.id NOT IN ($idsVistos)
-              AND $condicion
-            ORDER BY RAND()
-            LIMIT 1";
-
-        $resultado = $this->conexion->query($sql);
-        $pregunta = $resultado->fetch_assoc();
-
-        if (!$pregunta) {
-            $sql = "SELECT p.*, c.descripcion AS nombre_categoria
-                FROM preguntas p
-                JOIN categorias c ON p.categoria = c.id
-                WHERE p.id NOT IN ($idsVistos)
-                ORDER BY RAND()
-                LIMIT 1";
-
-            $resultado = $this->conexion->query($sql);
-            $pregunta = $resultado->fetch_assoc();
-        }
-
-        return $pregunta;
-    }
-
-    public function obtenerPreguntaPorCategoria($categoria, $preguntasVistas)
-    {
         $idsVistos = implode(',', $preguntasVistas ?: [0]);
 
         $sql = "SELECT p.*, c.descripcion AS nombre_categoria
             FROM preguntas p
             JOIN categorias c ON p.categoria = c.id
             WHERE c.descripcion = ?
-            AND p.id NOT IN ($idsVistos)
+              AND p.dificultad = ?
+              AND p.id NOT IN ($idsVistos)
             ORDER BY RAND()
             LIMIT 1";
 
         $stmt = $this->conexion->prepare($sql);
-        $stmt->bind_param("s", $categoria);
+        $stmt->bind_param("ss", $categoriaElegida, $dificultadBuscada);
         $stmt->execute();
-        return $stmt->get_result()->fetch_assoc();
-    }
+        $pregunta = $stmt->get_result()->fetch_assoc();
 
+        if (!$pregunta) {
+            $sql = "SELECT p.*, c.descripcion AS nombre_categoria
+                FROM preguntas p
+                JOIN categorias c ON p.categoria = c.id
+                WHERE c.descripcion = ?
+                  AND p.id NOT IN ($idsVistos)
+                ORDER BY RAND()
+                LIMIT 1";
+
+            $stmt = $this->conexion->prepare($sql);
+            $stmt->bind_param("s", $categoriaElegida);
+            $stmt->execute();
+            $pregunta = $stmt->get_result()->fetch_assoc();
+        }
+
+        return $pregunta;
+    }
 
     public function obtenerRespuestas($preguntaId)
     {

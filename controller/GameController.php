@@ -46,14 +46,21 @@ class GameController
         $idUsuario = $_SESSION['usuario']['id'] ?? null;
 
         if ($categoriaElegida) {
-            $pregunta = $this->model->obtenerPreguntaPorCategoria($categoriaElegida, $_SESSION['preguntas_vistas']);
-        } else {
-            $pregunta = $this->model->obtenerPreguntaPorDificultad($idUsuario, $_SESSION['preguntas_vistas']);
+            $pregunta = $this->model->obtenerPreguntaPorDificultad(
+                $categoriaElegida,
+                $idUsuario,
+                $_SESSION['preguntas_vistas']
+            );
         }
 
         if (!$pregunta) {
             $_SESSION['preguntas_vistas'] = [];
-            $pregunta = $this->model->obtenerPreguntaPorDificultad($idUsuario, []);
+
+            $pregunta = $this->model->obtenerPreguntaPorDificultad(
+                $categoriaElegida,
+                $idUsuario,
+                []
+            );
         }
 
         $nombreCategoria = $pregunta['nombre_categoria'] ?? 'Sin categoría';
